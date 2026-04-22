@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study</title>
+<style>
+  :root {
+    --cream: #fdf8f0;
+    --warm-white: #fffef9;
+    --parchment: #f5edd8;
+    --gold: #c9922a;
+    --gold-light: #e8b84b;
+    --gold-dark: #8b6318;
+    --ink: #1a1208;
+    --ink-mid: #3d2e0f;
+    --ink-light: #6b5229;
+    --rust: #9e3a1e;
+    --sage: #3d6b4f;
+    --sky: #2c5f8a;
+    --border: #d4b896;
+    --border-light: #e8d9c0;
+    --shadow: rgba(90,60,10,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    position: fixed; top: 0; left: 0;
+    width: 220px; height: 100vh;
+    background: var(--parchment);
+    border-right: 2px solid var(--border);
+    display: flex; flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  #sidebar-header {
+    padding: 28px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  #sidebar-header .emblem {
+    font-size: 28px; margin-bottom: 6px;
+  }
+  #sidebar-header h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ink-light);
+    font-weight: normal;
+  }
+
+  #user-info {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+  #user-info strong { display: block; font-size: 13px; color: var(--ink-mid); margin-bottom: 2px; }
+  #user-name-display { cursor: pointer; border-bottom: 1px dashed var(--border); display: inline; }
+  #user-name-display:hover { color: var(--gold-dark); }
+
+  nav { flex: 1; padding: 16px 0; }
+  .nav-section { margin-bottom: 18px; }
+  .nav-label {
+    padding: 4px 18px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--gold-dark);
+    font-weight: bold;
+  }
+  .nav-btn {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; padding: 9px 18px;
+    background: none; border: none; cursor: pointer;
+    font-family: Georgia, serif; font-size: 14px;
+    color: var(--ink-mid);
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .nav-btn:hover { background: #ede4cf; color: var(--ink); }
+  .nav-btn.active {
+    background: #e6d8bb;
+    color: var(--gold-dark);
+    border-left-color: var(--gold);
+    font-style: italic;
+  }
+  .nav-btn .icon { font-size: 16px; width: 20px; text-align: center; }
+
+  #progress-sidebar {
+    padding: 14px 18px 22px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+  }
+  #progress-sidebar h4 {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--gold-dark); margin-bottom: 10px;
+  }
+  .prog-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--ink-light); }
+  .prog-bar-wrap { background: var(--border-light); border-radius: 2px; height: 5px; margin-bottom: 8px; }
+  .prog-bar { height: 5px; border-radius: 2px; background: var(--gold); transition: width 0.4s; }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: 220px;
+    min-height: 100vh;
+    padding: 36px 44px 60px;
+    max-width: 1000px;
+  }
+
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── DASHBOARD ── */
+  .dash-greeting {
+    font-size: 28px; color: var(--ink);
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+  .dash-sub { color: var(--ink-light); font-size: 15px; margin-bottom: 32px; }
+
+  .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 32px; }
+  .dash-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 22px 26px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .dash-card h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold-dark); margin-bottom: 12px; }
+  .dash-card .big-num { font-size: 42px; color: var(--ink); line-height: 1; }
+  .dash-card .num-label { font-size: 12px; color: var(--ink-light); margin-top: 4px; }
+
+  .work-on-section { margin-top: 28px; }
+  .work-on-section h3 {
+    font-size: 16px; color: var(--ink-mid);
+    margin-bottom: 14px; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;
+  }
+  .work-on-list { list-style: none; }
+  .work-on-list li {
+    padding: 10px 16px; margin-bottom: 8px;
+    background: #fff8ee;
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--rust);
+    border-radius: 3px;
+    font-size: 14px; color: var(--ink-mid);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .work-on-list li .badge {
+    font-size: 11px; background: var(--rust);
+    color: white; padding: 2px 8px; border-radius: 10px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 30px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: baseline; gap: 16px;
+  }
+  .section-header h1 { font-size: 26px; color: var(--ink); font-style: italic; }
+  .topic-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+  .topic-btn {
+    padding: 6px 18px; background: var(--warm-white);
+    border: none; cursor: pointer; font-family: Georgia, serif;
+    font-size: 13px; color: var(--ink-light);
+    transition: background 0.15s, color 0.15s;
+  }
+  .topic-btn.active { background: var(--gold); color: white; }
+  .topic-btn:not(:last-child) { border-right: 1px solid var(--border); }
+
+  /* ── FLASHCARDS ── */
+  .flashcard-area { perspective: 1400px; margin: 20px auto; max-width: 560px; }
+  .flashcard-wrap {
+    position: relative; width: 100%; padding-bottom: 62%;
+    cursor: pointer; user-select: none;
+  }
+  .flashcard {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 6px;
+    box-shadow: 0 8px 32px var(--shadow), 0 2px 8px rgba(90,60,10,0.08);
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute; inset: 0;
+    border-radius: 6px;
+    backface-visibility: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 36px;
+    border: 2px solid var(--border);
+  }
+  .card-front {
+    background: var(--warm-white);
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(201,146,42,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(201,146,42,0.04) 0%, transparent 50%);
+  }
+  .card-back {
+    background: var(--parchment);
+    transform: rotateY(180deg);
+  }
+  .card-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 3px;
+    color: var(--gold-dark); margin-bottom: 16px;
+  }
+  .card-main {
+    font-size: 30px; text-align: center; color: var(--ink);
+    font-style: italic; line-height: 1.3;
+  }
+  .card-sub { font-size: 14px; color: var(--ink-light); margin-top: 12px; text-align: center; }
+  .card-image { max-width: 100px; max-height: 80px; object-fit: contain; margin-bottom: 14px; opacity: 0.85; }
+
+  .card-hint {
+    text-align: center; font-size: 12px; color: var(--ink-light);
+    margin-top: 14px; font-style: italic;
+  }
+
+  .card-controls {
+    display: flex; gap: 12px; justify-content: center; margin-top: 22px; flex-wrap: wrap;
+  }
+  .btn {
+    padding: 9px 24px; border-radius: 3px; border: 1.5px solid;
+    font-family: Georgia, serif; font-size: 14px; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--gold); border-color: var(--gold-dark); color: white; }
+  .btn-primary:hover { background: var(--gold-dark); }
+  .btn-secondary { background: var(--warm-white); border-color: var(--border); color: var(--ink-mid); }
+  .btn-secondary:hover { background: var(--parchment); }
+  .btn-success { background: var(--sage); border-color: #2a5038; color: white; }
+  .btn-success:hover { background: #2a5038; }
+  .btn-danger { background: var(--rust); border-color: #7a2c14; color: white; }
+  .btn-danger:hover { background: #7a2c14; }
+
+  .card-counter { text-align: center; color: var(--ink-light); font-size: 13px; margin-top: 16px; }
+  .card-progress { display: flex; gap: 4px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+  .card-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
+  .card-dot.known { background: var(--sage); }
+  .card-dot.learning { background: var(--rust); }
+  .card-dot.current { background: var(--gold); transform: scale(1.3); }
+
+  /* ── QUIZ ── */
+  .quiz-card {
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 5px; padding: 34px 38px;
+    max-width: 620px; margin: 0 auto;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .quiz-q-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); margin-bottom: 14px; }
+  .quiz-question { font-size: 22px; color: var(--ink); margin-bottom: 28px; line-height: 1.4; }
+  .quiz-question img { display: block; max-height: 100px; margin: 10px auto; opacity: 0.8; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    padding: 13px 20px; border: 1.5px solid var(--border);
+    border-radius: 4px; background: var(--warm-white);
+    cursor: pointer; font-family: Georgia, serif; font-size: 15px;
+    color: var(--ink-mid); text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .quiz-opt:hover:not(.disabled) { border-color: var(--gold); background: #fffaef; }
+  .quiz-opt.correct { border-color: var(--sage); background: #eef5f0; color: var(--sage); }
+  .quiz-opt.wrong { border-color: var(--rust); background: #fdf0ed; color: var(--rust); }
+  .quiz-opt.disabled { cursor: default; }
+  .opt-letter {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0; font-style: normal;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .quiz-opt.correct .opt-letter { background: var(--sage); border-color: var(--sage); color: white; }
+  .quiz-opt.wrong .opt-letter { background: var(--rust); border-color: var(--rust); color: white; }
+
+  .quiz-feedback {
+    margin-top: 18px; padding: 14px 18px; border-radius: 4px;
+    font-size: 14px; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: #eef5f0; border: 1px solid var(--sage); color: #2a5038; }
+  .quiz-feedback.wrong { background: #fdf0ed; border: 1px solid var(--rust); color: #7a2c14; }
+
+  .quiz-progress-bar {
+    background: var(--border-light); border-radius: 2px; height: 6px; margin-bottom: 22px;
+  }
+  .quiz-progress-fill { height: 6px; background: var(--gold); border-radius: 2px; transition: width 0.3s; }
+  .quiz-score-line { font-size: 12px; color: var(--ink-light); margin-bottom: 18px; text-align: right; }
+
+  .results-card {
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 5px; padding: 42px; max-width: 520px;
+    margin: 0 auto; text-align: center;
+    box-shadow: 0 6px 24px var(--shadow);
+  }
+  .results-score { font-size: 64px; color: var(--gold); line-height: 1; margin: 16px 0 6px; }
+  .results-label { font-size: 14px; color: var(--ink-light); margin-bottom: 24px; }
+  .results-grade { font-size: 20px; color: var(--ink-mid); font-style: italic; margin-bottom: 28px; }
+
+  /* ── TEST ── */
+  .test-intro {
+    max-width: 560px; background: var(--warm-white);
+    border: 1px solid var(--border); border-radius: 5px;
+    padding: 34px; box-shadow: 0 4px 16px var(--shadow);
+  }
+  .test-intro h2 { font-size: 20px; margin-bottom: 12px; font-style: italic; }
+  .test-intro p { color: var(--ink-light); font-size: 14px; margin-bottom: 20px; line-height: 1.6; }
+  .test-options-list { list-style: none; margin-bottom: 22px; }
+  .test-options-list li {
+    padding: 7px 0; font-size: 14px; color: var(--ink-mid);
+    border-bottom: 1px dashed var(--border-light);
+  }
+  .test-options-list li:before { content: "◆ "; font-size: 8px; color: var(--gold); vertical-align: middle; }
+
+  .test-container { max-width: 640px; }
+  .test-q-block {
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 4px; padding: 24px 28px; margin-bottom: 16px;
+  }
+  .test-q-num { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); margin-bottom: 8px; }
+  .test-q-text { font-size: 17px; color: var(--ink); margin-bottom: 16px; }
+  .test-q-text img { max-height: 70px; display: block; margin: 8px 0; opacity: 0.8; }
+  .test-opts { display: flex; flex-direction: column; gap: 8px; }
+  .test-opt {
+    padding: 10px 16px; border: 1.5px solid var(--border);
+    border-radius: 3px; background: var(--warm-white);
+    cursor: pointer; font-family: Georgia, serif; font-size: 14px;
+    color: var(--ink-mid); text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .test-opt:hover { border-color: var(--gold); background: #fffaef; }
+  .test-opt.selected { border-color: var(--sky); background: #eef3f8; color: var(--sky); }
+  .test-opt.correct { border-color: var(--sage); background: #eef5f0; color: var(--sage); }
+  .test-opt.wrong { border-color: var(--rust); background: #fdf0ed; color: var(--rust); }
+  .test-opt.missed { border-color: var(--sage); background: #eef5f0; color: var(--sage); opacity: 0.7; }
+
+  .test-fill-in input {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border); border-radius: 3px;
+    font-family: Georgia, serif; font-size: 15px;
+    background: var(--warm-white); color: var(--ink);
+    outline: none; transition: border-color 0.15s;
+  }
+  .test-fill-in input:focus { border-color: var(--gold); }
+  .test-fill-in input.correct { border-color: var(--sage); background: #eef5f0; }
+  .test-fill-in input.wrong { border-color: var(--rust); background: #fdf0ed; }
+
+  .test-review-note { font-size: 12px; color: var(--ink-light); margin-top: 6px; font-style: italic; }
+
+  .test-timer {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--ink-mid);
+    background: var(--parchment); border: 1px solid var(--border);
+    padding: 8px 16px; border-radius: 3px; margin-bottom: 22px;
+    width: fit-content;
+  }
+  .test-timer .clock { font-size: 20px; }
+  .test-timer .time-val { font-size: 18px; color: var(--gold-dark); font-style: italic; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(20,12,0,0.5);
+    z-index: 999; display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--warm-white); border: 2px solid var(--border);
+    border-radius: 6px; padding: 36px 42px; max-width: 420px; width: 90%;
+    box-shadow: 0 16px 48px rgba(20,12,0,0.25);
+  }
+  .modal h2 { font-size: 22px; font-style: italic; margin-bottom: 10px; }
+  .modal p { color: var(--ink-light); font-size: 14px; margin-bottom: 22px; }
+  .modal input {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border); border-radius: 3px;
+    font-family: Georgia, serif; font-size: 16px;
+    background: var(--parchment); color: var(--ink);
+    margin-bottom: 18px; outline: none;
+  }
+  .modal input:focus { border-color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    #sidebar { width: 180px; }
+    #main { margin-left: 180px; padding: 20px 18px 48px; }
+    .dash-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── DECORATIVE ── */
+  .divider { border: none; border-top: 1px solid var(--border-light); margin: 28px 0; }
+  .tag {
+    display: inline-block; padding: 2px 10px;
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 11px; color: var(--ink-light); margin-right: 6px;
+  }
+
+  .state-img {
+    width: 80px; height: 60px; object-fit: contain;
+    filter: sepia(0.3) saturate(0.8);
+    display: block; margin: 0 auto 8px;
+  }
+  .root-badge {
+    display: inline-block; padding: 4px 14px;
+    background: var(--gold); color: white;
+    border-radius: 20px; font-size: 14px; font-style: normal;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="emblem">📜</div>
+    <h2>Study</h2>
+  </div>
+  <div id="user-info">
+    <strong>Studying as</strong>
+    <span id="user-name-display" onclick="promptName()" title="Click to change name">—</span>
+  </div>
+  <nav>
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <button class="nav-btn active" onclick="showPage('dashboard')" id="nav-dashboard">
+        <span class="icon">🏠</span> Dashboard
+      </button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">States & Capitals</div>
+      <button class="nav-btn" onclick="showPage('flash','states')" id="nav-flash-states">
+        <span class="icon">🃏</span> Flashcards
+      </button>
+      <button class="nav-btn" onclick="showPage('quiz','states')" id="nav-quiz-states">
+        <span class="icon">❓</span> Quiz
+      </button>
+      <button class="nav-btn" onclick="showPage('test','states')" id="nav-test-states">
+        <span class="icon">📝</span> Test
+      </button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Greek & Latin Roots</div>
+      <button class="nav-btn" onclick="showPage('flash','roots')" id="nav-flash-roots">
+        <span class="icon">🃏</span> Flashcards
+      </button>
+      <button class="nav-btn" onclick="showPage('quiz','roots')" id="nav-quiz-roots">
+        <span class="icon">❓</span> Quiz
+      </button>
+      <button class="nav-btn" onclick="showPage('test','roots')" id="nav-test-roots">
+        <span class="icon">📝</span> Test
+      </button>
+    </div>
+  </nav>
+  <div id="progress-sidebar">
+    <h4>Progress</h4>
+    <div class="prog-row"><span>States</span><span id="prog-states-pct">0%</span></div>
+    <div class="prog-bar-wrap"><div class="prog-bar" id="prog-states-bar" style="width:0%"></div></div>
+    <div class="prog-row"><span>Roots</span><span id="prog-roots-pct">0%</span></div>
+    <div class="prog-bar-wrap"><div class="prog-bar" id="prog-roots-bar" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div id="main">
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="page-dashboard">
+    <div class="dash-greeting" id="dash-greeting">Welcome back.</div>
+    <div class="dash-sub">Here is where you stand today.</div>
+    <div class="dash-grid">
+      <div class="dash-card">
+        <h3>States Known</h3>
+        <div class="big-num" id="dash-states-known">0</div>
+        <div class="num-label">of 50 states & capitals</div>
+      </div>
+      <div class="dash-card">
+        <h3>Roots Known</h3>
+        <div class="big-num" id="dash-roots-known">0</div>
+        <div class="num-label">of <span id="dash-roots-total">—</span> root words</div>
+      </div>
+      <div class="dash-card">
+        <h3>Quiz Best</h3>
+        <div class="big-num" id="dash-quiz-best">—</div>
+        <div class="num-label">highest quiz score</div>
+      </div>
+      <div class="dash-card">
+        <h3>Tests Taken</h3>
+        <div class="big-num" id="dash-tests-taken">0</div>
+        <div class="num-label">total tests completed</div>
+      </div>
+    </div>
+    <div class="work-on-section">
+      <h3>What to Work On</h3>
+      <ul class="work-on-list" id="work-on-list">
+        <li>Start studying to see recommendations. <span class="badge">New</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div class="page" id="page-flash">
+    <div class="section-header">
+      <h1>Flashcards</h1>
+      <div id="flash-topic-display" style="font-size:14px;color:var(--ink-light);font-style:italic;"></div>
+    </div>
+    <div class="flashcard-area">
+      <div class="flashcard-wrap" id="flashcard-wrap" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+          <div class="card-face card-front" id="card-front">
+            <div class="card-label" id="card-front-label">State</div>
+            <img id="card-img" class="card-image" src="" alt="" style="display:none">
+            <div class="card-main" id="card-front-text">—</div>
+            <div class="card-sub" id="card-front-sub"></div>
+          </div>
+          <div class="card-face card-back" id="card-back">
+            <div class="card-label" id="card-back-label">Capital</div>
+            <div class="card-main" id="card-back-text">—</div>
+            <div class="card-sub" id="card-back-sub"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-hint">Click the card to flip • Use arrows to navigate</div>
+    </div>
+    <div class="card-counter"><span id="card-idx">1</span> / <span id="card-total">50</span></div>
+    <div class="card-progress" id="card-progress-dots"></div>
+    <div class="card-controls">
+      <button class="btn btn-secondary" onclick="prevCard()">← Previous</button>
+      <button class="btn btn-danger" onclick="markCard('learning')">Still Learning</button>
+      <button class="btn btn-success" onclick="markCard('known')">Know It ✓</button>
+      <button class="btn btn-secondary" onclick="nextCard()">Next →</button>
+    </div>
+    <div style="text-align:center;margin-top:18px;">
+      <button class="btn btn-secondary" onclick="shuffleCards()">⇄ Shuffle</button>
+      <button class="btn btn-secondary" onclick="resetDeck()">↺ Reset Deck</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="page" id="page-quiz">
+    <div class="section-header">
+      <h1>Quiz</h1>
+      <div id="quiz-topic-display" style="font-size:14px;color:var(--ink-light);font-style:italic;"></div>
+    </div>
+    <div id="quiz-area">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-prog-fill" style="width:0%"></div></div>
+      <div class="quiz-score-line">Score: <span id="quiz-score">0</span> / <span id="quiz-total">10</span></div>
+      <div class="quiz-card">
+        <div class="quiz-q-label">Question <span id="quiz-q-num">1</span></div>
+        <div class="quiz-question" id="quiz-q-text">—</div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+        <div style="margin-top:22px;text-align:right;">
+          <button class="btn btn-primary" id="quiz-next-btn" onclick="nextQuizQ()" style="display:none">Next →</button>
+        </div>
+      </div>
+    </div>
+    <div id="quiz-results" style="display:none">
+      <div class="results-card">
+        <div style="font-size:16px;color:var(--ink-light);">Quiz Complete</div>
+        <div class="results-score" id="res-score">—</div>
+        <div class="results-label">out of <span id="res-total">10</span> questions</div>
+        <div class="results-grade" id="res-grade">—</div>
+        <button class="btn btn-primary" onclick="startQuiz(currentTopic)">Try Again</button>
+        &nbsp;
+        <button class="btn btn-secondary" onclick="showPage('dashboard')">Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div class="page" id="page-test">
+    <div class="section-header">
+      <h1>Test</h1>
+      <div id="test-topic-display" style="font-size:14px;color:var(--ink-light);font-style:italic;"></div>
+    </div>
+    <div id="test-intro-area">
+      <div class="test-intro">
+        <h2 id="test-intro-title">—</h2>
+        <p id="test-intro-desc">—</p>
+        <ul class="test-options-list">
+          <li>Multiple choice & fill-in questions</li>
+          <li>Covers entire topic — no shortcuts</li>
+          <li>Review all answers at the end</li>
+          <li>Wrong answers flagged for future study</li>
+        </ul>
+        <button class="btn btn-primary" onclick="beginTest()">Begin Test</button>
+      </div>
+    </div>
+    <div id="test-area" style="display:none">
+      <div class="test-timer">
+        <span class="clock">⏱</span>
+        <span>Time: </span>
+        <span class="time-val" id="test-timer-val">0:00</span>
+      </div>
+      <div id="test-questions" class="test-container"></div>
+      <div style="margin-top:24px;">
+        <button class="btn btn-primary" onclick="submitTest()">Submit Test</button>
+      </div>
+    </div>
+    <div id="test-results-area" style="display:none">
+      <div class="results-card" style="text-align:left;max-width:620px;">
+        <h2 style="text-align:center;font-style:italic;margin-bottom:6px;">Test Results</h2>
+        <div style="text-align:center;">
+          <div class="results-score" id="test-res-score">—</div>
+          <div class="results-label">out of <span id="test-res-total">—</span></div>
+          <div class="results-grade" id="test-res-grade">—</div>
+        </div>
+        <hr class="divider">
+        <div id="test-review-list"></div>
+        <div style="text-align:center;margin-top:22px;">
+          <button class="btn btn-primary" onclick="beginTest()">Retake Test</button>
+          &nbsp;
+          <button class="btn btn-secondary" onclick="showPage('dashboard')">Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAME MODAL -->
+<div class="modal-overlay" id="name-modal">
+  <div class="modal">
+    <h2>What's your name?</h2>
+    <p>Your progress will be saved locally on this device.</p>
+    <input type="text" id="name-input" placeholder="Enter your name…" maxlength="40" onkeydown="if(event.key==='Enter')saveName()">
+    <button class="btn btn-primary" onclick="saveName()" style="width:100%">Start Studying</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+
+const STATES = [
+  {state:"Alabama",capital:"Montgomery",abbr:"AL",region:"South"},
+  {state:"Alaska",capital:"Juneau",abbr:"AK",region:"West"},
+  {state:"Arizona",capital:"Phoenix",abbr:"AZ",region:"Southwest"},
+  {state:"Arkansas",capital:"Little Rock",abbr:"AR",region:"South"},
+  {state:"California",capital:"Sacramento",abbr:"CA",region:"West"},
+  {state:"Colorado",capital:"Denver",abbr:"CO",region:"West"},
+  {state:"Connecticut",capital:"Hartford",abbr:"CT",region:"Northeast"},
+  {state:"Delaware",capital:"Dover",abbr:"DE",region:"Northeast"},
+  {state:"Florida",capital:"Tallahassee",abbr:"FL",region:"South"},
+  {state:"Georgia",capital:"Atlanta",abbr:"GA",region:"South"},
+  {state:"Hawaii",capital:"Honolulu",abbr:"HI",region:"West"},
+  {state:"Idaho",capital:"Boise",abbr:"ID",region:"West"},
+  {state:"Illinois",capital:"Springfield",abbr:"IL",region:"Midwest"},
+  {state:"Indiana",capital:"Indianapolis",abbr:"IN",region:"Midwest"},
+  {state:"Iowa",capital:"Des Moines",abbr:"IA",region:"Midwest"},
+  {state:"Kansas",capital:"Topeka",abbr:"KS",region:"Midwest"},
+  {state:"Kentucky",capital:"Frankfort",abbr:"KY",region:"South"},
+  {state:"Louisiana",capital:"Baton Rouge",abbr:"LA",region:"South"},
+  {state:"Maine",capital:"Augusta",abbr:"ME",region:"Northeast"},
+  {state:"Maryland",capital:"Annapolis",abbr:"MD",region:"Northeast"},
+  {state:"Massachusetts",capital:"Boston",abbr:"MA",region:"Northeast"},
+  {state:"Michigan",capital:"Lansing",abbr:"MI",region:"Midwest"},
+  {state:"Minnesota",capital:"Saint Paul",abbr:"MN",region:"Midwest"},
+  {state:"Mississippi",capital:"Jackson",abbr:"MS",region:"South"},
+  {state:"Missouri",capital:"Jefferson City",abbr:"MO",region:"Midwest"},
+  {state:"Montana",capital:"Helena",abbr:"MT",region:"West"},
+  {state:"Nebraska",capital:"Lincoln",abbr:"NE",region:"Midwest"},
+  {state:"Nevada",capital:"Carson City",abbr:"NV",region:"West"},
+  {state:"New Hampshire",capital:"Concord",abbr:"NH",region:"Northeast"},
+  {state:"New Jersey",capital:"Trenton",abbr:"NJ",region:"Northeast"},
+  {state:"New Mexico",capital:"Santa Fe",abbr:"NM",region:"Southwest"},
+  {state:"New York",capital:"Albany",abbr:"NY",region:"Northeast"},
+  {state:"North Carolina",capital:"Raleigh",abbr:"NC",region:"South"},
+  {state:"North Dakota",capital:"Bismarck",abbr:"ND",region:"Midwest"},
+  {state:"Ohio",capital:"Columbus",abbr:"OH",region:"Midwest"},
+  {state:"Oklahoma",capital:"Oklahoma City",abbr:"OK",region:"South"},
+  {state:"Oregon",capital:"Salem",abbr:"OR",region:"West"},
+  {state:"Pennsylvania",capital:"Harrisburg",abbr:"PA",region:"Northeast"},
+  {state:"Rhode Island",capital:"Providence",abbr:"RI",region:"Northeast"},
+  {state:"South Carolina",capital:"Columbia",abbr:"SC",region:"South"},
+  {state:"South Dakota",capital:"Pierre",abbr:"SD",region:"Midwest"},
+  {state:"Tennessee",capital:"Nashville",abbr:"TN",region:"South"},
+  {state:"Texas",capital:"Austin",abbr:"TX",region:"South"},
+  {state:"Utah",capital:"Salt Lake City",abbr:"UT",region:"West"},
+  {state:"Vermont",capital:"Montpelier",abbr:"VT",region:"Northeast"},
+  {state:"Virginia",capital:"Richmond",abbr:"VA",region:"South"},
+  {state:"Washington",capital:"Olympia",abbr:"WA",region:"West"},
+  {state:"West Virginia",capital:"Charleston",abbr:"WV",region:"South"},
+  {state:"Wisconsin",capital:"Madison",abbr:"WI",region:"Midwest"},
+  {state:"Wyoming",capital:"Cheyenne",abbr:"WY",region:"West"}
+];
+
+const ROOTS = [
+  {root:"aqu",origin:"Latin",meaning:"water",examples:["aquarium","aquatic","aqueduct"]},
+  {root:"aud",origin:"Latin",meaning:"hear",examples:["audible","audience","auditorium"]},
+  {root:"bene",origin:"Latin",meaning:"good, well",examples:["benefit","benefactor","benevolent"]},
+  {root:"bio",origin:"Greek",meaning:"life",examples:["biology","biography","biome"]},
+  {root:"cap/cept",origin:"Latin",meaning:"take, seize",examples:["capture","receptive","intercept"]},
+  {root:"chron",origin:"Greek",meaning:"time",examples:["chronology","chronic","synchronize"]},
+  {root:"dict",origin:"Latin",meaning:"say, speak",examples:["dictate","predict","verdict"]},
+  {root:"duc/duct",origin:"Latin",meaning:"lead",examples:["conduct","induce","deduct"]},
+  {root:"fac/fact",origin:"Latin",meaning:"make, do",examples:["factory","manufacture","artifact"]},
+  {root:"geo",origin:"Greek",meaning:"earth",examples:["geology","geography","geometry"]},
+  {root:"graph/gram",origin:"Greek",meaning:"write",examples:["paragraph","telegram","autograph"]},
+  {root:"hetero",origin:"Greek",meaning:"different",examples:["heterogeneous","heteronym","heterodox"]},
+  {root:"homo",origin:"Greek",meaning:"same",examples:["homophone","homogeneous","homonym"]},
+  {root:"hydr",origin:"Greek",meaning:"water",examples:["hydrant","hydraulic","dehydrate"]},
+  {root:"log/logue",origin:"Greek",meaning:"word, study",examples:["biology","dialogue","epilogue"]},
+  {root:"luc/lum",origin:"Latin",meaning:"light",examples:["lucid","illuminate","translucent"]},
+  {root:"mal",origin:"Latin",meaning:"bad",examples:["malicious","malfunction","malady"]},
+  {root:"man/manu",origin:"Latin",meaning:"hand",examples:["manual","manuscript","manipulate"]},
+  {root:"mega",origin:"Greek",meaning:"large",examples:["megaphone","megabyte","megalopolis"]},
+  {root:"micro",origin:"Greek",meaning:"small",examples:["microscope","microphone","microbiology"]},
+  {root:"mit/miss",origin:"Latin",meaning:"send",examples:["transmit","missile","dismiss"]},
+  {root:"morph",origin:"Greek",meaning:"form, shape",examples:["morphology","metamorphosis","amorphous"]},
+  {root:"multi",origin:"Latin",meaning:"many",examples:["multiply","multicolor","multitask"]},
+  {root:"nat/nasc",origin:"Latin",meaning:"born",examples:["native","natural","prenatal"]},
+  {root:"neg",origin:"Latin",meaning:"not, deny",examples:["negative","negate","neglect"]},
+  {root:"omni",origin:"Latin",meaning:"all",examples:["omnivore","omnipotent","omniscient"]},
+  {root:"pan",origin:"Greek",meaning:"all",examples:["pandemic","panorama","pantheon"]},
+  {root:"path",origin:"Greek",meaning:"feeling, disease",examples:["empathy","pathology","sympathy"]},
+  {root:"ped/pod",origin:"Greek/Latin",meaning:"foot",examples:["pedestrian","podium","expedition"]},
+  {root:"phil",origin:"Greek",meaning:"love",examples:["philosophy","philanthropy","bibliophile"]},
+  {root:"phon",origin:"Greek",meaning:"sound",examples:["phonics","microphone","symphony"]},
+  {root:"photo",origin:"Greek",meaning:"light",examples:["photograph","photosynthesis","photon"]},
+  {root:"port",origin:"Latin",meaning:"carry",examples:["transport","portable","export"]},
+  {root:"psych",origin:"Greek",meaning:"mind",examples:["psychology","psychic","psychiatry"]},
+  {root:"rupt",origin:"Latin",meaning:"break",examples:["disrupt","rupture","interrupt"]},
+  {root:"scrib/script",origin:"Latin",meaning:"write",examples:["describe","manuscript","inscription"]},
+  {root:"sect",origin:"Latin",meaning:"cut",examples:["dissect","section","intersect"]},
+  {root:"sol",origin:"Latin",meaning:"sun",examples:["solar","solstice","parasol"]},
+  {root:"spec/spect",origin:"Latin",meaning:"see, look",examples:["spectacle","inspect","perspective"]},
+  {root:"struct",origin:"Latin",meaning:"build",examples:["structure","construct","instruct"]},
+  {root:"tele",origin:"Greek",meaning:"far",examples:["telephone","telescope","television"]},
+  {root:"terr",origin:"Latin",meaning:"earth, land",examples:["territory","terrain","terrestrial"]},
+  {root:"therm",origin:"Greek",meaning:"heat",examples:["thermometer","thermostat","thermal"]},
+  {root:"tract",origin:"Latin",meaning:"pull, drag",examples:["traction","attract","extract"]},
+  {root:"uni",origin:"Latin",meaning:"one",examples:["uniform","unify","unique"]},
+  {root:"ver/veri",origin:"Latin",meaning:"truth",examples:["verify","verdict","verity"]},
+  {root:"vid/vis",origin:"Latin",meaning:"see",examples:["video","vision","visible"]},
+  {root:"vit/viv",origin:"Latin",meaning:"life",examples:["vital","vivid","survive"]},
+  {root:"voc/voke",origin:"Latin",meaning:"voice, call",examples:["vocal","invoke","provoke"]},
+  {root:"zoo",origin:"Greek",meaning:"animal",examples:["zoology","zodiac","protozoa"]}
+];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let progress = {
+  statesKnown: {},      // abbr -> true/false
+  rootsKnown: {},       // root -> true/false
+  statesErrors: {},     // abbr -> count
+  rootsErrors: {},      // root -> count
+  quizBest: null,
+  testsTaken: 0,
+  lastStudied: null
+};
+let userName = '';
+let currentTopic = 'states';
+let currentPage = 'dashboard';
+
+// flashcard state
+let deck = [];
+let deckIdx = 0;
+let cardFlipped = false;
+
+// quiz state
+let quizItems = [];
+let quizIdx = 0;
+let quizCorrect = 0;
+let quizAnswered = false;
+
+// test state
+let testItems = [];
+let testAnswers = {};
+let testTimer = null;
+let testSeconds = 0;
+let testTopicLocal = 'states';
+
+// ══════════════════════════════════════════
+// STORAGE
+// ══════════════════════════════════════════
+function saveData() {
+  localStorage.setItem('study_progress', JSON.stringify(progress));
+  localStorage.setItem('study_name', userName);
+}
+function loadData() {
+  const p = localStorage.getItem('study_progress');
+  if (p) { try { progress = Object.assign(progress, JSON.parse(p)); } catch(e){} }
+  const n = localStorage.getItem('study_name');
+  if (n) { userName = n; }
+}
+
+// ══════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════
+function showPage(page, topic) {
+  if (topic) currentTopic = topic;
+  currentPage = page;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  const pageEl = document.getElementById('page-' + page);
+  if (pageEl) pageEl.classList.add('active');
+
+  const navId = topic ? `nav-${page}-${topic}` : `nav-${page}`;
+  const navEl = document.getElementById(navId);
+  if (navEl) navEl.classList.add('active');
+
+  if (page === 'dashboard') renderDashboard();
+  else if (page === 'flash') initFlashcards(topic);
+  else if (page === 'quiz') { document.getElementById('quiz-results').style.display='none'; document.getElementById('quiz-area').style.display=''; startQuiz(topic); }
+  else if (page === 'test') initTestPage(topic);
+}
+
+// ══════════════════════════════════════════
+// USER NAME
+// ══════════════════════════════════════════
+function promptName() {
+  document.getElementById('name-input').value = userName || '';
+  document.getElementById('name-modal').classList.add('show');
+  setTimeout(()=>document.getElementById('name-input').focus(),100);
+}
+function saveName() {
+  const v = document.getElementById('name-input').value.trim();
+  if (!v) return;
+  userName = v;
+  saveData();
+  document.getElementById('name-modal').classList.remove('show');
+  updateUserUI();
+}
+function updateUserUI() {
+  document.getElementById('user-name-display').textContent = userName || '—';
+  document.getElementById('dash-greeting').textContent = userName ? `Welcome back, ${userName}.` : 'Welcome back.';
+}
+
+// ══════════════════════════════════════════
+// PROGRESS UI
+// ══════════════════════════════════════════
+function updateProgressUI() {
+  const sKnown = Object.values(progress.statesKnown).filter(Boolean).length;
+  const rKnown = Object.values(progress.rootsKnown).filter(Boolean).length;
+  const sPct = Math.round(sKnown/50*100);
+  const rPct = Math.round(rKnown/ROOTS.length*100);
+
+  document.getElementById('prog-states-pct').textContent = sPct+'%';
+  document.getElementById('prog-roots-pct').textContent = rPct+'%';
+  document.getElementById('prog-states-bar').style.width = sPct+'%';
+  document.getElementById('prog-roots-bar').style.width = rPct+'%';
+
+  document.getElementById('dash-states-known').textContent = sKnown;
+  document.getElementById('dash-roots-known').textContent = rKnown;
+  document.getElementById('dash-roots-total').textContent = ROOTS.length;
+  document.getElementById('dash-quiz-best').textContent = progress.quizBest !== null ? progress.quizBest+'%' : '—';
+  document.getElementById('dash-tests-taken').textContent = progress.testsTaken;
+}
+
+function renderDashboard() {
+  updateUserUI();
+  updateProgressUI();
+  renderWorkOn();
+}
+
+function renderWorkOn() {
+  const list = document.getElementById('work-on-list');
+  const items = [];
+
+  // States with errors
+  const stateErrors = Object.entries(progress.statesErrors).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  stateErrors.forEach(([abbr,ct])=>{
+    const s = STATES.find(x=>x.abbr===abbr);
+    if (s) items.push({label:`${s.state} → ${s.capital}`, sub:'State & Capital', count:ct, type:'state'});
+  });
+
+  // Roots with errors
+  const rootErrors = Object.entries(progress.rootsErrors).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  rootErrors.forEach(([root,ct])=>{
+    const r = ROOTS.find(x=>x.root===root);
+    if (r) items.push({label:`"${r.root}" — ${r.meaning}`, sub:'Latin/Greek Root', count:ct, type:'root'});
+  });
+
+  // States not yet marked known
+  const unknownStates = STATES.filter(s=>!progress.statesKnown[s.abbr]).slice(0,2);
+  unknownStates.forEach(s=>{
+    if (!items.find(i=>i.label===`${s.state} → ${s.capital}`))
+      items.push({label:`${s.state} → ${s.capital}`, sub:'Not yet studied', count:0, type:'state'});
+  });
+
+  if (items.length === 0) {
+    list.innerHTML = '<li>Great job! Keep reviewing to stay sharp. <span class="badge">✓</span></li>';
+    return;
+  }
+  list.innerHTML = items.slice(0,6).map(i=>`
+    <li>
+      <span>
+        <strong>${i.label}</strong>
+        <span style="font-size:12px;color:var(--ink-light);display:block;">${i.sub}</span>
+      </span>
+      ${i.count>0 ? `<span class="badge">Missed ${i.count}×</span>` : '<span class="badge" style="background:var(--sky)">Study</span>'}
+    </li>
+  `).join('');
+}
+
+// ══════════════════════════════════════════
+// FLASHCARDS
+// ══════════════════════════════════════════
+function initFlashcards(topic) {
+  if (topic === 'states') {
+    deck = STATES.map((s,i)=>({...s, _id: s.abbr, _i: i}));
+    document.getElementById('flash-topic-display').textContent = 'US States & Capitals';
+  } else {
+    deck = ROOTS.map((r,i)=>({...r, _id: r.root, _i: i}));
+    document.getElementById('flash-topic-display').textContent = 'Greek & Latin Root Words';
+  }
+  deckIdx = 0;
+  renderCard();
+  buildDots();
+}
+
+function renderCard() {
+  const item = deck[deckIdx];
+  const isState = currentTopic === 'states';
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  cardFlipped = false;
+
+  if (isState) {
+    document.getElementById('card-front-label').textContent = 'State';
+    document.getElementById('card-front-text').textContent = item.state;
+    document.getElementById('card-front-sub').textContent = item.abbr + ' · ' + item.region;
+    document.getElementById('card-back-label').textContent = 'Capital';
+    document.getElementById('card-back-text').textContent = item.capital;
+    document.getElementById('card-back-sub').textContent = '';
+    // Flag emoji
+    const img = document.getElementById('card-img');
+    img.src = `https://flagcdn.com/w80/us-${item.abbr.toLowerCase()}.png`;
+    img.alt = item.state + ' flag';
+    img.style.display = 'block';
+    img.onerror = ()=>img.style.display='none';
+  } else {
+    document.getElementById('card-front-label').textContent = item.origin + ' Root';
+    document.getElementById('card-front-text').textContent = item.root;
+    document.getElementById('card-front-sub').textContent = '';
+    document.getElementById('card-back-label').textContent = 'Meaning & Examples';
+    document.getElementById('card-back-text').textContent = item.meaning;
+    document.getElementById('card-back-sub').textContent = item.examples.join(', ');
+    document.getElementById('card-img').style.display = 'none';
+  }
+
+  document.getElementById('card-idx').textContent = deckIdx+1;
+  document.getElementById('card-total').textContent = deck.length;
+  updateDots();
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+  cardFlipped = !cardFlipped;
+}
+
+function prevCard() {
+  if (deckIdx > 0) { deckIdx--; renderCard(); }
+}
+function nextCard() {
+  if (deckIdx < deck.length-1) { deckIdx++; renderCard(); }
+}
+
+function markCard(status) {
+  const item = deck[deckIdx];
+  const id = item._id || item.root || item.abbr;
+  if (currentTopic === 'states') {
+    progress.statesKnown[item.abbr] = (status === 'known');
+  } else {
+    progress.rootsKnown[item.root] = (status === 'known');
+  }
+  saveData();
+  updateProgressUI();
+  updateDots();
+  if (deckIdx < deck.length-1) { deckIdx++; renderCard(); }
+}
+
+function shuffleCards() {
+  for (let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
+  deckIdx = 0; renderCard(); buildDots();
+}
+
+function resetDeck() {
+  if (currentTopic === 'states') { progress.statesKnown = {}; }
+  else { progress.rootsKnown = {}; }
+  saveData(); updateProgressUI();
+  deckIdx = 0; renderCard(); buildDots();
+}
+
+function buildDots() {
+  const wrap = document.getElementById('card-progress-dots');
+  wrap.innerHTML = deck.map((_,i)=>`<div class="card-dot" id="dot-${i}"></div>`).join('');
+}
+
+function updateDots() {
+  deck.forEach((item,i)=>{
+    const dot = document.getElementById('dot-'+i);
+    if (!dot) return;
+    const known = currentTopic==='states' ? progress.statesKnown[item.abbr] : progress.rootsKnown[item.root];
+    dot.className = 'card-dot' + (i===deckIdx?' current':known===true?' known':known===false?' learning':'');
+  });
+}
+
+// ══════════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════════
+function startQuiz(topic) {
+  currentTopic = topic;
+  document.getElementById('quiz-topic-display').textContent = topic==='states'?'US States & Capitals':'Greek & Latin Roots';
+  quizIdx = 0; quizCorrect = 0;
+  quizAnswered = false;
+
+  // Build 10 random questions
+  const pool = topic==='states' ? [...STATES] : [...ROOTS];
+  shuffle(pool);
+  quizItems = pool.slice(0,10);
+
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-area').style.display = '';
+  document.getElementById('quiz-score').textContent = 0;
+  document.getElementById('quiz-total').textContent = quizItems.length;
+  renderQuizQ();
+}
+
+function renderQuizQ() {
+  const item = quizItems[quizIdx];
+  const isState = currentTopic === 'states';
+  quizAnswered = false;
+
+  document.getElementById('quiz-q-num').textContent = quizIdx+1;
+  document.getElementById('quiz-next-btn').style.display = 'none';
+  document.getElementById('quiz-feedback').className = 'quiz-feedback';
+  document.getElementById('quiz-feedback').textContent = '';
+
+  const progFill = document.getElementById('quiz-prog-fill');
+  progFill.style.width = (quizIdx/quizItems.length*100)+'%';
+
+  let question, correct, distractors;
+  if (isState) {
+    const flip = Math.random() > 0.5;
+    if (flip) {
+      question = `What is the capital of <strong>${item.state}</strong>?`;
+      correct = item.capital;
+      distractors = STATES.filter(s=>s.abbr!==item.abbr).map(s=>s.capital);
+    } else {
+      question = `<strong>${item.capital}</strong> is the capital of which state?`;
+      correct = item.state;
+      distractors = STATES.filter(s=>s.abbr!==item.abbr).map(s=>s.state);
+    }
+  } else {
+    const flip = Math.random() > 0.5;
+    if (flip) {
+      question = `What does the root <strong>"${item.root}"</strong> mean?`;
+      correct = item.meaning;
+      distractors = ROOTS.filter(r=>r.root!==item.root).map(r=>r.meaning);
+    } else {
+      question = `Which root means <strong>"${item.meaning}"</strong>?`;
+      correct = item.root;
+      distractors = ROOTS.filter(r=>r.root!==item.root).map(r=>r.root);
+    }
+  }
+
+  // Pick 3 distractors
+  shuffle(distractors);
+  const options = [correct, ...distractors.slice(0,3)];
+  shuffle(options);
+
+  document.getElementById('quiz-q-text').innerHTML = question;
+  const letters = ['A','B','C','D'];
+  document.getElementById('quiz-options').innerHTML = options.map((opt,i)=>`
+    <button class="quiz-opt" onclick="answerQuiz(this,'${esc(opt)}','${esc(correct)}')">
+      <span class="opt-letter">${letters[i]}</span>${opt}
+    </button>
+  `).join('');
+}
+
+function esc(s){ return String(s).replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
+
+function answerQuiz(btn, chosen, correct) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const item = quizItems[quizIdx];
+  const isCorrect = chosen === correct;
+
+  document.querySelectorAll('.quiz-opt').forEach(b=>{
+    b.classList.add('disabled');
+    const txt = b.textContent.trim().replace(/^[A-D]/,'').trim();
+    if (txt === correct) b.classList.add('correct');
+  });
+  if (!isCorrect) { btn.classList.add('wrong'); }
+
+  // Track errors
+  if (!isCorrect) {
+    if (currentTopic==='states') {
+      progress.statesErrors[item.abbr] = (progress.statesErrors[item.abbr]||0)+1;
+    } else {
+      progress.rootsErrors[item.root] = (progress.rootsErrors[item.root]||0)+1;
+    }
+  } else {
+    quizCorrect++;
+    document.getElementById('quiz-score').textContent = quizCorrect;
+  }
+
+  const fb = document.getElementById('quiz-feedback');
+  fb.className = 'quiz-feedback show ' + (isCorrect?'correct':'wrong');
+  if (isCorrect) {
+    fb.textContent = '✓ Correct!';
+  } else {
+    fb.textContent = isCorrect ? '' : `✗ The correct answer is: ${correct}`;
+  }
+
+  saveData();
+  document.getElementById('quiz-next-btn').style.display = 'inline-block';
+}
+
+function nextQuizQ() {
+  quizIdx++;
+  if (quizIdx >= quizItems.length) {
+    endQuiz();
+  } else {
+    renderQuizQ();
+  }
+}
+
+function endQuiz() {
+  const pct = Math.round(quizCorrect/quizItems.length*100);
+  if (progress.quizBest === null || pct > progress.quizBest) {
+    progress.quizBest = pct;
+  }
+  saveData();
+  updateProgressUI();
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('quiz-results').style.display = '';
+  document.getElementById('res-score').textContent = quizCorrect + '/' + quizItems.length;
+  document.getElementById('res-total').textContent = quizItems.length;
+  document.getElementById('res-grade').textContent = gradeText(pct);
+  document.getElementById('quiz-prog-fill').style.width = '100%';
+}
+
+function gradeText(pct) {
+  if (pct===100) return '★ Perfect Score ★';
+  if (pct>=90) return 'Excellent — ' + pct + '%';
+  if (pct>=80) return 'Good — ' + pct + '%';
+  if (pct>=70) return 'Fair — ' + pct + '%';
+  if (pct>=60) return 'Needs Work — ' + pct + '%';
+  return 'Keep Studying — ' + pct + '%';
+}
+
+// ══════════════════════════════════════════
+// TEST
+// ══════════════════════════════════════════
+function initTestPage(topic) {
+  testTopicLocal = topic;
+  document.getElementById('test-topic-display').textContent = topic==='states'?'US States & Capitals':'Greek & Latin Roots';
+  document.getElementById('test-intro-title').textContent = topic==='states' ? 'States & Capitals Test' : 'Greek & Latin Roots Test';
+  document.getElementById('test-intro-desc').textContent = topic==='states'
+    ? 'A comprehensive test covering all 50 US states and their capitals. Questions include multiple choice and fill-in-the-blank.'
+    : `A comprehensive test covering all ${ROOTS.length} Greek and Latin roots. Questions include meaning identification and example recognition.`;
+
+  document.getElementById('test-intro-area').style.display = '';
+  document.getElementById('test-area').style.display = 'none';
+  document.getElementById('test-results-area').style.display = 'none';
+  if (testTimer) clearInterval(testTimer);
+}
+
+function beginTest() {
+  testAnswers = {};
+  testSeconds = 0;
+  document.getElementById('test-intro-area').style.display = 'none';
+  document.getElementById('test-area').style.display = '';
+  document.getElementById('test-results-area').style.display = 'none';
+
+  const pool = testTopicLocal==='states' ? [...STATES] : [...ROOTS];
+  shuffle(pool);
+  testItems = pool;
+
+  buildTestQuestions();
+  startTestTimer();
+}
+
+function buildTestQuestions() {
+  const container = document.getElementById('test-questions');
+  container.innerHTML = '';
+
+  testItems.forEach((item, idx) => {
+    const isState = testTopicLocal === 'states';
+    const block = document.createElement('div');
+    block.className = 'test-q-block';
+    block.id = 'tq-'+idx;
+
+    const num = document.createElement('div');
+    num.className = 'test-q-num';
+    num.textContent = `Question ${idx+1}`;
+    block.appendChild(num);
+
+    const useMultiChoice = idx % 3 !== 2; // every 3rd is fill-in
+
+    let questionHTML, correct, options;
+    if (isState) {
+      const flip = idx % 2 === 0;
+      if (flip) {
+        questionHTML = `What is the capital of <strong>${item.state}</strong>?`;
+        correct = item.capital;
+        if (useMultiChoice) {
+          const d = STATES.filter(s=>s.abbr!==item.abbr).map(s=>s.capital);
+          shuffle(d);
+          options = [correct, ...d.slice(0,3)];
+          shuffle(options);
+        }
+      } else {
+        questionHTML = `<strong>${item.capital}</strong> is the capital of which state?`;
+        correct = item.state;
+        if (useMultiChoice) {
+          const d = STATES.filter(s=>s.abbr!==item.abbr).map(s=>s.state);
+          shuffle(d);
+          options = [correct, ...d.slice(0,3)];
+          shuffle(options);
+        }
+      }
+    } else {
+      const flip = idx % 2 === 0;
+      if (flip) {
+        questionHTML = `What does the root <strong>"${item.root}"</strong> mean?`;
+        correct = item.meaning;
+        if (useMultiChoice) {
+          const d = ROOTS.filter(r=>r.root!==item.root).map(r=>r.meaning);
+          shuffle(d);
+          options = [correct, ...d.slice(0,3)];
+          shuffle(options);
+        }
+      } else {
+        questionHTML = `Which root means <strong>"${item.meaning}"</strong>? (from ${item.origin})`;
+        correct = item.root;
+        if (useMultiChoice) {
+          const d = ROOTS.filter(r=>r.root!==item.root).map(r=>r.root);
+          shuffle(d);
+          options = [correct, ...d.slice(0,3)];
+          shuffle(options);
+        }
+      }
+    }
+
+    const qText = document.createElement('div');
+    qText.className = 'test-q-text';
+    qText.innerHTML = questionHTML;
+    block.appendChild(qText);
+
+    if (useMultiChoice) {
+      const optsWrap = document.createElement('div');
+      optsWrap.className = 'test-opts';
+      options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'test-opt';
+        b.textContent = opt;
+        b.dataset.val = opt;
+        b.dataset.correct = correct;
+        b.dataset.idx = idx;
+        b.onclick = function(){
+          block.querySelectorAll('.test-opt').forEach(x=>x.classList.remove('selected'));
+          this.classList.add('selected');
+          testAnswers[idx] = {val: opt, correct};
+        };
+        optsWrap.appendChild(b);
+      });
+      block.appendChild(optsWrap);
+    } else {
+      const fillWrap = document.createElement('div');
+      fillWrap.className = 'test-fill-in';
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.placeholder = 'Type your answer…';
+      inp.dataset.idx = idx;
+      inp.dataset.correct = correct;
+      inp.oninput = function(){
+        testAnswers[idx] = {val: this.value.trim(), correct};
+      };
+      fillWrap.appendChild(inp);
+      block.appendChild(fillWrap);
+    }
+
+    container.appendChild(block);
+  });
+}
+
+function submitTest() {
+  if (testTimer) clearInterval(testTimer);
+  let correct = 0;
+  const reviewLines = [];
+
+  testItems.forEach((item, idx)=>{
+    const ans = testAnswers[idx];
+    const block = document.getElementById('tq-'+idx);
+    const correctVal = block ? block.querySelector('[data-correct]')?.dataset.correct : '';
+    const val = ans ? ans.val : '';
+    const isCorrect = val.toLowerCase().trim() === (ans?.correct||'').toLowerCase().trim();
+
+    if (isCorrect) {
+      correct++;
+      if (testTopicLocal==='states') progress.statesKnown[item.abbr] = true;
+      else progress.rootsKnown[item.root] = true;
+    } else {
+      if (testTopicLocal==='states') progress.statesErrors[item.abbr] = (progress.statesErrors[item.abbr]||0)+1;
+      else progress.rootsErrors[item.root] = (progress.rootsErrors[item.root]||0)+1;
+    }
+
+    // Highlight answers
+    if (block) {
+      const opts = block.querySelectorAll('.test-opt');
+      opts.forEach(o=>{
+        if (o.dataset.val === ans?.correct) o.classList.add('correct');
+        else if (o.classList.contains('selected') && !isCorrect) o.classList.add('wrong');
+      });
+      const inp = block.querySelector('input');
+      if (inp) {
+        inp.readOnly = true;
+        inp.classList.add(isCorrect?'correct':'wrong');
+        if (!isCorrect) {
+          const note = document.createElement('div');
+          note.className = 'test-review-note';
+          note.textContent = 'Correct: ' + ans?.correct;
+          inp.parentNode.appendChild(note);
+        }
+      }
+    }
+
+    reviewLines.push({q: idx+1, isCorrect, given: val || '(no answer)', correct: ans?.correct || ''});
+  });
+
+  progress.testsTaken++;
+  saveData();
+  updateProgressUI();
+
+  const pct = Math.round(correct/testItems.length*100);
+  document.getElementById('test-area').style.display = 'none';
+  document.getElementById('test-results-area').style.display = '';
+  document.getElementById('test-res-score').textContent = correct + '/' + testItems.length;
+  document.getElementById('test-res-total').textContent = testItems.length;
+  document.getElementById('test-res-grade').textContent = gradeText(pct);
+
+  const rl = document.getElementById('test-review-list');
+  const wrong = reviewLines.filter(r=>!r.isCorrect);
+  if (wrong.length === 0) {
+    rl.innerHTML = '<p style="color:var(--sage);font-style:italic;">All answers correct — outstanding work.</p>';
+  } else {
+    rl.innerHTML = `<p style="font-size:13px;color:var(--ink-light);margin-bottom:12px;">Incorrect answers (${wrong.length}):</p>` +
+      wrong.map(r=>`
+        <div style="padding:9px 14px;background:#fdf0ed;border-left:3px solid var(--rust);margin-bottom:8px;border-radius:2px;font-size:13px;">
+          <strong>Q${r.q}.</strong> You wrote: <em>"${r.given}"</em> · Correct: <strong>${r.correct}</strong>
+        </div>
+      `).join('');
+  }
+}
+
+function startTestTimer() {
+  testSeconds = 0;
+  document.getElementById('test-timer-val').textContent = '0:00';
+  testTimer = setInterval(()=>{
+    testSeconds++;
+    const m = Math.floor(testSeconds/60);
+    const s = testSeconds%60;
+    document.getElementById('test-timer-val').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  }, 1000);
+}
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+function shuffle(arr) {
+  for (let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
+// Keyboard nav for flashcards
+document.addEventListener('keydown', e => {
+  if (currentPage !== 'flash') return;
+  if (e.key === 'ArrowRight') nextCard();
+  else if (e.key === 'ArrowLeft') prevCard();
+  else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+  else if (e.key === 'k' || e.key === 'K') markCard('known');
+  else if (e.key === 'l' || e.key === 'L') markCard('learning');
+});
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+(function init() {
+  loadData();
+  if (!userName) {
+    document.getElementById('name-modal').classList.add('show');
+    setTimeout(()=>document.getElementById('name-input').focus(),200);
+  } else {
+    updateUserUI();
+  }
+  renderDashboard();
+  updateProgressUI();
+})();
+</script>
+</body>
+</html>
