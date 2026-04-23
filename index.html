@@ -221,6 +221,62 @@ nav{flex:1;padding:10px 0 6px;}
 .md input:focus{border-color:var(--gold);}
 hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
 
+/* ── CUSTOM DECKS ── */
+.cd-page-layout{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start;}
+.cd-deck-panel{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:0;box-shadow:0 2px 10px var(--sh);overflow:hidden;}
+.cd-panel-head{padding:16px 18px;border-bottom:1px solid var(--bdrl);display:flex;align-items:center;justify-content:space-between;}
+.cd-panel-head h4{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);font-weight:600;}
+.cd-deck-list{list-style:none;max-height:480px;overflow-y:auto;}
+.cd-deck-list::-webkit-scrollbar{width:4px;}
+.cd-deck-list::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px;}
+.cd-deck-item{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;border-bottom:1px solid var(--bdrl);border-left:3px solid transparent;transition:background .12s,border-color .12s;}
+.cd-deck-item:hover{background:var(--p);}
+.cd-deck-item.active{background:var(--gll);border-left-color:var(--gold);}
+.cd-deck-item .dk-icon{font-size:20px;flex-shrink:0;}
+.cd-deck-item .dk-info{flex:1;min-width:0;}
+.cd-deck-item .dk-name{font-size:14px;color:var(--ink);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cd-deck-item .dk-count{font-size:11px;color:var(--iv);}
+.cd-deck-item .dk-del{opacity:0;font-size:16px;color:var(--rust);cursor:pointer;padding:2px 4px;border-radius:2px;transition:opacity .13s;flex-shrink:0;background:none;border:none;font-family:inherit;}
+.cd-deck-item:hover .dk-del{opacity:1;}
+.cd-deck-item .dk-del:hover{background:#fdf0ed;}
+.cd-empty{padding:24px 18px;text-align:center;font-size:13px;color:var(--iv);font-style:italic;}
+.cd-right{}
+.cd-editor{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:26px 28px;box-shadow:0 2px 10px var(--sh);margin-bottom:20px;}
+.cd-editor h3{font-size:18px;font-style:italic;margin-bottom:18px;color:var(--ink);}
+.cd-field{margin-bottom:16px;}
+.cd-field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--gd);margin-bottom:5px;font-weight:600;}
+.cd-field input,.cd-field textarea{width:100%;padding:10px 14px;border:1.5px solid var(--bdr);border-radius:4px;font-family:'EB Garamond',Georgia,serif;font-size:15px;background:var(--p);color:var(--ink);outline:none;transition:border-color .13s;resize:vertical;}
+.cd-field input:focus,.cd-field textarea:focus{border-color:var(--gold);background:var(--w);}
+.cd-field textarea{min-height:80px;}
+.cd-field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cd-cards-list{background:var(--w);border:1px solid var(--bdr);border-radius:6px;box-shadow:0 2px 10px var(--sh);overflow:hidden;}
+.cd-cards-head{padding:14px 18px;border-bottom:1px solid var(--bdrl);display:flex;align-items:center;justify-content:space-between;}
+.cd-cards-head h4{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);font-weight:600;}
+.cd-card-row{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--bdrl);transition:background .12s;}
+.cd-card-row:hover{background:var(--p);}
+.cd-card-row:last-child{border-bottom:none;}
+.cd-card-front{flex:1;font-size:14px;color:var(--ink);font-style:italic;}
+.cd-card-back{flex:1;font-size:14px;color:var(--il);}
+.cd-card-actions{display:flex;gap:6px;flex-shrink:0;}
+.cd-act-btn{background:none;border:1px solid var(--bdrl);border-radius:3px;padding:4px 9px;font-size:12px;cursor:pointer;font-family:'EB Garamond',Georgia,serif;color:var(--im);transition:all .12s;}
+.cd-act-btn:hover{border-color:var(--gold);background:var(--gll);}
+.cd-act-btn.del:hover{border-color:var(--rust);background:#fdf0ed;color:var(--rust);}
+.cd-no-cards{padding:28px;text-align:center;font-size:13px;color:var(--iv);font-style:italic;}
+/* custom study view */
+.cd-study-wrap{}
+.cd-study-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;}
+.cd-study-header h2{font-size:20px;font-style:italic;}
+/* deck name input modal piece */
+.md-sm{background:var(--w);border:2px solid var(--bdr);border-radius:8px;padding:30px 36px;max-width:380px;width:92%;box-shadow:0 20px 56px rgba(20,10,0,.28);}
+.md-sm h2{font-size:20px;font-style:italic;margin-bottom:18px;}
+.md-sm .cd-field{margin-bottom:14px;}
+.color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .13s,border-color .13s;}
+.swatch:hover{transform:scale(1.15);}
+.swatch.picked{border-color:var(--ink);transform:scale(1.15);}
+
+@media(max-width:900px){.cd-page-layout{grid-template-columns:1fr;}}
+
 @media(max-width:900px){.dg{grid-template-columns:1fr 1fr;}.fc-layout{grid-template-columns:1fr;}}
 @media(max-width:680px){#sb{transform:translateX(-100%);}.#sb.open{transform:none;}#main{margin-left:0;padding:20px 18px 50px;}.dg{grid-template-columns:1fr;}}
 </style>
@@ -245,6 +301,9 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
     <button class="nb" id="n-fc-r" onclick="go('fc','roots')"><span class="ic">🃏</span>Flashcards</button>
     <button class="nb" id="n-qz-r" onclick="go('qz','roots')"><span class="ic">✦</span>Quiz</button>
     <button class="nb" id="n-ts-r" onclick="go('ts','roots')"><span class="ic">✎</span>Test</button>
+    <div class="nl">My Cards</div>
+    <button class="nb" id="n-cd" onclick="go('cd')"><span class="ic">✏</span>My Decks</button>
+    <div id="sb-custom-decks"></div>
   </nav>
   <div id="sb-foot">
     <h5>Progress</h5>
@@ -399,9 +458,142 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
     </div>
   </div>
 
+  <!-- ── CUSTOM DECKS ── -->
+  <div class="pg" id="pg-cd">
+    <div class="pgh"><h1>My Decks</h1><span class="sub">Create and study your own flashcards</span></div>
+    <hr class="rule">
+    <div id="cd-main-view">
+      <div class="cd-page-layout">
+        <!-- Left: deck list -->
+        <div class="cd-deck-panel">
+          <div class="cd-panel-head">
+            <h4>Decks</h4>
+            <button class="btn b-gold" style="padding:5px 14px;font-size:13px" onclick="openNewDeckModal()">+ New Deck</button>
+          </div>
+          <ul class="cd-deck-list" id="cd-deck-list">
+            <li class="cd-empty">No decks yet. Create one to get started.</li>
+          </ul>
+        </div>
+        <!-- Right: selected deck editor -->
+        <div class="cd-right" id="cd-right">
+          <div style="padding:48px;text-align:center;background:var(--w);border:1px solid var(--bdr);border-radius:6px;box-shadow:0 2px 10px var(--sh);">
+            <div style="font-size:40px;margin-bottom:12px">🃏</div>
+            <div style="font-size:17px;font-style:italic;color:var(--im);margin-bottom:6px">Select or create a deck</div>
+            <div style="font-size:14px;color:var(--iv)">Your custom flashcard decks appear on the left.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Study view for custom deck -->
+    <div id="cd-study-view" style="display:none">
+      <div class="cd-study-header">
+        <button class="btn b-wht" onclick="exitCustomStudy()" style="padding:6px 16px;font-size:13px">← Back to Deck</button>
+        <h2 id="cd-study-title">—</h2>
+        <span style="font-size:13px;color:var(--iv);font-style:italic" id="cd-study-sub"></span>
+      </div>
+      <div class="fc-layout">
+        <div class="fc-main">
+          <div class="fc-area">
+            <div class="fc-wrap" onclick="flipCustomCard()">
+              <div class="fc-card" id="cd-fc-card">
+                <div class="face fr">
+                  <div class="fc-lbl" id="cd-fc-fl">Front</div>
+                  <div class="fc-main-txt" id="cd-fc-fm">—</div>
+                  <div class="fc-sub-txt" id="cd-fc-fs"></div>
+                </div>
+                <div class="face bk">
+                  <div class="fc-lbl" id="cd-fc-bl">Back</div>
+                  <div class="fc-main-txt" id="cd-fc-bm">—</div>
+                  <div class="fc-sub-txt" id="cd-fc-bs"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fc-hint">Click card to flip &nbsp;·&nbsp; ← → to navigate &nbsp;·&nbsp; K = know it &nbsp;·&nbsp; L = learning</div>
+          <div class="fc-count"><span id="cd-fc-i">1</span> of <span id="cd-fc-t">—</span></div>
+          <div class="fc-dots" id="cd-fc-dots"></div>
+          <div class="fc-ctrls">
+            <button class="btn b-wht" onclick="prevCustomCard()">← Prev</button>
+            <button class="btn b-red" onclick="markCustomCard('learn')">Still Learning</button>
+            <button class="btn b-grn" onclick="markCustomCard('known')">Know It ✓</button>
+            <button class="btn b-wht" onclick="nextCustomCard()">Next →</button>
+          </div>
+          <div class="fc-ctrls2">
+            <button class="btn b-wht" onclick="shuffleCustomDeck()">⇄ Shuffle</button>
+            <button class="btn b-wht" onclick="filterCustomUnknown()">Study Unknown Only</button>
+            <button class="btn b-wht" onclick="resetCustomDeck()">↺ Reset</button>
+          </div>
+        </div>
+        <div class="fc-side">
+          <h4>Cards in Deck</h4>
+          <ul class="fc-side-list" id="cd-fc-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /main -->
 
-<!-- NAME MODAL -->
+<!-- NEW DECK MODAL -->
+<div class="mo" id="new-deck-mo">
+  <div class="md-sm">
+    <h2>New Deck</h2>
+    <div class="cd-field">
+      <label>Deck Name</label>
+      <input type="text" id="nd-name" placeholder="e.g. Biology Vocab" maxlength="60" onkeydown="if(event.key==='Enter')saveNewDeck()">
+    </div>
+    <div class="cd-field">
+      <label>Icon (emoji)</label>
+      <input type="text" id="nd-icon" placeholder="🃏" maxlength="4" style="max-width:80px">
+    </div>
+    <div class="cd-field">
+      <label>Color</label>
+      <div class="color-swatches" id="color-swatches"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button class="btn b-gold" onclick="saveNewDeck()" style="flex:1">Create Deck</button>
+      <button class="btn b-wht" onclick="closeModal('new-deck-mo')" style="flex:1">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT CARD MODAL -->
+<div class="mo" id="edit-card-mo">
+  <div class="md-sm" style="max-width:460px">
+    <h2 id="ec-title">Add Card</h2>
+    <div class="cd-field">
+      <label>Front (Question / Term)</label>
+      <textarea id="ec-front" placeholder="What goes on the front of the card?" rows="3"></textarea>
+    </div>
+    <div class="cd-field">
+      <label>Back (Answer / Definition)</label>
+      <textarea id="ec-back" placeholder="What goes on the back?" rows="3"></textarea>
+    </div>
+    <div class="cd-field">
+      <label>Hint <span style="font-size:11px;color:var(--iv);font-style:italic;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input type="text" id="ec-hint" placeholder="Optional extra info shown below the answer">
+    </div>
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button class="btn b-gold" onclick="saveCard()" style="flex:1" id="ec-save-btn">Add Card</button>
+      <button class="btn b-wht" onclick="closeModal('edit-card-mo')" style="flex:1">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- RENAME DECK MODAL -->
+<div class="mo" id="rename-deck-mo">
+  <div class="md-sm">
+    <h2>Rename Deck</h2>
+    <div class="cd-field">
+      <label>Deck Name</label>
+      <input type="text" id="rd-name" placeholder="New name…" maxlength="60" onkeydown="if(event.key==='Enter')saveRenameDeck()">
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button class="btn b-gold" onclick="saveRenameDeck()" style="flex:1">Save</button>
+      <button class="btn b-wht" onclick="closeModal('rename-deck-mo')" style="flex:1">Cancel</button>
+    </div>
+  </div>
+</div>
 <div class="mo" id="name-mo">
   <div class="md">
     <h2>What's your name?</h2>
@@ -1099,7 +1291,336 @@ function gradeText(p){
   return 'Keep Studying — '+p+'%';
 }
 
+// ══════════════════════════════════════
+// CUSTOM DECKS
+// ══════════════════════════════════════
+// Structure: P.decks = [{id, name, icon, color, cards:[{id,front,back,hint,known}]}, ...]
+// P.customProgress = {deckId: {cardId: 'known'|'learn'|null}}
+
+const SWATCH_COLORS = ['#c9922a','#3d6b4f','#2c5f8a','#9e3a1e','#6b4f9e','#1e7a6e','#8b4a00','#555'];
+
+let cdActiveDeckId = null;
+let cdStudyDeck = []; // working array for study session
+let cdStudyIdx = 0;
+let cdStudyFlipped = false;
+let cdEditCardId = null; // null = new card, else id of card being edited
+let newDeckColor = SWATCH_COLORS[0];
+
+function ensureDecks(){
+  if(!P.decks) P.decks = [];
+  if(!P.customProgress) P.customProgress = {};
+}
+
+// ── Sidebar custom deck links ──
+function renderSbCustomDecks(){
+  ensureDecks();
+  const c = document.getElementById('sb-custom-decks');
+  if(!P.decks.length){ c.innerHTML=''; return; }
+  c.innerHTML = P.decks.map(d=>`
+    <button class="nb" style="padding-left:28px;font-size:13px" onclick="go('cd');openDeck('${d.id}')">
+      <span class="ic" style="font-size:13px">${d.icon||'🃏'}</span>
+      <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px">${d.name}</span>
+    </button>`).join('');
+}
+
+// ── Main decks page ──
+function renderDecksPage(){
+  ensureDecks();
+  renderSbCustomDecks();
+  const ul = document.getElementById('cd-deck-list');
+  if(!P.decks.length){
+    ul.innerHTML='<li class="cd-empty">No decks yet. Create one to get started.</li>';
+    return;
+  }
+  ul.innerHTML = P.decks.map(d=>{
+    const prog = P.customProgress[d.id]||{};
+    const known = d.cards.filter(c=>prog[c.id]==='known').length;
+    return `<li class="cd-deck-item${cdActiveDeckId===d.id?' active':''}" onclick="openDeck('${d.id}')">
+      <span class="dk-icon" style="color:${d.color||'var(--gold)'}">${d.icon||'🃏'}</span>
+      <span class="dk-info">
+        <span class="dk-name">${d.name}</span>
+        <span class="dk-count">${d.cards.length} card${d.cards.length!==1?'s':''} · ${known} known</span>
+      </span>
+      <button class="dk-del" onclick="deleteDeck('${d.id}',event)" title="Delete deck">✕</button>
+    </li>`;
+  }).join('');
+}
+
+function openDeck(id){
+  ensureDecks();
+  cdActiveDeckId = id;
+  const deck = P.decks.find(d=>d.id===id);
+  if(!deck) return;
+  renderDecksPage();
+
+  const right = document.getElementById('cd-right');
+  const prog = P.customProgress[id]||{};
+  const known = deck.cards.filter(c=>prog[c.id]==='known').length;
+  const learn = deck.cards.filter(c=>prog[c.id]==='learn').length;
+
+  right.innerHTML = `
+    <div class="cd-editor">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">
+        <span style="font-size:36px;color:${deck.color||'var(--gold)'}">${deck.icon||'🃏'}</span>
+        <div style="flex:1">
+          <h3 style="margin-bottom:3px">${deck.name}</h3>
+          <div style="font-size:13px;color:var(--iv)">${deck.cards.length} cards &nbsp;·&nbsp; ${known} known &nbsp;·&nbsp; ${learn} still learning</div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          ${deck.cards.length>0?`<button class="btn b-gold" style="padding:7px 18px;font-size:14px" onclick="startCustomStudy('${id}')">Study Deck</button>`:''}
+          <button class="btn b-wht" style="padding:7px 14px;font-size:13px" onclick="openRenameModal('${id}')">Rename</button>
+        </div>
+      </div>
+    </div>
+    <div class="cd-cards-list">
+      <div class="cd-cards-head">
+        <h4>Cards ${deck.cards.length>0?'('+deck.cards.length+')':''}</h4>
+        <button class="btn b-gold" style="padding:5px 14px;font-size:13px" onclick="openAddCardModal('${id}')">+ Add Card</button>
+      </div>
+      ${deck.cards.length===0
+        ? `<div class="cd-no-cards">No cards yet. Add your first card above.</div>`
+        : deck.cards.map((c,i)=>{
+            const st = prog[c.id];
+            const dot = st==='known'?'#3d6b4f':st==='learn'?'#9e3a1e':'var(--bdrl)';
+            return `<div class="cd-card-row" id="cdr-${c.id}">
+              <div style="width:8px;height:8px;border-radius:50%;background:${dot};flex-shrink:0"></div>
+              <div class="cd-card-front">${c.front}</div>
+              <div class="cd-card-back">${c.back}</div>
+              <div class="cd-card-actions">
+                <button class="cd-act-btn" onclick="openEditCardModal('${id}','${c.id}')">Edit</button>
+                <button class="cd-act-btn del" onclick="deleteCard('${id}','${c.id}')">✕</button>
+              </div>
+            </div>`;
+          }).join('')
+      }
+    </div>`;
+}
+
+// ── New deck modal ──
+function openNewDeckModal(){
+  document.getElementById('nd-name').value='';
+  document.getElementById('nd-icon').value='🃏';
+  newDeckColor = SWATCH_COLORS[0];
+  // Build swatches
+  const sw = document.getElementById('color-swatches');
+  sw.innerHTML = SWATCH_COLORS.map(c=>`<div class="swatch${c===newDeckColor?' picked':''}" style="background:${c}" onclick="pickColor('${c}',this)"></div>`).join('');
+  document.getElementById('new-deck-mo').classList.add('on');
+  setTimeout(()=>document.getElementById('nd-name').focus(),80);
+}
+function pickColor(c,el){
+  newDeckColor=c;
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('picked'));
+  el.classList.add('picked');
+}
+function saveNewDeck(){
+  const name = document.getElementById('nd-name').value.trim();
+  if(!name) return;
+  const icon = document.getElementById('nd-icon').value.trim()||'🃏';
+  ensureDecks();
+  const id = 'dk_'+Date.now();
+  P.decks.push({id,name,icon,color:newDeckColor,cards:[]});
+  P.customProgress[id]={};
+  save();
+  closeModal('new-deck-mo');
+  renderDecksPage();
+  renderSbCustomDecks();
+  openDeck(id);
+}
+
+// ── Rename deck ──
+function openRenameModal(id){
+  const deck = P.decks.find(d=>d.id===id);
+  if(!deck) return;
+  document.getElementById('rd-name').value=deck.name;
+  document.getElementById('rename-deck-mo').classList.add('on');
+  document.getElementById('rename-deck-mo').dataset.deckId=id;
+  setTimeout(()=>document.getElementById('rd-name').focus(),80);
+}
+function saveRenameDeck(){
+  const id = document.getElementById('rename-deck-mo').dataset.deckId;
+  const name = document.getElementById('rd-name').value.trim();
+  if(!name||!id) return;
+  const deck = P.decks.find(d=>d.id===id);
+  if(deck){ deck.name=name; save(); renderDecksPage(); renderSbCustomDecks(); openDeck(id); }
+  closeModal('rename-deck-mo');
+}
+
+// ── Delete deck ──
+function deleteDeck(id,e){
+  e.stopPropagation();
+  if(!confirm('Delete this deck and all its cards?')) return;
+  ensureDecks();
+  P.decks = P.decks.filter(d=>d.id!==id);
+  delete P.customProgress[id];
+  save();
+  if(cdActiveDeckId===id){ cdActiveDeckId=null; document.getElementById('cd-right').innerHTML='<div style="padding:48px;text-align:center;background:var(--w);border:1px solid var(--bdr);border-radius:6px;box-shadow:0 2px 10px var(--sh);"><div style="font-size:17px;font-style:italic;color:var(--im)">Deck deleted.</div></div>'; }
+  renderDecksPage(); renderSbCustomDecks();
+}
+
+// ── Add/Edit card modal ──
+function openAddCardModal(deckId){
+  cdEditCardId = null;
+  document.getElementById('ec-title').textContent='Add Card';
+  document.getElementById('ec-save-btn').textContent='Add Card';
+  document.getElementById('ec-front').value='';
+  document.getElementById('ec-back').value='';
+  document.getElementById('ec-hint').value='';
+  document.getElementById('edit-card-mo').dataset.deckId=deckId;
+  document.getElementById('edit-card-mo').classList.add('on');
+  setTimeout(()=>document.getElementById('ec-front').focus(),80);
+}
+function openEditCardModal(deckId,cardId){
+  const deck = P.decks.find(d=>d.id===deckId);
+  const card = deck&&deck.cards.find(c=>c.id===cardId);
+  if(!card) return;
+  cdEditCardId = cardId;
+  document.getElementById('ec-title').textContent='Edit Card';
+  document.getElementById('ec-save-btn').textContent='Save Changes';
+  document.getElementById('ec-front').value=card.front;
+  document.getElementById('ec-back').value=card.back;
+  document.getElementById('ec-hint').value=card.hint||'';
+  document.getElementById('edit-card-mo').dataset.deckId=deckId;
+  document.getElementById('edit-card-mo').classList.add('on');
+  setTimeout(()=>document.getElementById('ec-front').focus(),80);
+}
+function saveCard(){
+  const deckId = document.getElementById('edit-card-mo').dataset.deckId;
+  const front = document.getElementById('ec-front').value.trim();
+  const back = document.getElementById('ec-back').value.trim();
+  const hint = document.getElementById('ec-hint').value.trim();
+  if(!front||!back){ alert('Front and back are required.'); return; }
+  const deck = P.decks.find(d=>d.id===deckId);
+  if(!deck) return;
+  if(cdEditCardId){
+    const card = deck.cards.find(c=>c.id===cdEditCardId);
+    if(card){ card.front=front; card.back=back; card.hint=hint; }
+  } else {
+    const id='c_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+    deck.cards.push({id,front,back,hint});
+    if(!P.customProgress[deckId]) P.customProgress[deckId]={};
+  }
+  save();
+  closeModal('edit-card-mo');
+  openDeck(deckId);
+}
+
+// ── Delete card ──
+function deleteCard(deckId,cardId){
+  const deck = P.decks.find(d=>d.id===deckId);
+  if(!deck) return;
+  deck.cards = deck.cards.filter(c=>c.id!==cardId);
+  if(P.customProgress[deckId]) delete P.customProgress[deckId][cardId];
+  save(); openDeck(deckId);
+}
+
+// ── Custom study session ──
+function startCustomStudy(deckId){
+  ensureDecks();
+  const deck = P.decks.find(d=>d.id===deckId);
+  if(!deck||!deck.cards.length) return;
+  cdActiveDeckId = deckId;
+  cdStudyDeck = [...deck.cards]; shuf(cdStudyDeck);
+  cdStudyIdx = 0; cdStudyFlipped = false;
+  setText('cd-study-title', deck.name);
+  setText('cd-study-sub', deck.cards.length+' cards');
+  document.getElementById('cd-main-view').style.display='none';
+  document.getElementById('cd-study-view').style.display='';
+  renderCustomCard(); buildCustomDots(); buildCustomList();
+}
+
+function exitCustomStudy(){
+  document.getElementById('cd-main-view').style.display='';
+  document.getElementById('cd-study-view').style.display='none';
+  if(cdActiveDeckId) openDeck(cdActiveDeckId);
+}
+
+function renderCustomCard(){
+  if(!cdStudyDeck.length) return;
+  const card = cdStudyDeck[cdStudyIdx];
+  const fc = document.getElementById('cd-fc-card');
+  fc.classList.remove('flip'); cdStudyFlipped=false;
+  setText('cd-fc-fl','Front'); setText('cd-fc-fm',card.front); setText('cd-fc-fs','');
+  setText('cd-fc-bl','Back'); setText('cd-fc-bm',card.back);
+  document.getElementById('cd-fc-bs').textContent = card.hint||'';
+  setText('cd-fc-i',cdStudyIdx+1); setText('cd-fc-t',cdStudyDeck.length);
+  updateCustomDots(); updateCustomList();
+}
+
+function flipCustomCard(){document.getElementById('cd-fc-card').classList.toggle('flip');cdStudyFlipped=!cdStudyFlipped;}
+function prevCustomCard(){if(cdStudyIdx>0){cdStudyIdx--;renderCustomCard();}}
+function nextCustomCard(){if(cdStudyIdx<cdStudyDeck.length-1){cdStudyIdx++;renderCustomCard();}}
+
+function markCustomCard(st){
+  const card = cdStudyDeck[cdStudyIdx];
+  if(!P.customProgress[cdActiveDeckId]) P.customProgress[cdActiveDeckId]={};
+  P.customProgress[cdActiveDeckId][card.id]=st;
+  save(); updateCustomDots(); updateCustomList();
+  if(cdStudyIdx<cdStudyDeck.length-1){cdStudyIdx++;renderCustomCard();}
+}
+
+function shuffleCustomDeck(){shuf(cdStudyDeck);cdStudyIdx=0;renderCustomCard();buildCustomList();}
+function filterCustomUnknown(){
+  const deck = P.decks.find(d=>d.id===cdActiveDeckId);
+  if(!deck) return;
+  const prog = P.customProgress[cdActiveDeckId]||{};
+  const unknown = deck.cards.filter(c=>prog[c.id]!=='known');
+  cdStudyDeck = unknown.length>0?[...unknown]:[...deck.cards];
+  shuf(cdStudyDeck); cdStudyIdx=0; renderCustomCard(); buildCustomDots(); buildCustomList();
+}
+function resetCustomDeck(){
+  if(!P.customProgress[cdActiveDeckId]) return;
+  P.customProgress[cdActiveDeckId]={};
+  save(); const deck=P.decks.find(d=>d.id===cdActiveDeckId);
+  if(deck){cdStudyDeck=[...deck.cards];shuf(cdStudyDeck);}
+  cdStudyIdx=0; renderCustomCard(); buildCustomDots(); buildCustomList();
+}
+
+function buildCustomDots(){
+  const w=document.getElementById('cd-fc-dots');
+  w.innerHTML=cdStudyDeck.map((_,i)=>`<div class="dot" id="cd${i}"></div>`).join('');
+}
+function updateCustomDots(){
+  cdStudyDeck.forEach((card,i)=>{
+    const d=document.getElementById('cd'+i);if(!d)return;
+    const st=(P.customProgress[cdActiveDeckId]||{})[card.id];
+    d.className='dot'+(i===cdStudyIdx?' cur':st==='known'?' known':st==='learn'?' learn':'');
+  });
+}
+function buildCustomList(){
+  const ul=document.getElementById('cd-fc-list');
+  const prog=P.customProgress[cdActiveDeckId]||{};
+  ul.innerHTML=cdStudyDeck.map((card,i)=>{
+    const st=prog[card.id];
+    return `<li class="fsl-item${i===cdStudyIdx?' cur':''}" onclick="jumpCustomCard(${i})">
+      <span class="fsl-dot${st==='known'?' known':st==='learn'?' learn':''}"></span>
+      <span><strong style="font-size:13px">${card.front}</strong><span style="font-size:11px;color:var(--iv);display:block">${card.back}</span></span>
+    </li>`;
+  }).join('');
+}
+function updateCustomList(){
+  document.querySelectorAll('#cd-fc-list .fsl-item').forEach((el,i)=>el.classList.toggle('cur',i===cdStudyIdx));
+  const cur=document.querySelector('#cd-fc-list .fsl-item.cur');
+  if(cur) cur.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+function jumpCustomCard(i){cdStudyIdx=i;renderCustomCard();}
+
+// ── Modal helper ──
+function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+// Close modal on overlay click
+document.querySelectorAll('.mo').forEach(mo=>{
+  mo.addEventListener('click',e=>{ if(e.target===mo) mo.classList.remove('on'); });
+});
+
+// Extend keyboard nav to custom study
 document.addEventListener('keydown',e=>{
+  if(curPg==='cd'&&document.getElementById('cd-study-view').style.display!=='none'){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown') nextCustomCard();
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp') prevCustomCard();
+    else if(e.key===' '){e.preventDefault();flipCustomCard();}
+    else if(e.key==='k'||e.key==='K') markCustomCard('known');
+    else if(e.key==='l'||e.key==='L') markCustomCard('learn');
+    return;
+  }
   if(curPg!=='fc') return;
   if(e.key==='ArrowRight'||e.key==='ArrowDown') nextCard();
   else if(e.key==='ArrowLeft'||e.key==='ArrowUp') prevCard();
@@ -1108,14 +1629,35 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='l'||e.key==='L') markCard('learn');
 });
 
+// Patch go() to handle custom decks page without recursion
+const _goOrig = go;
+go = function(pg,topic){
+  if(pg==='cd'){
+    // manually do what go() does for 'cd'
+    curPg='cd';
+    document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+    document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+    document.getElementById('pg-cd').classList.add('on');
+    const nb=document.getElementById('n-cd');
+    if(nb) nb.classList.add('on');
+    document.getElementById('cd-main-view').style.display='';
+    document.getElementById('cd-study-view').style.display='none';
+    renderDecksPage();
+    logActivity();
+    return;
+  }
+  _goOrig(pg,topic);
+};
+
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
 (function(){
   load();
+  ensureDecks();
   if(!uName){document.getElementById('name-mo').classList.add('on');setTimeout(()=>document.getElementById('name-inp').focus(),150);}
   else updateUI();
-  renderDash(); updateProg();
+  renderDash(); updateProg(); renderSbCustomDecks();
 })();
 </script>
 </body>
