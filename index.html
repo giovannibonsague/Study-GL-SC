@@ -3,63 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Study</title>
+<title>Study GL - SC</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
 :root{
-  --c:#fdf8f0; --w:#fffef9; --p:#f5edd8; --p2:#ede0c4;
-  --gold:#c9922a; --gd:#8b6318; --gl:#e8b84b; --gll:#fdf0d4;
-  --ink:#1a1208; --im:#3d2e0f; --il:#6b5229; --iv:#b09060;
-  --rust:#9e3a1e; --sage:#3d6b4f; --sky:#2c5f8a; --skyL:#ddeaf5;
-  --bdr:#d4b896; --bdrl:#e8d9c0;
-  --sh:rgba(90,60,10,0.11); --sh2:rgba(90,60,10,0.07);
+  --c:#fdf8f0;--w:#fffef9;--p:#f5edd8;--p2:#ede0c4;
+  --gold:#c9922a;--gd:#8b6318;--gl:#e8b84b;--gll:#fdf0d4;
+  --ink:#1a1208;--im:#3d2e0f;--il:#6b5229;--iv:#b09060;
+  --rust:#9e3a1e;--sage:#3d6b4f;--sky:#2c5f8a;--skyL:#ddeaf5;
+  --bdr:#d4b896;--bdrl:#e8d9c0;
+  --sh:rgba(90,60,10,0.11);--sh2:rgba(90,60,10,0.07);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:'EB Garamond',Georgia,serif;background:var(--c);color:var(--ink);font-size:16px;line-height:1.65;overflow-x:hidden;}
 
-/* ── SIDEBAR ── */
-#sb{position:fixed;top:0;left:0;width:230px;height:100vh;background:var(--p);border-right:2px solid var(--bdr);display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .25s;}
-#sb-logo{padding:28px 20px 16px;border-bottom:1px solid var(--bdr);text-align:center;}
-#sb-logo .mk{font-size:30px;margin-bottom:4px;}
-#sb-logo .tt{font-size:10px;text-transform:uppercase;letter-spacing:4px;color:var(--il);font-weight:500;}
-#sb-user{padding:11px 16px 13px;border-bottom:1px solid var(--bdrl);cursor:pointer;transition:background .14s;}
+/* SIDEBAR */
+#sb{position:fixed;top:0;left:0;width:234px;height:100vh;background:var(--p);border-right:2px solid var(--bdr);display:flex;flex-direction:column;z-index:200;overflow-y:auto;}
+#sb-logo{padding:22px 18px 12px;border-bottom:1px solid var(--bdr);text-align:center;}
+#sb-logo .site-name{font-size:17px;font-weight:600;color:var(--ink);letter-spacing:.5px;line-height:1.2;}
+#sb-logo .byline{font-size:11px;color:var(--iv);margin-top:3px;font-style:italic;}
+#sb-user{padding:10px 16px 12px;border-bottom:1px solid var(--bdrl);cursor:pointer;transition:background .14s;}
 #sb-user:hover{background:var(--p2);}
-#sb-user .who{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--iv);margin-bottom:2px;}
+#sb-user .who{font-size:9.5px;text-transform:uppercase;letter-spacing:2px;color:var(--iv);margin-bottom:2px;}
 #sb-user .nm{font-size:15px;color:var(--im);font-style:italic;}
 #sb-user .nm .edit{font-size:10px;color:var(--iv);margin-left:5px;font-style:normal;}
-nav{flex:1;padding:10px 0 6px;}
-.nl{padding:5px 18px 2px;font-size:9.5px;text-transform:uppercase;letter-spacing:3px;color:var(--gd);font-weight:600;margin-top:8px;}
-.nb{display:flex;align-items:center;gap:8px;width:100%;padding:8px 18px;background:none;border:none;cursor:pointer;font-family:'EB Garamond',Georgia,serif;font-size:14px;color:var(--im);text-align:left;border-left:3px solid transparent;transition:background .13s,color .13s,border-color .13s;}
+nav{flex:1;padding:8px 0 6px;}
+.nl{padding:4px 18px 2px;font-size:9.5px;text-transform:uppercase;letter-spacing:3px;color:var(--gd);font-weight:600;margin-top:8px;}
+.nb{display:flex;align-items:center;gap:9px;width:100%;padding:8px 18px;background:none;border:none;cursor:pointer;font-family:'EB Garamond',Georgia,serif;font-size:14px;color:var(--im);text-align:left;border-left:3px solid transparent;transition:background .13s,color .13s,border-color .13s;}
 .nb:hover{background:rgba(201,146,42,.07);color:var(--ink);}
 .nb.on{background:rgba(201,146,42,.13);color:var(--gd);border-left-color:var(--gold);font-style:italic;}
-.nb .ic{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
-#sb-foot{padding:14px 16px 18px;border-top:1px solid var(--bdrl);}
-#sb-foot h5{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);margin-bottom:10px;font-weight:600;}
+.nb svg{width:16px;height:16px;flex-shrink:0;fill:currentColor;opacity:.75;}
+.nb.on svg{opacity:1;}
+#sb-foot{padding:12px 16px 16px;border-top:1px solid var(--bdrl);}
+#sb-foot h5{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);margin-bottom:9px;font-weight:600;}
 .pr{display:flex;justify-content:space-between;font-size:12px;color:var(--il);margin-bottom:3px;}
-.pw{height:5px;background:var(--bdrl);border-radius:3px;margin-bottom:9px;overflow:hidden;}
+.pw{height:5px;background:var(--bdrl);border-radius:3px;margin-bottom:8px;overflow:hidden;}
 .pb{height:100%;background:linear-gradient(90deg,var(--gold),var(--gl));border-radius:3px;transition:width .5s ease;}
-.streak-badge{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--im);margin-top:6px;}
-.streak-badge .fl{font-size:16px;}
+.streak-line{font-size:12px;color:var(--im);margin-top:5px;}
 
-/* ── MAIN ── */
-#main{margin-left:230px;min-height:100vh;padding:36px 46px 70px;}
+/* MAIN */
+#main{margin-left:234px;min-height:100vh;padding:36px 46px 70px;}
 .pg{display:none;}
 .pg.on{display:block;animation:fi .3s ease;}
 @keyframes fi{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
-.pgh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+.pgh{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:6px;}
 .pgh h1{font-size:26px;font-style:italic;color:var(--ink);}
-.pgh .sub{font-size:14px;color:var(--il);font-style:italic;}
 .rule{border:none;border-top:2px solid var(--bdr);margin-bottom:24px;}
 
-/* ── FILTER BAR ── */
+/* TOPIC TOGGLE */
+.topic-toggle{display:flex;background:var(--p2);border-radius:24px;padding:3px;gap:2px;border:1px solid var(--bdr);}
+.tt-btn{padding:5px 18px;border-radius:20px;border:none;background:transparent;font-family:'EB Garamond',Georgia,serif;font-size:13px;color:var(--im);cursor:pointer;transition:all .18s;white-space:nowrap;}
+.tt-btn.on{background:var(--gold);color:#fff;box-shadow:0 1px 4px rgba(90,60,10,.2);}
+
+/* FILTER BAR */
 .fbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:20px;}
 .fbar label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--iv);margin-right:2px;}
-.ft{padding:4px 15px;border:1.5px solid var(--bdr);border-radius:20px;background:var(--w);font-family:'EB Garamond',Georgia,serif;font-size:13px;color:var(--im);cursor:pointer;transition:all .13s;}
+.ft{padding:4px 14px;border:1.5px solid var(--bdr);border-radius:20px;background:var(--w);font-family:'EB Garamond',Georgia,serif;font-size:13px;color:var(--im);cursor:pointer;transition:all .13s;}
 .ft:hover{border-color:var(--gold);background:var(--gll);}
 .ft.on{background:var(--gold);border-color:var(--gd);color:#fff;}
 
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn{padding:9px 24px;border-radius:3px;border:1.5px solid;font-family:'EB Garamond',Georgia,serif;font-size:15px;cursor:pointer;transition:all .13s;letter-spacing:.3px;}
 .b-gold{background:var(--gold);border-color:var(--gd);color:#fff;}
 .b-gold:hover{background:var(--gd);}
@@ -70,22 +74,15 @@ nav{flex:1;padding:10px 0 6px;}
 .b-red{background:var(--rust);border-color:#7a2c14;color:#fff;}
 .b-red:hover{background:#7a2c14;}
 
-/* ── DASHBOARD ── */
+/* DASHBOARD */
 .dhi{font-size:30px;font-style:italic;margin-bottom:4px;}
-.dsub{color:var(--il);font-size:15px;margin-bottom:30px;}
-.dg{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:30px;}
+.dsub{color:var(--il);font-size:15px;margin-bottom:28px;}
+.dg{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;}
 .dc{background:var(--w);border:1px solid var(--bdr);border-radius:5px;padding:20px 22px;box-shadow:0 2px 10px var(--sh);}
 .dc h4{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);margin-bottom:10px;font-weight:600;}
 .dc .bn{font-size:44px;line-height:1;color:var(--ink);}
 .dc .bl{font-size:12px;color:var(--il);margin-top:3px;}
-.hmap-wrap{background:var(--w);border:1px solid var(--bdr);border-radius:5px;padding:20px 24px;box-shadow:0 2px 10px var(--sh);margin-bottom:24px;}
-.hmap-wrap h4{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);margin-bottom:14px;font-weight:600;}
-.hmap{display:flex;gap:3px;flex-wrap:wrap;}
-.hday{width:14px;height:14px;border-radius:2px;background:var(--bdrl);transition:background .2s;}
-.hday.l1{background:#c8e6d4;}
-.hday.l2{background:#7ab89a;}
-.hday.l3{background:#3d6b4f;}
-.hday[title]{cursor:default;}
+.won-sec{margin-bottom:28px;}
 .won-sec h4{font-size:15px;color:var(--im);margin-bottom:14px;border-bottom:1px solid var(--bdrl);padding-bottom:8px;}
 .wl{list-style:none;}
 .wi{padding:10px 16px;margin-bottom:8px;background:linear-gradient(135deg,#fff8ee,var(--w));border:1px solid var(--bdrl);border-left:4px solid var(--rust);border-radius:4px;font-size:14px;color:var(--im);display:flex;justify-content:space-between;align-items:center;gap:12px;}
@@ -95,33 +92,23 @@ nav{flex:1;padding:10px 0 6px;}
 .bge.r{background:var(--rust);}
 .bge.b{background:var(--sky);}
 .bge.g{background:var(--sage);}
+.dash-footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--bdrl);text-align:center;font-size:13px;color:var(--iv);}
+.dash-footer a{color:var(--sky);text-decoration:none;border-bottom:1px dashed var(--skyL);}
+.dash-footer a:hover{color:var(--gd);border-bottom-color:var(--gold);}
 
-/* ── SVG MAP ── */
-.map-section{margin-bottom:22px;}
-.map-section h4{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);margin-bottom:10px;font-weight:600;}
-#us-map-wrap{background:var(--w);border:1px solid var(--bdr);border-radius:5px;padding:12px;box-shadow:0 2px 10px var(--sh);position:relative;overflow:hidden;}
-#us-map-wrap svg{width:100%;height:auto;display:block;}
-.sp{fill:#d9c9a8;stroke:#fff;stroke-width:.8;cursor:pointer;transition:fill .18s;}
-.sp:hover{fill:var(--gl);}
-.sp.known{fill:#7ab89a;}
-.sp.learning{fill:#e0836a;}
-.sp.hl{fill:var(--gold);stroke:var(--gd);stroke-width:1.5;}
-.map-tip{position:absolute;background:var(--ink);color:#fff;font-family:'EB Garamond',Georgia,serif;font-size:12px;padding:5px 11px;border-radius:3px;pointer-events:none;white-space:nowrap;z-index:300;display:none;box-shadow:0 2px 8px rgba(0,0,0,.3);}
-
-/* ── FLASHCARD ── */
-.fc-layout{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start;}
-.fc-main{}
-.fc-side{background:var(--w);border:1px solid var(--bdr);border-radius:5px;padding:20px;box-shadow:0 2px 10px var(--sh);}
-.fc-side h4{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);margin-bottom:14px;font-weight:600;}
+/* FLASHCARD */
+.fc-layout{display:grid;grid-template-columns:1fr 310px;gap:26px;align-items:start;}
+.fc-side{background:var(--w);border:1px solid var(--bdr);border-radius:5px;padding:0;box-shadow:0 2px 10px var(--sh);overflow:hidden;}
+.fc-side h4{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);font-weight:600;padding:14px 16px 12px;border-bottom:1px solid var(--bdrl);}
 .fc-side-list{list-style:none;max-height:360px;overflow-y:auto;}
 .fc-side-list::-webkit-scrollbar{width:4px;}
 .fc-side-list::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px;}
 .fsl-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:3px;font-size:13px;color:var(--im);cursor:pointer;border-left:3px solid transparent;transition:background .12s;}
 .fsl-item:hover{background:var(--p);}
 .fsl-item.cur{background:var(--gll);border-left-color:var(--gold);font-weight:500;}
-.fsl-item .fsl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--bdr);}
-.fsl-item .fsl-dot.known{background:var(--sage);}
-.fsl-item .fsl-dot.learn{background:var(--rust);}
+.fsl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--bdr);}
+.fsl-dot.known{background:var(--sage);}
+.fsl-dot.learn{background:var(--rust);}
 .fc-area{perspective:1600px;}
 .fc-wrap{position:relative;width:100%;padding-bottom:58%;cursor:pointer;user-select:none;}
 .fc-card{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);border-radius:8px;box-shadow:0 12px 40px var(--sh),0 3px 12px var(--sh2);}
@@ -129,29 +116,26 @@ nav{flex:1;padding:10px 0 6px;}
 .face{position:absolute;inset:0;border-radius:8px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;border:2px solid var(--bdr);}
 .fr{background:var(--w);background-image:radial-gradient(ellipse at 15% 85%,rgba(201,146,42,.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 15%,rgba(201,146,42,.05) 0%,transparent 55%);}
 .bk{background:var(--p);transform:rotateY(180deg);}
-/* corner ornament */
 .face::before,.face::after{content:'✦';position:absolute;font-size:12px;color:var(--bdrl);}
 .face::before{top:12px;left:16px;}
 .face::after{bottom:12px;right:16px;}
 .fc-lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:3.5px;color:var(--gd);margin-bottom:12px;font-weight:600;}
 .fc-main-txt{font-size:28px;text-align:center;color:var(--ink);font-style:italic;line-height:1.2;}
 .fc-sub-txt{font-size:14px;color:var(--il);margin-top:11px;text-align:center;max-width:320px;line-height:1.5;}
-.fc-tag{display:inline-block;padding:3px 12px;background:var(--p2);border-radius:12px;font-size:12px;color:var(--im);margin-top:10px;font-style:normal;}
 .fc-hint{text-align:center;font-size:11.5px;color:var(--iv);margin-top:12px;font-style:italic;}
 .fc-ctrls{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
-.fc-ctrls2{text-align:center;margin-top:10px;display:flex;gap:7px;justify-content:center;}
+.fc-ctrls2{text-align:center;margin-top:10px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap;}
 .fc-count{text-align:center;color:var(--iv);font-size:13px;margin-top:10px;}
 .fc-dots{display:flex;gap:3px;justify-content:center;margin-top:8px;flex-wrap:wrap;}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--bdrl);transition:background .2s,transform .2s;}
 .dot.known{background:var(--sage);}
 .dot.learn{background:var(--rust);}
 .dot.cur{background:var(--gold);transform:scale(1.5);}
-/* map on card back */
-.fc-map-back{width:100%;max-width:300px;margin-bottom:14px;}
+.fc-map-back{width:100%;max-width:280px;margin-bottom:12px;}
 .fc-map-back svg{width:100%;height:auto;}
 .root-origin-pill{display:inline-block;padding:3px 14px;background:var(--gold);color:#fff;border-radius:12px;font-size:13px;margin-bottom:12px;font-style:normal;}
 
-/* ── QUIZ ── */
+/* QUIZ */
 .qz-wrap{max-width:620px;}
 .qpbar{background:var(--bdrl);border-radius:3px;height:6px;margin-bottom:4px;overflow:hidden;}
 .qpfill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gl));border-radius:3px;transition:width .35s ease;}
@@ -165,7 +149,7 @@ nav{flex:1;padding:10px 0 6px;}
 .qopt.ok{border-color:var(--sage);background:#eef5f0;color:#2a5038;}
 .qopt.ng{border-color:var(--rust);background:#fdf0ed;color:#7a2c14;}
 .qopt.dis{cursor:default;}
-.ql{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;transition:all .13s;font-style:normal;}
+.ql{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;font-style:normal;}
 .qopt.ok .ql{background:var(--sage);border-color:var(--sage);color:#fff;}
 .qopt.ng .ql{background:var(--rust);border-color:var(--rust);color:#fff;}
 .qfb{margin-top:16px;padding:13px 16px;border-radius:4px;font-size:14px;display:none;line-height:1.5;}
@@ -173,18 +157,15 @@ nav{flex:1;padding:10px 0 6px;}
 .qfb.ok{background:#eef5f0;border:1px solid #7ab89a;color:#2a5038;}
 .qfb.ng{background:#fdf0ed;border:1px solid #e0836a;color:#7a2c14;}
 .qnxt{text-align:right;margin-top:18px;}
-
-/* ── RESULTS ── */
 .res-card{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:44px;max-width:500px;margin:0 auto;text-align:center;box-shadow:0 6px 28px var(--sh);}
 .res-sc{font-size:68px;color:var(--gold);line-height:1;margin:14px 0 5px;}
 .res-of{font-size:14px;color:var(--il);margin-bottom:22px;}
 .res-gr{font-size:20px;color:var(--im);font-style:italic;margin-bottom:28px;}
 .res-breakdown{display:flex;justify-content:center;gap:24px;margin-bottom:28px;flex-wrap:wrap;}
-.res-stat{text-align:center;}
 .res-stat .rn{font-size:28px;color:var(--ink);}
 .res-stat .rl{font-size:11px;color:var(--iv);text-transform:uppercase;letter-spacing:1.5px;}
 
-/* ── TEST ── */
+/* TEST */
 .t-intro{max-width:540px;background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:32px;box-shadow:0 4px 18px var(--sh);}
 .t-intro h2{font-size:21px;margin-bottom:10px;font-style:italic;}
 .t-intro p{color:var(--il);font-size:14px;margin-bottom:18px;line-height:1.6;}
@@ -211,20 +192,49 @@ nav{flex:1;padding:10px 0 6px;}
 .t-res-card{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:40px;max-width:640px;box-shadow:0 6px 28px var(--sh);}
 .wrong-item{padding:8px 13px;background:#fdf0ed;border-left:3px solid var(--rust);margin-bottom:7px;border-radius:3px;font-size:13.5px;line-height:1.5;}
 
-/* ── MODAL ── */
-.mo{position:fixed;inset:0;background:rgba(20,10,0,.55);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
-.mo.on{display:flex;}
-.md{background:var(--w);border:2px solid var(--bdr);border-radius:8px;padding:38px 44px;max-width:420px;width:92%;box-shadow:0 20px 56px rgba(20,10,0,.28);}
-.md h2{font-size:22px;font-style:italic;margin-bottom:9px;}
-.md p{color:var(--il);font-size:14px;margin-bottom:22px;line-height:1.6;}
-.md input{width:100%;padding:10px 14px;border:1.5px solid var(--bdr);border-radius:4px;font-family:'EB Garamond',Georgia,serif;font-size:16px;background:var(--p);color:var(--ink);margin-bottom:18px;outline:none;}
-.md input:focus{border-color:var(--gold);}
-hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
+/* DICTIONARY */
+.dict-layout{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start;}
+.dict-search-wrap{position:relative;margin-bottom:16px;}
+.dict-search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:var(--iv);pointer-events:none;}
+.dict-search{width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--bdr);border-radius:4px;font-family:'EB Garamond',Georgia,serif;font-size:14px;background:var(--w);color:var(--ink);outline:none;transition:border-color .13s;}
+.dict-search:focus{border-color:var(--gold);}
+.dict-alpha{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px;}
+.dict-alpha button{width:28px;height:28px;border:1.5px solid var(--bdr);border-radius:3px;background:var(--w);font-family:'EB Garamond',Georgia,serif;font-size:13px;color:var(--im);cursor:pointer;transition:all .12s;display:flex;align-items:center;justify-content:center;}
+.dict-alpha button:hover{border-color:var(--gold);background:var(--gll);}
+.dict-alpha button.on{background:var(--gold);border-color:var(--gd);color:#fff;}
+.dict-list{background:var(--w);border:1px solid var(--bdr);border-radius:5px;overflow:hidden;box-shadow:0 2px 10px var(--sh);max-height:70vh;overflow-y:auto;}
+.dict-list::-webkit-scrollbar{width:4px;}
+.dict-list::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px;}
+.dict-item{padding:10px 16px;border-bottom:1px solid var(--bdrl);cursor:pointer;transition:background .12s;display:flex;justify-content:space-between;align-items:center;}
+.dict-item:hover{background:var(--p);}
+.dict-item.on{background:var(--gll);border-left:3px solid var(--gold);}
+.dict-item-term{font-size:14px;color:var(--ink);font-style:italic;}
+.dict-item-type{font-size:11px;color:var(--iv);background:var(--p2);padding:1px 7px;border-radius:10px;}
+.dict-empty{padding:24px;text-align:center;font-size:13px;color:var(--iv);font-style:italic;}
+.dict-entry{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:32px 36px;box-shadow:0 4px 18px var(--sh);}
+.dict-entry-none{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:48px;text-align:center;box-shadow:0 2px 10px var(--sh);}
+.dict-entry-none p{font-size:15px;font-style:italic;color:var(--il);}
+.de-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.de-term{font-size:36px;font-style:italic;color:var(--ink);line-height:1;}
+.de-meta{margin-top:4px;}
+.de-origin-pill{display:inline-block;padding:3px 13px;border-radius:12px;font-size:13px;color:#fff;margin-right:6px;}
+.de-origin-pill.Latin{background:var(--rust);}
+.de-origin-pill.Greek{background:var(--sky);}
+.de-origin-pill.mixed{background:var(--sage);}
+.de-meaning{font-size:22px;color:var(--im);margin-bottom:18px;font-style:italic;}
+.de-section-lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);font-weight:600;margin-bottom:8px;}
+.de-examples{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.de-ex{padding:5px 14px;background:var(--p);border:1px solid var(--bdrl);border-radius:16px;font-size:14px;color:var(--im);}
+.de-note{font-size:14px;color:var(--il);line-height:1.65;padding:14px 18px;background:var(--p);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;margin-bottom:20px;}
+.de-related{display:flex;flex-wrap:wrap;gap:8px;}
+.de-rel-item{padding:5px 14px;border:1.5px solid var(--bdr);border-radius:16px;font-size:13px;color:var(--im);cursor:pointer;transition:all .12s;background:var(--w);}
+.de-rel-item:hover{border-color:var(--gold);background:var(--gll);}
+hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
 
-/* ── CUSTOM DECKS ── */
-.cd-page-layout{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start;}
-.cd-deck-panel{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:0;box-shadow:0 2px 10px var(--sh);overflow:hidden;}
-.cd-panel-head{padding:16px 18px;border-bottom:1px solid var(--bdrl);display:flex;align-items:center;justify-content:space-between;}
+/* CUSTOM DECKS */
+.cd-page-layout{display:grid;grid-template-columns:270px 1fr;gap:26px;align-items:start;}
+.cd-deck-panel{background:var(--w);border:1px solid var(--bdr);border-radius:6px;overflow:hidden;box-shadow:0 2px 10px var(--sh);}
+.cd-panel-head{padding:14px 18px;border-bottom:1px solid var(--bdrl);display:flex;align-items:center;justify-content:space-between;}
 .cd-panel-head h4{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);font-weight:600;}
 .cd-deck-list{list-style:none;max-height:480px;overflow-y:auto;}
 .cd-deck-list::-webkit-scrollbar{width:4px;}
@@ -232,23 +242,20 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
 .cd-deck-item{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;border-bottom:1px solid var(--bdrl);border-left:3px solid transparent;transition:background .12s,border-color .12s;}
 .cd-deck-item:hover{background:var(--p);}
 .cd-deck-item.active{background:var(--gll);border-left-color:var(--gold);}
-.cd-deck-item .dk-icon{font-size:20px;flex-shrink:0;}
-.cd-deck-item .dk-info{flex:1;min-width:0;}
-.cd-deck-item .dk-name{font-size:14px;color:var(--ink);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cd-deck-item .dk-count{font-size:11px;color:var(--iv);}
-.cd-deck-item .dk-del{opacity:0;font-size:16px;color:var(--rust);cursor:pointer;padding:2px 4px;border-radius:2px;transition:opacity .13s;flex-shrink:0;background:none;border:none;font-family:inherit;}
+.dk-swatch{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+.dk-info{flex:1;min-width:0;}
+.dk-name{font-size:14px;color:var(--ink);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dk-count{font-size:11px;color:var(--iv);}
+.dk-del{opacity:0;font-size:15px;color:var(--rust);cursor:pointer;padding:2px 5px;border-radius:2px;transition:opacity .13s;flex-shrink:0;background:none;border:none;font-family:inherit;line-height:1;}
 .cd-deck-item:hover .dk-del{opacity:1;}
-.cd-deck-item .dk-del:hover{background:#fdf0ed;}
+.dk-del:hover{background:#fdf0ed;}
 .cd-empty{padding:24px 18px;text-align:center;font-size:13px;color:var(--iv);font-style:italic;}
-.cd-right{}
-.cd-editor{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:26px 28px;box-shadow:0 2px 10px var(--sh);margin-bottom:20px;}
-.cd-editor h3{font-size:18px;font-style:italic;margin-bottom:18px;color:var(--ink);}
-.cd-field{margin-bottom:16px;}
+.cd-editor{background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:24px 28px;box-shadow:0 2px 10px var(--sh);margin-bottom:20px;}
+.cd-field{margin-bottom:15px;}
 .cd-field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--gd);margin-bottom:5px;font-weight:600;}
 .cd-field input,.cd-field textarea{width:100%;padding:10px 14px;border:1.5px solid var(--bdr);border-radius:4px;font-family:'EB Garamond',Georgia,serif;font-size:15px;background:var(--p);color:var(--ink);outline:none;transition:border-color .13s;resize:vertical;}
 .cd-field input:focus,.cd-field textarea:focus{border-color:var(--gold);background:var(--w);}
-.cd-field textarea{min-height:80px;}
-.cd-field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cd-field textarea{min-height:78px;}
 .cd-cards-list{background:var(--w);border:1px solid var(--bdr);border-radius:6px;box-shadow:0 2px 10px var(--sh);overflow:hidden;}
 .cd-cards-head{padding:14px 18px;border-bottom:1px solid var(--bdrl);display:flex;align-items:center;justify-content:space-between;}
 .cd-cards-head h4{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gd);font-weight:600;}
@@ -262,47 +269,73 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
 .cd-act-btn:hover{border-color:var(--gold);background:var(--gll);}
 .cd-act-btn.del:hover{border-color:var(--rust);background:#fdf0ed;color:var(--rust);}
 .cd-no-cards{padding:28px;text-align:center;font-size:13px;color:var(--iv);font-style:italic;}
-/* custom study view */
-.cd-study-wrap{}
 .cd-study-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;}
 .cd-study-header h2{font-size:20px;font-style:italic;}
-/* deck name input modal piece */
 .md-sm{background:var(--w);border:2px solid var(--bdr);border-radius:8px;padding:30px 36px;max-width:380px;width:92%;box-shadow:0 20px 56px rgba(20,10,0,.28);}
 .md-sm h2{font-size:20px;font-style:italic;margin-bottom:18px;}
-.md-sm .cd-field{margin-bottom:14px;}
 .color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
 .swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .13s,border-color .13s;}
 .swatch:hover{transform:scale(1.15);}
 .swatch.picked{border-color:var(--ink);transform:scale(1.15);}
 
-@media(max-width:900px){.cd-page-layout{grid-template-columns:1fr;}}
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(20,10,0,.55);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
+.mo.on{display:flex;}
+.md{background:var(--w);border:2px solid var(--bdr);border-radius:8px;padding:38px 44px;max-width:420px;width:92%;box-shadow:0 20px 56px rgba(20,10,0,.28);}
+.md h2{font-size:22px;font-style:italic;margin-bottom:9px;}
+.md p{color:var(--il);font-size:14px;margin-bottom:22px;line-height:1.6;}
+.md input{width:100%;padding:10px 14px;border:1.5px solid var(--bdr);border-radius:4px;font-family:'EB Garamond',Georgia,serif;font-size:16px;background:var(--p);color:var(--ink);margin-bottom:18px;outline:none;}
+.md input:focus{border-color:var(--gold);}
 
-@media(max-width:900px){.dg{grid-template-columns:1fr 1fr;}.fc-layout{grid-template-columns:1fr;}}
-@media(max-width:680px){#sb{transform:translateX(-100%);}.#sb.open{transform:none;}#main{margin-left:0;padding:20px 18px 50px;}.dg{grid-template-columns:1fr;}}
+@media(max-width:900px){.dg{grid-template-columns:1fr 1fr;}.fc-layout{grid-template-columns:1fr;}.dict-layout{grid-template-columns:1fr;}.cd-page-layout{grid-template-columns:1fr;}}
+@media(max-width:680px){#main{margin-left:0;padding:20px 18px 50px;}.dg{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
+<!-- SVG ICON DEFS (referenced by use, no repeats) -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="ic-home" viewBox="0 0 24 24"><path d="M3 12L12 3l9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/></symbol>
+  <symbol id="ic-card" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></symbol>
+  <symbol id="ic-quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+  <symbol id="ic-test" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></symbol>
+  <symbol id="ic-deck" viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="13" rx="2"/><path d="M6 7V5a2 2 0 012-2h12a2 2 0 012 2v13a2 2 0 01-2 2h-2"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+</svg>
+
 <!-- SIDEBAR -->
 <div id="sb">
-  <div id="sb-logo"><div class="mk">📜</div><div class="tt">Study</div></div>
+  <div id="sb-logo">
+    <div class="site-name">Study GL &ndash; SC</div>
+    <div class="byline">Made by Gio</div>
+  </div>
   <div id="sb-user" onclick="promptName()">
     <div class="who">Studying as</div>
     <div class="nm" id="uname">— <span class="edit">edit</span></div>
   </div>
   <nav>
     <div class="nl">Overview</div>
-    <button class="nb on" id="n-dash" onclick="go('dash')"><span class="ic">⌂</span>Dashboard</button>
-    <div class="nl">States &amp; Capitals</div>
-    <button class="nb" id="n-fc-s" onclick="go('fc','states')"><span class="ic">🃏</span>Flashcards</button>
-    <button class="nb" id="n-qz-s" onclick="go('qz','states')"><span class="ic">✦</span>Quiz</button>
-    <button class="nb" id="n-ts-s" onclick="go('ts','states')"><span class="ic">✎</span>Test</button>
-    <div class="nl">Greek &amp; Latin Roots</div>
-    <button class="nb" id="n-fc-r" onclick="go('fc','roots')"><span class="ic">🃏</span>Flashcards</button>
-    <button class="nb" id="n-qz-r" onclick="go('qz','roots')"><span class="ic">✦</span>Quiz</button>
-    <button class="nb" id="n-ts-r" onclick="go('ts','roots')"><span class="ic">✎</span>Test</button>
+    <button class="nb on" id="n-dash" onclick="go('dash')">
+      <svg><use href="#ic-home" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></svg>Dashboard
+    </button>
+    <div class="nl">Study</div>
+    <button class="nb" id="n-fc" onclick="go('fc')">
+      <svg><use href="#ic-card" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></svg>Flashcards
+    </button>
+    <button class="nb" id="n-qz" onclick="go('qz')">
+      <svg><use href="#ic-quiz" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></svg>Quiz
+    </button>
+    <button class="nb" id="n-ts" onclick="go('ts')">
+      <svg><use href="#ic-test" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></svg>Test
+    </button>
+    <button class="nb" id="n-dict" onclick="go('dict')">
+      <svg><use href="#ic-book" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></svg>Dictionary
+    </button>
     <div class="nl">My Cards</div>
-    <button class="nb" id="n-cd" onclick="go('cd')"><span class="ic">✏</span>My Decks</button>
+    <button class="nb" id="n-cd" onclick="go('cd')">
+      <svg><use href="#ic-deck" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></svg>My Decks
+    </button>
     <div id="sb-custom-decks"></div>
   </nav>
   <div id="sb-foot">
@@ -311,67 +344,72 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
     <div class="pw"><div class="pb" id="p-sb" style="width:0%"></div></div>
     <div class="pr"><span>Root Words</span><span id="p-rp">0%</span></div>
     <div class="pw"><div class="pb" id="p-rb" style="width:0%"></div></div>
-    <div class="streak-badge"><span class="fl">🔥</span><span id="streak-txt">0-day streak</span></div>
+    <div class="streak-line" id="streak-txt">&#x1F525; 1-day streak</div>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="main">
 
-  <!-- ── DASHBOARD ── -->
+  <!-- DASHBOARD -->
   <div class="pg on" id="pg-dash">
     <div class="dhi" id="d-hi">Welcome back.</div>
     <div class="dsub">Here is where you stand today.</div>
     <div class="dg">
       <div class="dc"><h4>States Known</h4><div class="bn" id="d-sk">0</div><div class="bl">of 50</div></div>
       <div class="dc"><h4>Roots Known</h4><div class="bn" id="d-rk">0</div><div class="bl" id="d-rl">of 57</div></div>
-      <div class="dc"><h4>Best Quiz</h4><div class="bn" id="d-qb">—</div><div class="bl">highest score</div></div>
+      <div class="dc"><h4>Best Quiz</h4><div class="bn" id="d-qb">&#8212;</div><div class="bl">highest score</div></div>
       <div class="dc"><h4>Tests Taken</h4><div class="bn" id="d-tt">0</div><div class="bl">completed</div></div>
     </div>
-    <div class="hmap-wrap">
-      <h4>Study Activity — Past 10 Weeks</h4>
-      <div class="hmap" id="hmap"></div>
-    </div>
     <div class="won-sec"><h4>What to Work On</h4><ul class="wl" id="won"></ul></div>
+    <div class="dash-footer">
+      Email <a href="mailto:368604@students.cnusd.k12.ca.us?subject=Study%20GL-SC%20Question%20or%20Idea">368604@students.cnusd.k12.ca.us</a> for questions or update ideas.
+    </div>
   </div>
 
-  <!-- ── FLASHCARDS ── -->
+  <!-- FLASHCARDS -->
   <div class="pg" id="pg-fc">
-    <div class="pgh"><h1>Flashcards</h1><span class="sub" id="fc-sub"></span></div>
+    <div class="pgh">
+      <h1>Flashcards</h1>
+      <div class="topic-toggle">
+        <button class="tt-btn on" id="fc-tt-s" onclick="setTopic('fc','states')">States &amp; Capitals</button>
+        <button class="tt-btn" id="fc-tt-r" onclick="setTopic('fc','roots')">Greek &amp; Latin Roots</button>
+      </div>
+    </div>
     <hr class="rule">
     <div class="fbar" id="fc-fbar"><label>Filter:</label></div>
     <div class="fc-layout">
-      <div class="fc-main">
+      <div>
         <div class="fc-area">
           <div class="fc-wrap" onclick="flipCard()">
             <div class="fc-card" id="fc-card">
               <div class="face fr">
                 <div class="fc-lbl" id="fc-fl">State</div>
-                <div class="fc-main-txt" id="fc-fm">—</div>
+                <div class="fc-main-txt" id="fc-fm">&#8212;</div>
                 <div class="fc-sub-txt" id="fc-fs"></div>
               </div>
-              <div class="face bk" id="fc-back">
+              <div class="face bk">
                 <div class="fc-lbl" id="fc-bl">Capital</div>
                 <div class="fc-map-back" id="fc-bmap" style="display:none"></div>
-                <div class="fc-main-txt" id="fc-bm">—</div>
+                <div class="fc-main-txt" id="fc-bm">&#8212;</div>
                 <div class="fc-sub-txt" id="fc-bs"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="fc-hint">Click card to flip &nbsp;·&nbsp; ← → keys to navigate &nbsp;·&nbsp; K = know it &nbsp;·&nbsp; L = learning</div>
-        <div class="fc-count"><span id="fc-i">1</span> of <span id="fc-t">—</span></div>
+        <div class="fc-hint">Click card to flip &nbsp;&middot;&nbsp; &#8592; &#8594; keys to navigate &nbsp;&middot;&nbsp; K&nbsp;=&nbsp;know it &nbsp;&middot;&nbsp; L&nbsp;=&nbsp;learning</div>
+        <div class="fc-count"><span id="fc-i">1</span> of <span id="fc-t">&#8212;</span></div>
         <div class="fc-dots" id="fc-dots"></div>
         <div class="fc-ctrls">
-          <button class="btn b-wht" onclick="prevCard()">← Prev</button>
+          <button class="btn b-wht" onclick="prevCard()">&#8592; Prev</button>
           <button class="btn b-red" onclick="markCard('learn')">Still Learning</button>
-          <button class="btn b-grn" onclick="markCard('known')">Know It ✓</button>
-          <button class="btn b-wht" onclick="nextCard()">Next →</button>
+          <button class="btn b-grn" onclick="markCard('known')">Know It &#10003;</button>
+          <button class="btn b-wht" onclick="nextCard()">Next &#8594;</button>
         </div>
         <div class="fc-ctrls2">
-          <button class="btn b-wht" onclick="shuffleCards()">⇄ Shuffle</button>
+          <button class="btn b-wht" onclick="shuffleCards()">&#8644; Shuffle</button>
           <button class="btn b-wht" onclick="filterUnknown()">Study Unknown Only</button>
-          <button class="btn b-wht" onclick="resetDeck()">↺ Reset</button>
+          <button class="btn b-wht" onclick="resetDeck()">&#8634; Reset</button>
         </div>
       </div>
       <div class="fc-side">
@@ -381,9 +419,15 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
     </div>
   </div>
 
-  <!-- ── QUIZ ── -->
+  <!-- QUIZ -->
   <div class="pg" id="pg-qz">
-    <div class="pgh"><h1>Quiz</h1><span class="sub" id="qz-sub"></span></div>
+    <div class="pgh">
+      <h1>Quiz</h1>
+      <div class="topic-toggle">
+        <button class="tt-btn on" id="qz-tt-s" onclick="setTopic('qz','states')">States &amp; Capitals</button>
+        <button class="tt-btn" id="qz-tt-r" onclick="setTopic('qz','roots')">Greek &amp; Latin Roots</button>
+      </div>
+    </div>
     <hr class="rule">
     <div class="fbar" id="qz-fbar"><label>Filter:</label></div>
     <div class="qz-wrap">
@@ -391,19 +435,19 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
         <div class="qpbar"><div class="qpfill" id="qpf" style="width:0%"></div></div>
         <div class="qmeta"><span>Question <span id="qz-n">1</span> of <span id="qz-tot">10</span></span><span>Score: <span id="qz-sc">0</span></span></div>
         <div class="qcard">
-          <div class="qn-lbl" id="qz-qn">—</div>
-          <div class="q-txt" id="qz-qt">—</div>
+          <div class="qn-lbl" id="qz-qn">&#8212;</div>
+          <div class="q-txt" id="qz-qt">&#8212;</div>
           <div class="qopts" id="qz-opts"></div>
           <div class="qfb" id="qz-fb"></div>
-          <div class="qnxt"><button class="btn b-gold" id="qz-nxt" onclick="nextQ()" style="display:none">Next →</button></div>
+          <div class="qnxt"><button class="btn b-gold" id="qz-nxt" onclick="nextQ()" style="display:none">Next &#8594;</button></div>
         </div>
       </div>
       <div id="qz-res" style="display:none">
         <div class="res-card">
           <div style="font-size:14px;color:var(--il)">Quiz Complete</div>
-          <div class="res-sc" id="qr-sc">—</div>
+          <div class="res-sc" id="qr-sc">&#8212;</div>
           <div class="res-of">out of <span id="qr-tot">10</span></div>
-          <div class="res-gr" id="qr-gr">—</div>
+          <div class="res-gr" id="qr-gr">&#8212;</div>
           <div class="res-breakdown">
             <div class="res-stat"><div class="rn" id="qr-c">0</div><div class="rl">Correct</div></div>
             <div class="res-stat"><div class="rn" id="qr-w">0</div><div class="rl">Wrong</div></div>
@@ -416,27 +460,32 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
     </div>
   </div>
 
-  <!-- ── TEST ── -->
+  <!-- TEST -->
   <div class="pg" id="pg-ts">
-    <div class="pgh"><h1>Test</h1><span class="sub" id="ts-sub"></span></div>
+    <div class="pgh">
+      <h1>Test</h1>
+      <div class="topic-toggle">
+        <button class="tt-btn on" id="ts-tt-s" onclick="setTopic('ts','states')">States &amp; Capitals</button>
+        <button class="tt-btn" id="ts-tt-r" onclick="setTopic('ts','roots')">Greek &amp; Latin Roots</button>
+      </div>
+    </div>
     <hr class="rule">
     <div class="fbar" id="ts-fbar"><label>Filter:</label></div>
     <div id="ts-intro">
       <div class="t-intro">
-        <h2 id="ts-ttl">—</h2>
-        <p id="ts-dsc">—</p>
+        <h2 id="ts-ttl">&#8212;</h2>
+        <p id="ts-dsc">&#8212;</p>
         <ul class="t-feats">
           <li>Questions are randomly ordered every time</li>
           <li>Mix of multiple choice and fill-in-the-blank</li>
           <li>Covers only your selected subset</li>
           <li>Wrong answers flagged for future review</li>
-          <li>Full review panel after submission</li>
         </ul>
         <button class="btn b-gold" onclick="beginTest()">Begin Test</button>
       </div>
     </div>
     <div id="ts-area" style="display:none">
-      <div class="t-timer">⏱&nbsp; <span class="t-tval" id="ts-tm">0:00</span>&nbsp; elapsed</div>
+      <div class="t-timer">&#9201;&nbsp;<span class="t-tval" id="ts-tm">0:00</span>&nbsp;elapsed</div>
       <div id="ts-qs"></div>
       <div style="margin-top:20px;"><button class="btn b-gold" onclick="submitTest()">Submit Test</button></div>
     </div>
@@ -444,9 +493,9 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
       <div class="t-res-card">
         <div style="text-align:center">
           <h2 style="font-style:italic;margin-bottom:6px">Test Results</h2>
-          <div class="res-sc" id="tr-sc">—</div>
-          <div class="res-of">out of <span id="tr-tot">—</span></div>
-          <div class="res-gr" id="tr-gr">—</div>
+          <div class="res-sc" id="tr-sc">&#8212;</div>
+          <div class="res-of">out of <span id="tr-tot">&#8212;</span></div>
+          <div class="res-gr" id="tr-gr">&#8212;</div>
         </div>
         <hr class="div">
         <div id="tr-rev"></div>
@@ -458,70 +507,88 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
     </div>
   </div>
 
-  <!-- ── CUSTOM DECKS ── -->
+  <!-- DICTIONARY -->
+  <div class="pg" id="pg-dict">
+    <div class="pgh">
+      <h1>Dictionary</h1>
+      <div class="topic-toggle">
+        <button class="tt-btn on" id="dict-tt-r" onclick="setTopic('dict','roots')">Greek &amp; Latin Roots</button>
+        <button class="tt-btn" id="dict-tt-s" onclick="setTopic('dict','states')">States &amp; Capitals</button>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="dict-layout">
+      <div>
+        <div class="dict-search-wrap">
+          <svg><use href="#ic-search" style="stroke:var(--iv);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></svg>
+          <input class="dict-search" type="text" id="dict-q" placeholder="Search..." oninput="dictSearch()">
+        </div>
+        <div class="dict-alpha" id="dict-alpha"></div>
+        <div class="dict-list" id="dict-list"></div>
+      </div>
+      <div id="dict-entry-wrap">
+        <div class="dict-entry-none"><p>Select an entry on the left to view it.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MY DECKS -->
   <div class="pg" id="pg-cd">
-    <div class="pgh"><h1>My Decks</h1><span class="sub">Create and study your own flashcards</span></div>
+    <div class="pgh"><h1>My Decks</h1><span style="font-size:14px;color:var(--il);font-style:italic">Create and study your own flashcards</span></div>
     <hr class="rule">
     <div id="cd-main-view">
       <div class="cd-page-layout">
-        <!-- Left: deck list -->
         <div class="cd-deck-panel">
           <div class="cd-panel-head">
             <h4>Decks</h4>
             <button class="btn b-gold" style="padding:5px 14px;font-size:13px" onclick="openNewDeckModal()">+ New Deck</button>
           </div>
-          <ul class="cd-deck-list" id="cd-deck-list">
-            <li class="cd-empty">No decks yet. Create one to get started.</li>
-          </ul>
+          <ul class="cd-deck-list" id="cd-deck-list"><li class="cd-empty">No decks yet.</li></ul>
         </div>
-        <!-- Right: selected deck editor -->
-        <div class="cd-right" id="cd-right">
-          <div style="padding:48px;text-align:center;background:var(--w);border:1px solid var(--bdr);border-radius:6px;box-shadow:0 2px 10px var(--sh);">
-            <div style="font-size:40px;margin-bottom:12px">🃏</div>
+        <div id="cd-right">
+          <div style="padding:48px;text-align:center;background:var(--w);border:1px solid var(--bdr);border-radius:6px;box-shadow:0 2px 10px var(--sh)">
             <div style="font-size:17px;font-style:italic;color:var(--im);margin-bottom:6px">Select or create a deck</div>
             <div style="font-size:14px;color:var(--iv)">Your custom flashcard decks appear on the left.</div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Study view for custom deck -->
     <div id="cd-study-view" style="display:none">
       <div class="cd-study-header">
-        <button class="btn b-wht" onclick="exitCustomStudy()" style="padding:6px 16px;font-size:13px">← Back to Deck</button>
-        <h2 id="cd-study-title">—</h2>
-        <span style="font-size:13px;color:var(--iv);font-style:italic" id="cd-study-sub"></span>
+        <button class="btn b-wht" onclick="exitCustomStudy()" style="padding:6px 16px;font-size:13px">&#8592; Back</button>
+        <h2 id="cd-study-title">&#8212;</h2>
       </div>
       <div class="fc-layout">
-        <div class="fc-main">
+        <div>
           <div class="fc-area">
             <div class="fc-wrap" onclick="flipCustomCard()">
               <div class="fc-card" id="cd-fc-card">
                 <div class="face fr">
-                  <div class="fc-lbl" id="cd-fc-fl">Front</div>
-                  <div class="fc-main-txt" id="cd-fc-fm">—</div>
+                  <div class="fc-lbl">Front</div>
+                  <div class="fc-main-txt" id="cd-fc-fm">&#8212;</div>
                   <div class="fc-sub-txt" id="cd-fc-fs"></div>
                 </div>
                 <div class="face bk">
-                  <div class="fc-lbl" id="cd-fc-bl">Back</div>
-                  <div class="fc-main-txt" id="cd-fc-bm">—</div>
+                  <div class="fc-lbl">Back</div>
+                  <div class="fc-main-txt" id="cd-fc-bm">&#8212;</div>
                   <div class="fc-sub-txt" id="cd-fc-bs"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="fc-hint">Click card to flip &nbsp;·&nbsp; ← → to navigate &nbsp;·&nbsp; K = know it &nbsp;·&nbsp; L = learning</div>
-          <div class="fc-count"><span id="cd-fc-i">1</span> of <span id="cd-fc-t">—</span></div>
+          <div class="fc-hint">Click card to flip &nbsp;&middot;&nbsp; &#8592; &#8594; navigate &nbsp;&middot;&nbsp; K / L to mark</div>
+          <div class="fc-count"><span id="cd-fc-i">1</span> of <span id="cd-fc-t">&#8212;</span></div>
           <div class="fc-dots" id="cd-fc-dots"></div>
           <div class="fc-ctrls">
-            <button class="btn b-wht" onclick="prevCustomCard()">← Prev</button>
+            <button class="btn b-wht" onclick="prevCustomCard()">&#8592; Prev</button>
             <button class="btn b-red" onclick="markCustomCard('learn')">Still Learning</button>
-            <button class="btn b-grn" onclick="markCustomCard('known')">Know It ✓</button>
-            <button class="btn b-wht" onclick="nextCustomCard()">Next →</button>
+            <button class="btn b-grn" onclick="markCustomCard('known')">Know It &#10003;</button>
+            <button class="btn b-wht" onclick="nextCustomCard()">Next &#8594;</button>
           </div>
           <div class="fc-ctrls2">
-            <button class="btn b-wht" onclick="shuffleCustomDeck()">⇄ Shuffle</button>
+            <button class="btn b-wht" onclick="shuffleCustomDeck()">&#8644; Shuffle</button>
             <button class="btn b-wht" onclick="filterCustomUnknown()">Study Unknown Only</button>
-            <button class="btn b-wht" onclick="resetCustomDeck()">↺ Reset</button>
+            <button class="btn b-wht" onclick="resetCustomDeck()">&#8634; Reset</button>
           </div>
         </div>
         <div class="fc-side">
@@ -534,117 +601,60 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:22px 0;}
 
 </div><!-- /main -->
 
-<!-- NEW DECK MODAL -->
+<!-- MODALS -->
+<div class="mo" id="name-mo">
+  <div class="md">
+    <h2>What's your name?</h2>
+    <p>Your progress is saved locally on this device.</p>
+    <input type="text" id="name-inp" placeholder="Enter your name..." maxlength="40" onkeydown="if(event.key==='Enter')saveName()">
+    <button class="btn b-gold" onclick="saveName()" style="width:100%">Begin Studying</button>
+  </div>
+</div>
 <div class="mo" id="new-deck-mo">
   <div class="md-sm">
     <h2>New Deck</h2>
-    <div class="cd-field">
-      <label>Deck Name</label>
-      <input type="text" id="nd-name" placeholder="e.g. Biology Vocab" maxlength="60" onkeydown="if(event.key==='Enter')saveNewDeck()">
-    </div>
-    <div class="cd-field">
-      <label>Icon (emoji)</label>
-      <input type="text" id="nd-icon" placeholder="🃏" maxlength="4" style="max-width:80px">
-    </div>
-    <div class="cd-field">
-      <label>Color</label>
-      <div class="color-swatches" id="color-swatches"></div>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:6px">
-      <button class="btn b-gold" onclick="saveNewDeck()" style="flex:1">Create Deck</button>
+    <div class="cd-field"><label>Deck Name</label><input type="text" id="nd-name" placeholder="e.g. Biology Vocab" maxlength="60" onkeydown="if(event.key==='Enter')saveNewDeck()"></div>
+    <div class="cd-field"><label>Color</label><div class="color-swatches" id="color-swatches"></div></div>
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn b-gold" onclick="saveNewDeck()" style="flex:1">Create</button>
       <button class="btn b-wht" onclick="closeModal('new-deck-mo')" style="flex:1">Cancel</button>
     </div>
   </div>
 </div>
-
-<!-- EDIT CARD MODAL -->
 <div class="mo" id="edit-card-mo">
   <div class="md-sm" style="max-width:460px">
     <h2 id="ec-title">Add Card</h2>
-    <div class="cd-field">
-      <label>Front (Question / Term)</label>
-      <textarea id="ec-front" placeholder="What goes on the front of the card?" rows="3"></textarea>
-    </div>
-    <div class="cd-field">
-      <label>Back (Answer / Definition)</label>
-      <textarea id="ec-back" placeholder="What goes on the back?" rows="3"></textarea>
-    </div>
-    <div class="cd-field">
-      <label>Hint <span style="font-size:11px;color:var(--iv);font-style:italic;text-transform:none;letter-spacing:0">(optional)</span></label>
-      <input type="text" id="ec-hint" placeholder="Optional extra info shown below the answer">
-    </div>
-    <div style="display:flex;gap:10px;margin-top:4px">
+    <div class="cd-field"><label>Front</label><textarea id="ec-front" rows="3" placeholder="Question / Term"></textarea></div>
+    <div class="cd-field"><label>Back</label><textarea id="ec-back" rows="3" placeholder="Answer / Definition"></textarea></div>
+    <div class="cd-field"><label>Hint (optional)</label><input type="text" id="ec-hint" placeholder="Extra info shown below the answer"></div>
+    <div style="display:flex;gap:10px;margin-top:6px">
       <button class="btn b-gold" onclick="saveCard()" style="flex:1" id="ec-save-btn">Add Card</button>
       <button class="btn b-wht" onclick="closeModal('edit-card-mo')" style="flex:1">Cancel</button>
     </div>
   </div>
 </div>
-
-<!-- RENAME DECK MODAL -->
 <div class="mo" id="rename-deck-mo">
   <div class="md-sm">
     <h2>Rename Deck</h2>
-    <div class="cd-field">
-      <label>Deck Name</label>
-      <input type="text" id="rd-name" placeholder="New name…" maxlength="60" onkeydown="if(event.key==='Enter')saveRenameDeck()">
-    </div>
-    <div style="display:flex;gap:10px;margin-top:6px">
+    <div class="cd-field"><label>Name</label><input type="text" id="rd-name" placeholder="New name..." maxlength="60" onkeydown="if(event.key==='Enter')saveRenameDeck()"></div>
+    <div style="display:flex;gap:10px;margin-top:8px">
       <button class="btn b-gold" onclick="saveRenameDeck()" style="flex:1">Save</button>
       <button class="btn b-wht" onclick="closeModal('rename-deck-mo')" style="flex:1">Cancel</button>
     </div>
   </div>
 </div>
-<div class="mo" id="name-mo">
-  <div class="md">
-    <h2>What's your name?</h2>
-    <p>Your progress, scores, and history are saved locally on this device.</p>
-    <input type="text" id="name-inp" placeholder="Enter your name…" maxlength="40" onkeydown="if(event.key==='Enter')saveName()">
-    <button class="btn b-gold" onclick="saveName()" style="width:100%">Begin Studying</button>
-  </div>
-</div>
-
-<div class="map-tip" id="mtt"></div>
 
 <script>
-// ══════════════════════════════════════
-// US MAP — inline SVG paths (simplified)
-// ══════════════════════════════════════
-// Each state has approximate [cx,cy] center coords for the mini-map on flashcard back
-const STATE_DATA = {
-  AL:{cx:520,cy:330}, AK:{cx:130,cy:420}, AZ:{cx:195,cy:300}, AR:{cx:465,cy:300},
-  CA:{cx:115,cy:255}, CO:{cx:270,cy:240}, CT:{cx:700,cy:155}, DE:{cx:685,cy:195},
-  FL:{cx:565,cy:390}, GA:{cx:545,cy:340}, HI:{cx:270,cy:430}, ID:{cx:195,cy:165},
-  IL:{cx:490,cy:225}, IN:{cx:520,cy:215}, IA:{cx:445,cy:195}, KS:{cx:385,cy:255},
-  KY:{cx:530,cy:255}, LA:{cx:465,cy:360}, ME:{cx:730,cy:105}, MD:{cx:670,cy:200},
-  MA:{cx:715,cy:145}, MI:{cx:525,cy:170}, MN:{cx:430,cy:145}, MS:{cx:490,cy:335},
-  MO:{cx:450,cy:250}, MT:{cx:250,cy:145}, NE:{cx:370,cy:220}, NV:{cx:155,cy:225},
-  NH:{cx:710,cy:130}, NJ:{cx:685,cy:185}, NM:{cx:255,cy:310}, NY:{cx:665,cy:155},
-  NC:{cx:600,cy:275}, ND:{cx:360,cy:145}, OH:{cx:560,cy:215}, OK:{cx:390,cy:295},
-  OR:{cx:150,cy:170}, PA:{cx:635,cy:185}, RI:{cx:715,cy:155}, SC:{cx:580,cy:305},
-  SD:{cx:360,cy:185}, TN:{cx:530,cy:285}, TX:{cx:370,cy:345}, UT:{cx:215,cy:245},
-  VT:{cx:695,cy:128}, VA:{cx:625,cy:240}, WA:{cx:155,cy:120}, WV:{cx:590,cy:230},
-  WI:{cx:470,cy:165}, WY:{cx:265,cy:195}
-};
+// ═══════════════════════════════
+// STATE MAP DATA
+// ═══════════════════════════════
+const MAP_URL='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Map_of_USA_with_state_names.svg/800px-Map_of_USA_with_state_names.svg.png';
+const SD={AL:{cx:520,cy:330},AK:{cx:130,cy:420},AZ:{cx:195,cy:300},AR:{cx:465,cy:300},CA:{cx:115,cy:255},CO:{cx:270,cy:240},CT:{cx:700,cy:155},DE:{cx:685,cy:195},FL:{cx:565,cy:390},GA:{cx:545,cy:340},HI:{cx:270,cy:430},ID:{cx:195,cy:165},IL:{cx:490,cy:225},IN:{cx:520,cy:215},IA:{cx:445,cy:195},KS:{cx:385,cy:255},KY:{cx:530,cy:255},LA:{cx:465,cy:360},ME:{cx:730,cy:105},MD:{cx:670,cy:200},MA:{cx:715,cy:145},MI:{cx:525,cy:170},MN:{cx:430,cy:145},MS:{cx:490,cy:335},MO:{cx:450,cy:250},MT:{cx:250,cy:145},NE:{cx:370,cy:220},NV:{cx:155,cy:225},NH:{cx:710,cy:130},NJ:{cx:685,cy:185},NM:{cx:255,cy:310},NY:{cx:665,cy:155},NC:{cx:600,cy:275},ND:{cx:360,cy:145},OH:{cx:560,cy:215},OK:{cx:390,cy:295},OR:{cx:150,cy:170},PA:{cx:635,cy:185},RI:{cx:715,cy:155},SC:{cx:580,cy:305},SD:{cx:360,cy:185},TN:{cx:530,cy:285},TX:{cx:370,cy:345},UT:{cx:215,cy:245},VT:{cx:695,cy:128},VA:{cx:625,cy:240},WA:{cx:155,cy:120},WV:{cx:590,cy:230},WI:{cx:470,cy:165},WY:{cx:265,cy:195}};
+function miniMap(a){const p=SD[a];if(!p)return '';return `<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:260px;border-radius:4px;border:1px solid var(--bdrl)"><image href="${MAP_URL}" width="800" height="500"/><circle cx="${p.cx}" cy="${p.cy}" r="14" fill="rgba(201,146,42,.3)"/><circle cx="${p.cx}" cy="${p.cy}" r="8" fill="var(--gold)" stroke="white" stroke-width="2"/></svg>`;}
 
-// Simple US map SVG as a string (we'll use an inline mini SVG for the card back)
-// For the main dashboard map, use a known CDN SVG
-const MAP_SVG_URL = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Map_of_USA_with_state_names.svg/800px-Map_of_USA_with_state_names.svg.png`;
-
-// Mini map for card back: draw a simple dot-on-map using canvas approach
-function makeMiniMap(abbr){
-  const pos = STATE_DATA[abbr];
-  if(!pos) return '';
-  // Simple SVG with a pin dot
-  return `<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;border-radius:4px;border:1px solid var(--bdrl)">
-    <image href="${MAP_SVG_URL}" width="800" height="500" x="0" y="0" preserveAspectRatio="xMidYMid meet"/>
-    <circle cx="${pos.cx}" cy="${pos.cy}" r="14" fill="rgba(201,146,42,.35)" stroke="none"/>
-    <circle cx="${pos.cx}" cy="${pos.cy}" r="8" fill="var(--gold)" stroke="white" stroke-width="2"/>
-  </svg>`;
-}
-
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // DATA — STATES
-// ══════════════════════════════════════
+// ═══════════════════════════════
 const STATES=[
   {s:"Alabama",c:"Montgomery",a:"AL",r:"Southeast"},
   {s:"Alaska",c:"Juneau",a:"AK",r:"West"},
@@ -699,965 +709,537 @@ const STATES=[
 ];
 const S_REG=["All","Northeast","Southeast","Midwest","Southwest","West"];
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // DATA — ROOTS
-// ══════════════════════════════════════
+// ═══════════════════════════════
 const ROOTS=[
   {root:"aqu",origin:"Latin",meaning:"water",examples:["aquarium","aquatic","aqueduct"],note:"From Latin aqua. Water was central to Roman infrastructure.",type:"Latin"},
   {root:"aud",origin:"Latin",meaning:"hear, listen",examples:["audible","audience","auditorium"],note:"From Latin audire. An audience literally means those who hear.",type:"Latin"},
-  {root:"bene / ben",origin:"Latin",meaning:"good, well",examples:["benefit","benevolent","benign"],note:"From Latin bene. The opposite is mal- (bad). Not to be confused with French/Spanish bien.",type:"Latin"},
+  {root:"bene / ben",origin:"Latin",meaning:"good, well",examples:["benefit","benevolent","benign"],note:"From Latin bene. Note: not to be confused with French/Spanish bien.",type:"Latin"},
   {root:"bio",origin:"Greek",meaning:"life",examples:["biology","biography","antibiotic"],note:"From Greek bios. Biology is literally the study of life.",type:"Greek"},
   {root:"cap / cept",origin:"Latin",meaning:"take, seize",examples:["capture","receptive","intercept"],note:"From Latin capere. To intercept is to seize something in between.",type:"Latin"},
-  {root:"chron",origin:"Greek",meaning:"time",examples:["chronology","chronic","anachronism"],note:"From Greek khronos. Chronos was the Greek god of time.",type:"Greek"},
-  {root:"cred",origin:"Latin",meaning:"believe, trust",examples:["credible","incredible","credentials"],note:"From Latin credere. Credit comes from trusting someone to repay.",type:"Latin"},
-  {root:"dem / demo",origin:"Greek",meaning:"people",examples:["democracy","epidemic","demographic"],note:"From Greek demos (the people). Democracy = rule by the people.",type:"Greek"},
-  {root:"dict",origin:"Latin",meaning:"say, speak",examples:["dictate","predict","verdict"],note:"From Latin dicere. A verdict is what is truly spoken (ver = truth).",type:"Latin"},
+  {root:"chron",origin:"Greek",meaning:"time",examples:["chronology","chronic","anachronism"],note:"From Greek khronos, the god of time.",type:"Greek"},
+  {root:"cred",origin:"Latin",meaning:"believe, trust",examples:["credible","incredible","credentials"],note:"From Latin credere. Credit means trusting someone to repay.",type:"Latin"},
+  {root:"dem",origin:"Greek",meaning:"people",examples:["democracy","epidemic","demographic"],note:"From Greek demos. Democracy = rule by the people.",type:"Greek"},
+  {root:"dict",origin:"Latin",meaning:"say, speak",examples:["dictate","predict","verdict"],note:"From Latin dicere. A verdict is what is truly spoken.",type:"Latin"},
   {root:"duc / duct",origin:"Latin",meaning:"lead",examples:["conduct","educate","deduce"],note:"From Latin ducere. To educate is to lead out potential.",type:"Latin"},
   {root:"eu",origin:"Greek",meaning:"good, well",examples:["euphoria","eulogy","euphemism"],note:"From Greek eu. A eulogy is literally good words (eu + logos).",type:"Greek"},
-  {root:"fac / fect",origin:"Latin",meaning:"make, do",examples:["factory","artifact","effect"],note:"From Latin facere. An artifact is something made by art/skill.",type:"Latin"},
+  {root:"fac / fect",origin:"Latin",meaning:"make, do",examples:["factory","artifact","effect"],note:"From Latin facere. An artifact is something made by art or skill.",type:"Latin"},
   {root:"fer",origin:"Latin",meaning:"carry, bear",examples:["transfer","fertile","defer"],note:"From Latin ferre. To transfer is to carry across.",type:"Latin"},
   {root:"fid",origin:"Latin",meaning:"faith, trust",examples:["fidelity","confide","infidel"],note:"From Latin fides. Fidelity means faithfulness.",type:"Latin"},
   {root:"flect / flex",origin:"Latin",meaning:"bend",examples:["reflect","flexible","deflect"],note:"From Latin flectere. To reflect is to bend back light or thought.",type:"Latin"},
-  {root:"geo",origin:"Greek",meaning:"earth",examples:["geology","geography","geometry"],note:"From Greek gē. Geometry was originally the measurement of land.",type:"Greek"},
+  {root:"geo",origin:"Greek",meaning:"earth",examples:["geology","geography","geometry"],note:"From Greek ge. Geometry was originally the measurement of land.",type:"Greek"},
   {root:"graph / gram",origin:"Greek",meaning:"write, draw, record",examples:["paragraph","telegram","autograph"],note:"From Greek graphein. A paragraph marks a written section.",type:"Greek"},
-  {root:"greg",origin:"Latin",meaning:"group, flock",examples:["congregate","segregate","gregarious"],note:"From Latin grex (flock). Gregarious means fond of groups.",type:"Latin"},
+  {root:"greg",origin:"Latin",meaning:"group, flock",examples:["congregate","segregate","gregarious"],note:"From Latin grex. Gregarious means fond of being in groups.",type:"Latin"},
   {root:"hetero",origin:"Greek",meaning:"different, other",examples:["heterogeneous","heteronym","heterodox"],note:"From Greek heteros. The opposite of homo- (same).",type:"Greek"},
   {root:"homo",origin:"Greek",meaning:"same",examples:["homophone","homogeneous","homonym"],note:"From Greek homos. Homophones sound the same but differ in meaning.",type:"Greek"},
   {root:"hydr",origin:"Greek",meaning:"water",examples:["hydrant","hydraulic","dehydrate"],note:"From Greek hydor. Hydraulics uses water pressure to do work.",type:"Greek"},
   {root:"ject",origin:"Latin",meaning:"throw",examples:["project","reject","inject"],note:"From Latin jacere. To project is to throw forward.",type:"Latin"},
   {root:"log / logue",origin:"Greek",meaning:"word, reason, study",examples:["dialogue","prologue","monologue"],note:"From Greek logos. Dialogue is speaking between two parties.",type:"Greek"},
-  {root:"luc / lum",origin:"Latin",meaning:"light",examples:["lucid","illuminate","translucent"],note:"From Latin lux/lumen. Lucid means clear and full of light.",type:"Latin"},
+  {root:"luc / lum",origin:"Latin",meaning:"light",examples:["lucid","illuminate","translucent"],note:"From Latin lux / lumen. Lucid means clear and full of light.",type:"Latin"},
   {root:"mal",origin:"Latin",meaning:"bad, evil",examples:["malicious","malfunction","malady"],note:"From Latin malus. The opposite of bene- (good).",type:"Latin"},
   {root:"man / manu",origin:"Latin",meaning:"hand",examples:["manual","manuscript","manipulate"],note:"From Latin manus. A manuscript was written by hand.",type:"Latin"},
   {root:"mega",origin:"Greek",meaning:"large, great",examples:["megaphone","megabyte","megalopolis"],note:"From Greek megas. A megalopolis is a very large city or metro area.",type:"Greek"},
   {root:"micro",origin:"Greek",meaning:"small",examples:["microscope","microphone","microbiology"],note:"From Greek mikros. The opposite of macro- and mega-.",type:"Greek"},
   {root:"mit / miss",origin:"Latin",meaning:"send",examples:["transmit","dismiss","missile"],note:"From Latin mittere. To transmit is to send across.",type:"Latin"},
-  {root:"morph",origin:"Greek",meaning:"form, shape",examples:["metamorphosis","morphology","amorphous"],note:"From Greek morphē. Metamorphosis = change of form.",type:"Greek"},
-  {root:"mort",origin:"Latin",meaning:"death",examples:["mortal","immortal","mortuary"],note:"From Latin mors/mortis. Immortal means not subject to death.",type:"Latin"},
+  {root:"morph",origin:"Greek",meaning:"form, shape",examples:["metamorphosis","morphology","amorphous"],note:"From Greek morphe. Metamorphosis = change of form.",type:"Greek"},
+  {root:"mort",origin:"Latin",meaning:"death",examples:["mortal","immortal","mortuary"],note:"From Latin mors / mortis. Immortal means not subject to death.",type:"Latin"},
   {root:"multi",origin:"Latin",meaning:"many",examples:["multiply","multilingual","multitask"],note:"From Latin multus. Multilingual = knowing many languages.",type:"Latin"},
   {root:"nat / nasc",origin:"Latin",meaning:"born",examples:["native","innate","prenatal"],note:"From Latin nasci. Innate qualities are those born within you.",type:"Latin"},
   {root:"neg",origin:"Latin",meaning:"not, deny",examples:["negative","negate","neglect"],note:"From Latin negare. To negate is to deny or cancel.",type:"Latin"},
   {root:"omni",origin:"Latin",meaning:"all",examples:["omnivore","omnipotent","omniscient"],note:"From Latin omnis. An omnivore eats all types of food.",type:"Latin"},
   {root:"pan",origin:"Greek",meaning:"all, every",examples:["pandemic","panorama","pantheon"],note:"From Greek pan. A panorama shows everything in view.",type:"Greek"},
   {root:"path",origin:"Greek",meaning:"feeling, suffering",examples:["empathy","sympathy","pathology"],note:"From Greek pathos. Empathy = feeling into another's experience.",type:"Greek"},
-  {root:"ped / pod",origin:"Greek/Latin",meaning:"foot",examples:["pedestrian","podium","expedition"],note:"From Greek pous/Latin pes. A podium is what you stand on.",type:"Greek"},
+  {root:"ped / pod",origin:"Greek/Latin",meaning:"foot",examples:["pedestrian","podium","expedition"],note:"From Greek pous / Latin pes. A podium is what you stand on.",type:"Greek"},
   {root:"phil",origin:"Greek",meaning:"love",examples:["philosophy","philanthropy","bibliophile"],note:"From Greek philos. Philosophy = love of wisdom.",type:"Greek"},
-  {root:"phon",origin:"Greek",meaning:"sound, voice",examples:["microphone","symphony","phonics"],note:"From Greek phōnē. A symphony is a sounding together.",type:"Greek"},
-  {root:"photo / phos",origin:"Greek",meaning:"light",examples:["photograph","photosynthesis","phosphorus"],note:"From Greek phōs. Photosynthesis = making with light.",type:"Greek"},
+  {root:"phon",origin:"Greek",meaning:"sound, voice",examples:["microphone","symphony","phonics"],note:"From Greek phone. A symphony is a sounding together.",type:"Greek"},
+  {root:"photo / phos",origin:"Greek",meaning:"light",examples:["photograph","photosynthesis","phosphorus"],note:"From Greek phos. Photosynthesis = making with light.",type:"Greek"},
   {root:"port",origin:"Latin",meaning:"carry",examples:["transport","portable","export"],note:"From Latin portare. To export is to carry out of a country.",type:"Latin"},
-  {root:"psych",origin:"Greek",meaning:"mind, soul",examples:["psychology","psychic","psychiatry"],note:"From Greek psychē. The study of the mind and behavior.",type:"Greek"},
+  {root:"psych",origin:"Greek",meaning:"mind, soul",examples:["psychology","psychic","psychiatry"],note:"From Greek psyche. The study of the mind and behavior.",type:"Greek"},
   {root:"rupt",origin:"Latin",meaning:"break",examples:["disrupt","rupture","interrupt"],note:"From Latin rumpere. To interrupt is to break in between.",type:"Latin"},
   {root:"scrib / script",origin:"Latin",meaning:"write",examples:["describe","manuscript","inscription"],note:"From Latin scribere. To describe is to write about.",type:"Latin"},
   {root:"sect",origin:"Latin",meaning:"cut",examples:["dissect","section","bisect"],note:"From Latin secare. To bisect is to cut into two equal parts.",type:"Latin"},
   {root:"sol",origin:"Latin",meaning:"sun",examples:["solar","solstice","parasol"],note:"From Latin sol. A solstice is when the sun stands still.",type:"Latin"},
   {root:"spec / spect",origin:"Latin",meaning:"see, look",examples:["spectacle","inspect","perspective"],note:"From Latin specere. A spectacle is something worth seeing.",type:"Latin"},
   {root:"struct",origin:"Latin",meaning:"build",examples:["structure","construct","instruct"],note:"From Latin struere. To instruct is to build knowledge in someone.",type:"Latin"},
-  {root:"tele",origin:"Greek",meaning:"far, distant",examples:["telephone","telescope","television"],note:"From Greek tēle. A telescope lets you see far away.",type:"Greek"},
+  {root:"tele",origin:"Greek",meaning:"far, distant",examples:["telephone","telescope","television"],note:"From Greek tele. A telescope lets you see far away.",type:"Greek"},
   {root:"terr",origin:"Latin",meaning:"earth, land",examples:["territory","terrain","terrestrial"],note:"From Latin terra. Terrestrial means of or relating to the earth.",type:"Latin"},
-  {root:"therm",origin:"Greek",meaning:"heat",examples:["thermometer","thermostat","thermal"],note:"From Greek thermē. A thermostat controls heat levels.",type:"Greek"},
+  {root:"therm",origin:"Greek",meaning:"heat",examples:["thermometer","thermostat","thermal"],note:"From Greek therme. A thermostat controls heat levels.",type:"Greek"},
   {root:"tract",origin:"Latin",meaning:"pull, drag",examples:["traction","attract","extract"],note:"From Latin trahere. To attract is to pull toward.",type:"Latin"},
   {root:"uni",origin:"Latin",meaning:"one",examples:["uniform","unify","unique"],note:"From Latin unus. Something unique is one of a kind.",type:"Latin"},
   {root:"ver / veri",origin:"Latin",meaning:"truth",examples:["verify","verdict","verity"],note:"From Latin verus. To verify is to confirm as true.",type:"Latin"},
   {root:"vid / vis",origin:"Latin",meaning:"see",examples:["video","vision","visible"],note:"From Latin videre. Vision is the power of seeing.",type:"Latin"},
-  {root:"vit / viv",origin:"Latin",meaning:"life",examples:["vital","vivid","survive"],note:"From Latin vita/vivere. Vital means necessary for life.",type:"Latin"},
-  {root:"voc / voke",origin:"Latin",meaning:"voice, call",examples:["vocal","invoke","advocate"],note:"From Latin vox/vocare. An advocate is one who calls in support.",type:"Latin"},
-  {root:"zoo",origin:"Greek",meaning:"animal",examples:["zoology","zodiac","protozoa"],note:"From Greek zōon. Zoology is the study of animals.",type:"Greek"}
+  {root:"vit / viv",origin:"Latin",meaning:"life",examples:["vital","vivid","survive"],note:"From Latin vita / vivere. Vital means necessary for life.",type:"Latin"},
+  {root:"voc / voke",origin:"Latin",meaning:"voice, call",examples:["vocal","invoke","advocate"],note:"From Latin vox / vocare. An advocate is one who calls in support.",type:"Latin"},
+  {root:"zoo",origin:"Greek",meaning:"animal",examples:["zoology","zodiac","protozoa"],note:"From Greek zoon. Zoology is the study of animals.",type:"Greek"}
 ];
-const R_TYPES=["All","Greek","Latin"];
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // APP STATE
-// ══════════════════════════════════════
-let P={sKnown:{},rKnown:{},sErr:{},rErr:{},quizBest:null,tests:0,streak:0,lastDay:'',activity:{}};
+// ═══════════════════════════════
+let P={sKnown:{},rKnown:{},sErr:{},rErr:{},quizBest:null,tests:0,streak:1,lastDay:'',
+       pgTopics:{fc:'states',qz:'states',ts:'states',dict:'roots'}};
 let uName='';
-let curPg='dash', curTopic='states';
+let curPg='dash';
+// per-page topics persisted
 let AF={states:['All'],roots:['All']};
-let deck=[],dIdx=0,flipped=false,unknownOnly=false;
+let deck=[],dIdx=0,flipped=false;
 let qItems=[],qIdx=0,qRight=0,qAns=false;
-let tItems=[],tAnswers={},tTimer=null,tSec=0,tTopic='states';
+let tItems=[],tAnswers={},tTimer=null,tSec=0;
+let dictSelIdx=-1,dictFilterAlpha='',dictSearchQ='';
+let cdActiveDeckId=null,cdStudyDeck=[],cdStudyIdx=0,cdStudyFlipped=false,cdEditCardId=null,newDeckColor='#c9922a';
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // STORAGE
-// ══════════════════════════════════════
-function save(){localStorage.setItem('study_v3',JSON.stringify(P));localStorage.setItem('study_nm',uName);}
+// ═══════════════════════════════
+function save(){localStorage.setItem('studyGL_v4',JSON.stringify(P));localStorage.setItem('studyGL_nm',uName);}
 function load(){
-  try{const d=localStorage.getItem('study_v3');if(d)P=Object.assign({sKnown:{},rKnown:{},sErr:{},rErr:{},quizBest:null,tests:0,streak:0,lastDay:'',activity:{}},JSON.parse(d));}catch(e){}
-  uName=localStorage.getItem('study_nm')||'';
+  try{const d=localStorage.getItem('studyGL_v4');if(d){const parsed=JSON.parse(d);P=Object.assign({sKnown:{},rKnown:{},sErr:{},rErr:{},quizBest:null,tests:0,streak:1,lastDay:'',pgTopics:{fc:'states',qz:'states',ts:'states',dict:'roots'}},parsed);if(!P.pgTopics)P.pgTopics={fc:'states',qz:'states',ts:'states',dict:'roots'};}}catch(e){}
+  uName=localStorage.getItem('studyGL_nm')||'';
 }
 
-function logActivity(){
-  const today=new Date().toISOString().split('T')[0];
-  P.activity[today]=(P.activity[today]||0)+1;
-  // streak
-  const prev=new Date(Date.now()-864e5).toISOString().split('T')[0];
-  if(P.lastDay===prev||P.lastDay===today){
-    if(P.lastDay!==today) P.streak=(P.streak||0)+1;
-  } else if(P.lastDay!==today){
-    P.streak=1;
+// ═══════════════════════════════
+// TOPIC TOGGLE (per page, saved)
+// ═══════════════════════════════
+function setTopic(pg,topic){
+  P.pgTopics[pg]=topic;save();
+  applyTopicToggle(pg,topic);
+  if(pg==='fc'){AF={states:['All'],roots:['All']};initFC();}
+  else if(pg==='qz'){document.getElementById('qz-res').style.display='none';document.getElementById('qz-active').style.display='';startQuiz();}
+  else if(pg==='ts') refreshTestIntro();
+  else if(pg==='dict') initDict();
+}
+function applyTopicToggle(pg,topic){
+  ['s','r'].forEach(x=>{
+    const b=document.getElementById(`${pg}-tt-${x}`);
+    if(b) b.classList.toggle('on',(topic==='states'&&x==='s')||(topic==='roots'&&x==='r')||(topic==='roots'&&x==='r'&&pg==='dict')||(topic==='states'&&x==='s'&&pg==='dict'));
+  });
+  // dict is reversed (roots default)
+  if(pg==='dict'){
+    const br=document.getElementById('dict-tt-r');
+    const bs=document.getElementById('dict-tt-s');
+    if(br) br.classList.toggle('on',topic==='roots');
+    if(bs) bs.classList.toggle('on',topic==='states');
   }
-  P.lastDay=today;
-  save();
-  updateStreakUI();
 }
-function updateStreakUI(){
-  document.getElementById('streak-txt').textContent=`${P.streak||0}-day streak`;
-}
+function getTopic(pg){return P.pgTopics[pg]||'states';}
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // NAV
-// ══════════════════════════════════════
-function go(pg,topic){
-  if(topic) curTopic=topic;
+// ═══════════════════════════════
+function go(pg){
   curPg=pg;
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('pg-'+pg).classList.add('on');
-  const nid=topic?`n-${pg}-${topic[0]}`:`n-${pg}`;
-  const nb=document.getElementById(nid);
-  if(nb) nb.classList.add('on');
+  const nb=document.getElementById('n-'+pg);if(nb)nb.classList.add('on');
+  const t=getTopic(pg);
+  applyTopicToggle(pg,t);
   if(pg==='dash') renderDash();
-  else if(pg==='fc') initFC(topic);
+  else if(pg==='fc'){AF={states:['All'],roots:['All']};initFC();}
   else if(pg==='qz'){document.getElementById('qz-res').style.display='none';document.getElementById('qz-active').style.display='';startQuiz();}
-  else if(pg==='ts') initTest(topic);
-  logActivity();
+  else if(pg==='ts'){document.getElementById('ts-area').style.display='none';document.getElementById('ts-res').style.display='none';document.getElementById('ts-intro').style.display='';refreshTestIntro();}
+  else if(pg==='dict') initDict();
+  else if(pg==='cd'){document.getElementById('cd-main-view').style.display='';document.getElementById('cd-study-view').style.display='none';renderDecksPage();}
+  if(tTimer&&pg!=='ts'){clearInterval(tTimer);tTimer=null;}
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // NAME
-// ══════════════════════════════════════
-function promptName(){
-  document.getElementById('name-inp').value=uName||'';
-  document.getElementById('name-mo').classList.add('on');
-  setTimeout(()=>document.getElementById('name-inp').focus(),80);
-}
-function saveName(){
-  const v=document.getElementById('name-inp').value.trim();
-  if(!v) return;
-  uName=v; save();
-  document.getElementById('name-mo').classList.remove('on');
-  updateUI();
-}
+// ═══════════════════════════════
+function promptName(){document.getElementById('name-inp').value=uName||'';document.getElementById('name-mo').classList.add('on');setTimeout(()=>document.getElementById('name-inp').focus(),80);}
+function saveName(){const v=document.getElementById('name-inp').value.trim();if(!v)return;uName=v;save();document.getElementById('name-mo').classList.remove('on');updateUI();}
 function updateUI(){
-  document.getElementById('uname').innerHTML=uName?`${uName} <span class="edit">edit</span>`:`— <span class="edit">edit</span>`;
+  document.getElementById('uname').innerHTML=uName?`${uName} <span class="edit">edit</span>`:`&#8212; <span class="edit">edit</span>`;
   document.getElementById('d-hi').textContent=uName?`Welcome back, ${uName}.`:'Welcome back.';
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // PROGRESS
-// ══════════════════════════════════════
+// ═══════════════════════════════
 function updateProg(){
   const sk=Object.values(P.sKnown).filter(Boolean).length;
   const rk=Object.values(P.rKnown).filter(Boolean).length;
   const sp=Math.round(sk/50*100),rp=Math.round(rk/ROOTS.length*100);
-  setText('p-sp',sp+'%'); setText('p-rp',rp+'%');
+  setText('p-sp',sp+'%');setText('p-rp',rp+'%');
   document.getElementById('p-sb').style.width=sp+'%';
   document.getElementById('p-rb').style.width=rp+'%';
-  setText('d-sk',sk); setText('d-rk',rk);
+  setText('d-sk',sk);setText('d-rk',rk);
   document.getElementById('d-rl').textContent='of '+ROOTS.length;
   setText('d-qb',P.quizBest!==null?P.quizBest+'%':'—');
   setText('d-tt',P.tests);
-  updateStreakUI();
+  document.getElementById('streak-txt').textContent='\uD83D\uDD25 '+(P.streak||1)+'-day streak';
 }
 function setText(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
 
-// ══════════════════════════════════════
-// DASHBOARD
-// ══════════════════════════════════════
 function renderDash(){
-  updateUI(); updateProg(); renderHmap(); renderWon();
-}
-function renderHmap(){
-  const wrap=document.getElementById('hmap');
-  wrap.innerHTML='';
-  const today=new Date();
-  for(let i=69;i>=0;i--){
-    const d=new Date(today); d.setDate(d.getDate()-i);
-    const k=d.toISOString().split('T')[0];
-    const ct=P.activity[k]||0;
-    const div=document.createElement('div');
-    div.className='hday'+(ct===0?'':ct<3?' l1':ct<6?' l2':' l3');
-    div.title=k+': '+ct+' sessions';
-    wrap.appendChild(div);
-  }
-}
-function renderWon(){
-  const list=document.getElementById('won');
-  const items=[];
-  Object.entries(P.sErr).sort((a,b)=>b[1]-a[1]).slice(0,3).forEach(([a,ct])=>{
-    const st=STATES.find(x=>x.a===a);
-    if(st) items.push({lbl:`${st.s} → ${st.c}`,sub:'State & Capital',ct,type:'s'});
-  });
-  Object.entries(P.rErr).sort((a,b)=>b[1]-a[1]).slice(0,3).forEach(([r,ct])=>{
-    const ro=ROOTS.find(x=>x.root===r);
-    if(ro) items.push({lbl:`"${ro.root}" — ${ro.meaning}`,sub:'Root Word ('+ro.origin+')',ct,type:'r'});
-  });
-  STATES.filter(s=>!P.sKnown[s.a]&&!P.sErr[s.a]).slice(0,2).forEach(s=>{
-    items.push({lbl:`${s.s} → ${s.c}`,sub:'Not yet studied',ct:0,type:'s'});
-  });
-  if(!items.length){
-    list.innerHTML='<li class="wi"><span class="wt"><strong>All caught up!</strong><small>Keep reviewing to stay sharp</small></span><span class="bge g">✓</span></li>';
-    return;
-  }
-  list.innerHTML=items.slice(0,7).map(i=>`
-    <li class="wi">
-      <span class="wt"><strong>${i.lbl}</strong><small>${i.sub}</small></span>
-      ${i.ct>0?`<span class="bge r">Missed ${i.ct}×</span>`:`<span class="bge b">Study</span>`}
-    </li>`).join('');
+  updateUI();updateProg();
+  const list=document.getElementById('won');const items=[];
+  Object.entries(P.sErr).sort((a,b)=>b[1]-a[1]).slice(0,3).forEach(([a,ct])=>{const st=STATES.find(x=>x.a===a);if(st)items.push({lbl:`${st.s} \u2192 ${st.c}`,sub:'State & Capital',ct});});
+  Object.entries(P.rErr).sort((a,b)=>b[1]-a[1]).slice(0,3).forEach(([r,ct])=>{const ro=ROOTS.find(x=>x.root===r);if(ro)items.push({lbl:`"${ro.root}" \u2014 ${ro.meaning}`,sub:'Root Word ('+ro.origin+')',ct});});
+  STATES.filter(s=>!P.sKnown[s.a]&&!P.sErr[s.a]).slice(0,2).forEach(s=>{items.push({lbl:`${s.s} \u2192 ${s.c}`,sub:'Not yet studied',ct:0});});
+  if(!items.length){list.innerHTML='<li class="wi"><span class="wt"><strong>All caught up!</strong><small>Keep reviewing to stay sharp</small></span><span class="bge g">&#10003;</span></li>';return;}
+  list.innerHTML=items.slice(0,7).map(i=>`<li class="wi"><span class="wt"><strong>${i.lbl}</strong><small>${i.sub}</small></span>${i.ct>0?`<span class="bge r">Missed ${i.ct}\u00d7</span>`:`<span class="bge b">Study</span>`}</li>`).join('');
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // FILTERS
-// ══════════════════════════════════════
+// ═══════════════════════════════
 function buildFilters(cid,opts,topic){
-  const c=document.getElementById(cid);
-  c.innerHTML='<label>Filter:</label>';
-  opts.forEach(opt=>{
-    const b=document.createElement('button');
-    b.className='ft'+(AF[topic].includes(opt)?' on':'');
-    b.textContent=opt;
-    b.onclick=()=>toggleF(opt,topic,cid,opts);
-    c.appendChild(b);
-  });
+  const c=document.getElementById(cid);c.innerHTML='<label>Filter:</label>';
+  opts.forEach(opt=>{const b=document.createElement('button');b.className='ft'+(AF[topic]&&AF[topic].includes(opt)?' on':'');b.textContent=opt;b.onclick=()=>toggleF(opt,topic,cid,opts);c.appendChild(b);});
 }
 function toggleF(opt,topic,cid,opts){
-  if(opt==='All'){AF[topic]=['All'];}
-  else{
-    AF[topic]=AF[topic].filter(x=>x!=='All');
-    if(AF[topic].includes(opt)) AF[topic]=AF[topic].filter(x=>x!==opt);
-    else AF[topic].push(opt);
-    if(!AF[topic].length) AF[topic]=['All'];
-  }
+  if(!AF[topic])AF[topic]=['All'];
+  if(opt==='All'){AF[topic]=['All'];}else{AF[topic]=AF[topic].filter(x=>x!=='All');if(AF[topic].includes(opt))AF[topic]=AF[topic].filter(x=>x!==opt);else AF[topic].push(opt);if(!AF[topic].length)AF[topic]=['All'];}
   buildFilters(cid,opts,topic);
-  if(curPg==='fc') initFC(topic);
-  else if(curPg==='qz') startQuiz();
-  else if(curPg==='ts') refreshTestIntro();
+  if(curPg==='fc')initFC();else if(curPg==='qz')startQuiz();else if(curPg==='ts')refreshTestIntro();
 }
-function fS(){const f=AF.states;if(f.includes('All'))return[...STATES];return STATES.filter(s=>f.includes(s.r));}
-function fR(){const f=AF.roots;if(f.includes('All'))return[...ROOTS];return ROOTS.filter(r=>f.includes(r.type));}
+function fS(){const f=AF.states||['All'];if(f.includes('All'))return[...STATES];return STATES.filter(s=>f.includes(s.r));}
+function fR(){const f=AF.roots||['All'];if(f.includes('All'))return[...ROOTS];return ROOTS.filter(r=>f.includes(r.type));}
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // FLASHCARDS
-// ══════════════════════════════════════
-function initFC(topic){
-  curTopic=topic; unknownOnly=false;
-  buildFilters('fc-fbar',topic==='states'?S_REG:R_TYPES,topic);
-  document.getElementById('fc-sub').textContent=topic==='states'?'US States & Capitals':'Greek & Latin Root Words';
-  const pool=topic==='states'?fS():fR();
-  deck=[...pool]; shuf(deck);
-  dIdx=0; buildList(); renderCard();
+// ═══════════════════════════════
+function initFC(){
+  const t=getTopic('fc');
+  buildFilters('fc-fbar',t==='states'?S_REG:['All','Greek','Latin'],t);
+  const pool=t==='states'?fS():fR();
+  deck=[...pool];shuf(deck);dIdx=0;buildDots();renderCard();buildList();
 }
-
-function filterUnknown(){
-  const pool=curTopic==='states'?fS():fR();
-  const unknown=pool.filter(item=>{
-    const k=curTopic==='states'?P.sKnown[item.a]:P.rKnown[item.root];
-    return k!==true;
-  });
-  deck=unknown.length>0?[...unknown]:[...pool];
-  shuf(deck); dIdx=0; unknownOnly=true; buildList(); renderCard();
-}
-
 function renderCard(){
-  if(!deck.length) return;
-  const item=deck[dIdx];
-  const isS=curTopic==='states';
-  const card=document.getElementById('fc-card');
-  card.classList.remove('flip'); flipped=false;
-
+  if(!deck.length)return;
+  const item=deck[dIdx];const isS=getTopic('fc')==='states';
+  document.getElementById('fc-card').classList.remove('flip');flipped=false;
   if(isS){
-    setText('fc-fl','State');
-    setText('fc-fm',item.s);
-    setText('fc-fs',item.a+' · '+item.r);
-    setText('fc-bl','Capital');
-    setText('fc-bm',item.c);
-    setText('fc-bs','');
-    // map with pin
-    const mapEl=document.getElementById('fc-bmap');
-    mapEl.innerHTML=makeMiniMap(item.a);
-    mapEl.style.display='block';
-  } else {
-    const card_fl=document.getElementById('fc-fl');
-    card_fl.innerHTML=`<span class="root-origin-pill">${item.origin}</span>`;
-    setText('fc-fm',item.root);
-    setText('fc-fs','');
-    setText('fc-bl','Meaning');
-    setText('fc-bm',item.meaning);
-    document.getElementById('fc-bs').innerHTML=
-      `<div style="margin-top:8px;font-size:13px;color:var(--il)">${item.examples.join(' · ')}</div>`+
-      `<div style="margin-top:10px;font-size:12px;color:var(--iv);font-style:italic;max-width:300px;text-align:center;line-height:1.5">${item.note}</div>`;
+    setText('fc-fl','State');setText('fc-fm',item.s);setText('fc-fs',item.a+' \u00b7 '+item.r);
+    setText('fc-bl','Capital');setText('fc-bm',item.c);document.getElementById('fc-bs').textContent='';
+    const m=document.getElementById('fc-bmap');m.innerHTML=miniMap(item.a);m.style.display='block';
+  }else{
+    document.getElementById('fc-fl').innerHTML=`<span class="root-origin-pill">${item.origin}</span>`;
+    setText('fc-fm',item.root);setText('fc-fs','');
+    setText('fc-bl','Meaning');setText('fc-bm',item.meaning);
+    document.getElementById('fc-bs').innerHTML=`<div style="margin-top:8px;font-size:13px;color:var(--il)">${item.examples.join(' \u00b7 ')}</div><div style="margin-top:10px;font-size:12px;color:var(--iv);font-style:italic;max-width:300px;text-align:center;line-height:1.5">${item.note}</div>`;
     document.getElementById('fc-bmap').style.display='none';
   }
-
-  setText('fc-i',dIdx+1);
-  setText('fc-t',deck.length);
-  updateDots(); updateList();
+  setText('fc-i',dIdx+1);setText('fc-t',deck.length);updateDots();updateList();
 }
-
 function flipCard(){document.getElementById('fc-card').classList.toggle('flip');flipped=!flipped;}
 function prevCard(){if(dIdx>0){dIdx--;renderCard();}}
 function nextCard(){if(dIdx<deck.length-1){dIdx++;renderCard();}}
-
 function markCard(st){
-  const item=deck[dIdx];
-  if(curTopic==='states') P.sKnown[item.a]=(st==='known');
-  else P.rKnown[item.root]=(st==='known');
-  save(); updateProg(); updateDots(); updateList();
-  if(dIdx<deck.length-1){dIdx++;renderCard();}
+  const item=deck[dIdx];const t=getTopic('fc');
+  if(t==='states')P.sKnown[item.a]=(st==='known');else P.rKnown[item.root]=(st==='known');
+  save();updateProg();updateDots();updateList();if(dIdx<deck.length-1){dIdx++;renderCard();}
 }
-
 function shuffleCards(){shuf(deck);dIdx=0;renderCard();buildList();}
-function resetDeck(){
-  if(curTopic==='states') P.sKnown={};
-  else P.rKnown={};
-  save(); updateProg(); dIdx=0; renderCard(); buildList(); updateDots();
+function filterUnknown(){
+  const t=getTopic('fc');const pool=t==='states'?fS():fR();
+  const unk=pool.filter(item=>t==='states'?P.sKnown[item.a]!==true:P.rKnown[item.root]!==true);
+  deck=unk.length?[...unk]:[...pool];shuf(deck);dIdx=0;renderCard();buildDots();buildList();
 }
-
+function resetDeck(){
+  const t=getTopic('fc');if(t==='states')P.sKnown={};else P.rKnown={};
+  save();updateProg();dIdx=0;renderCard();buildDots();buildList();
+}
+function buildDots(){const w=document.getElementById('fc-dots');w.innerHTML=deck.map((_,i)=>`<div class="dot" id="d${i}"></div>`).join('');}
+function updateDots(){
+  const t=getTopic('fc');
+  deck.forEach((item,i)=>{const d=document.getElementById('d'+i);if(!d)return;const k=t==='states'?P.sKnown[item.a]:P.rKnown[item.root];d.className='dot'+(i===dIdx?' cur':k===true?' known':k===false?' learn':'');});
+}
 function buildList(){
-  const ul=document.getElementById('fc-list');
-  ul.innerHTML=deck.map((item,i)=>{
-    const isS=curTopic==='states';
-    const k=isS?P.sKnown[item.a]:P.rKnown[item.root];
-    const label=isS?item.s:item.root;
-    const sub=isS?item.c:item.meaning;
-    return `<li class="fsl-item${i===dIdx?' cur':''}" onclick="jumpCard(${i})">
-      <span class="fsl-dot${k===true?' known':k===false?' learn':''}"></span>
-      <span><strong style="font-size:13px">${label}</strong><span style="font-size:11px;color:var(--iv);display:block">${sub}</span></span>
-    </li>`;
+  const t=getTopic('fc');
+  document.getElementById('fc-list').innerHTML=deck.map((item,i)=>{
+    const k=t==='states'?P.sKnown[item.a]:P.rKnown[item.root];
+    const lbl=t==='states'?item.s:item.root;const sub=t==='states'?item.c:item.meaning;
+    return `<li class="fsl-item${i===dIdx?' cur':''}" onclick="jumpCard(${i})"><span class="fsl-dot${k===true?' known':k===false?' learn':''}"></span><span><strong style="font-size:13px">${lbl}</strong><span style="font-size:11px;color:var(--iv);display:block">${sub}</span></span></li>`;
   }).join('');
 }
-function updateList(){
-  document.querySelectorAll('.fsl-item').forEach((el,i)=>{
-    el.classList.toggle('cur',i===dIdx);
-  });
-  // scroll active into view
-  const cur=document.querySelector('.fsl-item.cur');
-  if(cur) cur.scrollIntoView({block:'nearest',behavior:'smooth'});
-}
+function updateList(){document.querySelectorAll('#fc-list .fsl-item').forEach((el,i)=>el.classList.toggle('cur',i===dIdx));const cur=document.querySelector('#fc-list .fsl-item.cur');if(cur)cur.scrollIntoView({block:'nearest',behavior:'smooth'});}
 function jumpCard(i){dIdx=i;renderCard();}
 
-function buildDots(){
-  const w=document.getElementById('fc-dots');
-  w.innerHTML=deck.map((_,i)=>`<div class="dot" id="d${i}"></div>`).join('');
-}
-function updateDots(){
-  // rebuild efficiently
-  const w=document.getElementById('fc-dots');
-  if(w.children.length!==deck.length) buildDots();
-  deck.forEach((item,i)=>{
-    const d=document.getElementById('d'+i);if(!d)return;
-    const k=curTopic==='states'?P.sKnown[item.a]:P.rKnown[item.root];
-    d.className='dot'+(i===dIdx?' cur':k===true?' known':k===false?' learn':'');
-  });
-}
-
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // QUIZ
-// ══════════════════════════════════════
+// ═══════════════════════════════
 function startQuiz(){
-  buildFilters('qz-fbar',curTopic==='states'?S_REG:R_TYPES,curTopic);
-  setText('qz-sub',curTopic==='states'?'US States & Capitals':'Greek & Latin Root Words');
-  qIdx=0; qRight=0; qAns=false;
-  const pool=curTopic==='states'?fS():fR(); const p=[...pool]; shuf(p);
+  const t=getTopic('qz');
+  buildFilters('qz-fbar',t==='states'?S_REG:['All','Greek','Latin'],t);
+  qIdx=0;qRight=0;qAns=false;
+  const pool=t==='states'?fS():fR();const p=[...pool];shuf(p);
   qItems=p.slice(0,Math.min(10,p.length));
-  document.getElementById('qz-res').style.display='none';
-  document.getElementById('qz-active').style.display='';
-  setText('qz-sc',0); setText('qz-tot',qItems.length);
-  renderQ();
+  document.getElementById('qz-res').style.display='none';document.getElementById('qz-active').style.display='';
+  setText('qz-sc',0);setText('qz-tot',qItems.length);renderQ();
 }
-
 function renderQ(){
-  const item=qItems[qIdx];
-  const isS=curTopic==='states';
-  qAns=false;
-  setText('qz-n',qIdx+1);
-  document.getElementById('qz-nxt').style.display='none';
-  document.getElementById('qz-fb').className='qfb';
+  const item=qItems[qIdx];const t=getTopic('qz');const isS=t==='states';
+  qAns=false;setText('qz-n',qIdx+1);
+  document.getElementById('qz-nxt').style.display='none';document.getElementById('qz-fb').className='qfb';
   document.getElementById('qpf').style.width=(qIdx/qItems.length*100)+'%';
-
-  const all=isS?STATES:ROOTS;
-  let q,correct,dist;
-  if(isS){
-    const flip=Math.random()>.5;
-    if(flip){
-      q=`What is the capital of <strong>${item.s}</strong>?<br><span style="font-size:13px;color:var(--iv)">${item.a} · ${item.r}</span>`;
-      correct=item.c; dist=all.filter(x=>x.a!==item.a).map(x=>x.c);
-    } else {
-      q=`<strong>${item.c}</strong> is the capital of which state?`;
-      correct=item.s; dist=all.filter(x=>x.a!==item.a).map(x=>x.s);
-    }
-  } else {
-    const t=Math.floor(Math.random()*3);
-    if(t===0){
-      q=`What does the root <strong>"${item.root}"</strong> mean?<br><span style="font-size:13px;color:var(--iv)">${item.origin}</span>`;
-      correct=item.meaning; dist=all.filter(x=>x.root!==item.root).map(x=>x.meaning);
-    } else if(t===1){
-      q=`Which root means <strong>"${item.meaning}"</strong>?`;
-      correct=item.root; dist=all.filter(x=>x.root!==item.root).map(x=>x.root);
-    } else {
-      q=`Which of these words comes from the root <strong>"${item.root}"</strong> (${item.meaning})?`;
-      correct=item.examples[0];
-      // distractors from other roots' examples
-      const others=all.filter(x=>x.root!==item.root).flatMap(x=>x.examples);
-      shuf(others); dist=others.slice(0,3);
-      // ensure correct not in dist
-      const opts=[correct,...dist.slice(0,3)]; shuf(opts);
-      document.getElementById('qz-qt').innerHTML=q;
-      setText('qz-qn','Question '+( qIdx+1));
-      const L=['A','B','C','D'];
-      document.getElementById('qz-opts').innerHTML=opts.map((o,i)=>
-        `<button class="qopt" onclick="ansQ(this,${JSON.stringify(o)},${JSON.stringify(correct)})"><span class="ql">${L[i]}</span>${o}</button>`
-      ).join('');
-      return;
-    }
-  }
-  shuf(dist);
-  const opts=[correct,...dist.slice(0,3)]; shuf(opts);
-  document.getElementById('qz-qt').innerHTML=q;
-  setText('qz-qn','Question '+(qIdx+1));
-  const L=['A','B','C','D'];
-  document.getElementById('qz-opts').innerHTML=opts.map((o,i)=>
-    `<button class="qopt" onclick="ansQ(this,${JSON.stringify(o)},${JSON.stringify(correct)})"><span class="ql">${L[i]}</span>${o}</button>`
-  ).join('');
+  const all=isS?STATES:ROOTS;let q,correct,dist;
+  if(isS){const flip=Math.random()>.5;if(flip){q=`What is the capital of <strong>${item.s}</strong>?<br><span style="font-size:13px;color:var(--iv)">${item.a} \u00b7 ${item.r}</span>`;correct=item.c;dist=all.filter(x=>x.a!==item.a).map(x=>x.c);}else{q=`<strong>${item.c}</strong> is the capital of which state?`;correct=item.s;dist=all.filter(x=>x.a!==item.a).map(x=>x.s);}}
+  else{const t2=Math.floor(Math.random()*3);if(t2===0){q=`What does the root <strong>"${item.root}"</strong> mean? <span style="font-size:13px;color:var(--iv)">${item.origin}</span>`;correct=item.meaning;dist=all.filter(x=>x.root!==item.root).map(x=>x.meaning);}else if(t2===1){q=`Which root means <strong>"${item.meaning}"</strong>?`;correct=item.root;dist=all.filter(x=>x.root!==item.root).map(x=>x.root);}else{q=`Which word comes from the root <strong>"${item.root}"</strong>?`;correct=item.examples[0];const others=all.filter(x=>x.root!==item.root).flatMap(x=>x.examples);shuf(others);dist=others.slice(0,3);}}
+  shuf(dist);const opts=[correct,...dist.slice(0,3)];shuf(opts);
+  document.getElementById('qz-qt').innerHTML=q;setText('qz-qn','Question '+(qIdx+1));
+  document.getElementById('qz-opts').innerHTML=opts.map((o,i)=>`<button class="qopt" onclick="ansQ(this,${JSON.stringify(o)},${JSON.stringify(correct)})"><span class="ql">${['A','B','C','D'][i]}</span>${o}</button>`).join('');
 }
-
 function ansQ(btn,chosen,correct){
-  if(qAns) return; qAns=true;
-  const item=qItems[qIdx]; const ok=chosen===correct;
-  document.querySelectorAll('.qopt').forEach(b=>{
-    b.classList.add('dis');
-    const t=b.textContent.trim().slice(1).trim();
-    if(t===correct) b.classList.add('ok');
-  });
-  if(!ok) btn.classList.add('ng');
-  if(!ok){
-    if(curTopic==='states') P.sErr[item.a]=(P.sErr[item.a]||0)+1;
-    else P.rErr[item.root]=(P.rErr[item.root]||0)+1;
-  } else {qRight++; setText('qz-sc',qRight);}
-  const fb=document.getElementById('qz-fb');
-  fb.className='qfb show '+(ok?'ok':'ng');
-  if(ok) fb.innerHTML='<strong>✓ Correct!</strong>';
-  else {
-    fb.innerHTML=`<strong>✗ Incorrect.</strong> The answer is: <strong>${correct}</strong>`;
-    // Add note for roots
-    if(curTopic==='roots'){
-      const ro=ROOTS.find(x=>x.root===item.root||x.meaning===correct||x.root===correct);
-      if(ro&&ro.note) fb.innerHTML+=`<br><span style="font-size:13px;color:inherit;opacity:.85">${ro.note}</span>`;
-    }
-  }
-  save();
-  document.getElementById('qz-nxt').style.display='inline-block';
+  if(qAns)return;qAns=true;const item=qItems[qIdx];const ok=chosen===correct;
+  document.querySelectorAll('.qopt').forEach(b=>{b.classList.add('dis');if(b.textContent.trim().slice(1).trim()===correct)b.classList.add('ok');});
+  if(!ok)btn.classList.add('ng');
+  if(!ok){const t=getTopic('qz');if(t==='states')P.sErr[item.a]=(P.sErr[item.a]||0)+1;else P.rErr[item.root]=(P.rErr[item.root]||0)+1;}
+  else{qRight++;setText('qz-sc',qRight);}
+  const fb=document.getElementById('qz-fb');fb.className='qfb show '+(ok?'ok':'ng');
+  fb.innerHTML=ok?'<strong>&#10003; Correct!</strong>':`<strong>&#10007; Incorrect.</strong> The answer is: <strong>${correct}</strong>`;
+  save();document.getElementById('qz-nxt').style.display='inline-block';
 }
-
-function nextQ(){
-  qIdx++;
-  if(qIdx>=qItems.length) endQuiz(); else renderQ();
-}
+function nextQ(){qIdx++;if(qIdx>=qItems.length)endQuiz();else renderQ();}
 function endQuiz(){
   const pct=Math.round(qRight/qItems.length*100);
-  if(P.quizBest===null||pct>P.quizBest) P.quizBest=pct;
-  save(); updateProg();
-  document.getElementById('qz-active').style.display='none';
-  document.getElementById('qz-res').style.display='';
-  setText('qr-sc',qRight+'/'+qItems.length);
-  setText('qr-tot',qItems.length);
-  setText('qr-gr',gradeText(pct));
-  setText('qr-c',qRight);
-  setText('qr-w',qItems.length-qRight);
-  setText('qr-pct',pct+'%');
+  if(P.quizBest===null||pct>P.quizBest)P.quizBest=pct;save();updateProg();
+  document.getElementById('qz-active').style.display='none';document.getElementById('qz-res').style.display='';
+  setText('qr-sc',qRight+'/'+qItems.length);setText('qr-tot',qItems.length);setText('qr-gr',gradeText(pct));
+  setText('qr-c',qRight);setText('qr-w',qItems.length-qRight);setText('qr-pct',pct+'%');
   document.getElementById('qpf').style.width='100%';
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // TEST
-// ══════════════════════════════════════
-function initTest(topic){
-  tTopic=topic;
-  buildFilters('ts-fbar',topic==='states'?S_REG:R_TYPES,topic);
-  refreshTestIntro();
-}
+// ═══════════════════════════════
 function refreshTestIntro(){
-  setText('ts-sub',tTopic==='states'?'US States & Capitals':'Greek & Latin Root Words');
-  setText('ts-ttl',tTopic==='states'?'States & Capitals Test':'Greek & Latin Roots Test');
-  const pool=tTopic==='states'?fS():fR();
-  setText('ts-dsc',`A comprehensive test covering ${pool.length} items from your selected ${tTopic==='states'?'regions':'types'}. Questions are randomly ordered each time.`);
-  document.getElementById('ts-intro').style.display='';
-  document.getElementById('ts-area').style.display='none';
-  document.getElementById('ts-res').style.display='none';
-  if(tTimer) clearInterval(tTimer);
+  const t=getTopic('ts');
+  buildFilters('ts-fbar',t==='states'?S_REG:['All','Greek','Latin'],t);
+  const pool=t==='states'?fS():fR();
+  setText('ts-ttl',t==='states'?'States & Capitals Test':'Greek & Latin Roots Test');
+  setText('ts-dsc',`A comprehensive test covering ${pool.length} items from your selected ${t==='states'?'regions':'types'}. Questions are randomly ordered.`);
 }
 function beginTest(){
   tAnswers={};
-  const pool=tTopic==='states'?fS():fR();
-  const p=[...pool]; shuf(p); tItems=p;
-  document.getElementById('ts-intro').style.display='none';
-  document.getElementById('ts-area').style.display='';
-  document.getElementById('ts-res').style.display='none';
-  buildTestQs(); startTimer();
+  const t=getTopic('ts');const pool=t==='states'?fS():fR();const p=[...pool];shuf(p);tItems=p;
+  document.getElementById('ts-intro').style.display='none';document.getElementById('ts-area').style.display='';document.getElementById('ts-res').style.display='none';
+  buildTestQs();startTimer();
 }
 function buildTestQs(){
-  const c=document.getElementById('ts-qs'); c.innerHTML='';
-  const isS=tTopic==='states'; const all=isS?STATES:ROOTS;
+  const c=document.getElementById('ts-qs');c.innerHTML='';const t=getTopic('ts');const isS=t==='states';const all=isS?STATES:ROOTS;
   tItems.forEach((item,idx)=>{
-    const fill=(idx%4===3); // every 4th is fill-in
-    let q,correct,opts;
-    if(isS){
-      if(idx%2===0){
-        q=`What is the capital of <strong>${item.s}</strong>? <span style="font-size:12px;color:var(--iv)">(${item.a} · ${item.r})</span>`;
-        correct=item.c;
-        if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.c);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}
-      } else {
-        q=`<strong>${item.c}</strong> is the capital of which state?`;
-        correct=item.s;
-        if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.s);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}
-      }
-    } else {
-      if(idx%2===0){
-        q=`What does the root <strong>"${item.root}"</strong> (${item.origin}) mean?`;
-        correct=item.meaning;
-        if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.meaning);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}
-      } else {
-        q=`Which root means <strong>"${item.meaning}"</strong>?`;
-        correct=item.root;
-        if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.root);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}
-      }
-    }
-    const blk=document.createElement('div');
-    blk.className='tq'; blk.id='tq'+idx;
+    const fill=(idx%4===3);let q,correct,opts;
+    if(isS){if(idx%2===0){q=`What is the capital of <strong>${item.s}</strong>? <span style="font-size:12px;color:var(--iv)">(${item.a} \u00b7 ${item.r})</span>`;correct=item.c;if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.c);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}else{q=`<strong>${item.c}</strong> is the capital of which state?`;correct=item.s;if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.s);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}}
+    else{if(idx%2===0){q=`What does the root <strong>"${item.root}"</strong> (${item.origin}) mean?`;correct=item.meaning;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.meaning);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}else{q=`Which root means <strong>"${item.meaning}"</strong>?`;correct=item.root;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.root);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}}
+    const blk=document.createElement('div');blk.className='tq';blk.id='tq'+idx;
     blk.innerHTML=`<div class="tqn">Question ${idx+1} of ${tItems.length}</div><div class="tqt">${q}</div>`;
-    if(fill){
-      const d=document.createElement('div'); d.className='t-fill';
-      const inp=document.createElement('input');
-      inp.type='text'; inp.placeholder='Type your answer…'; inp.dataset.correct=correct;
-      inp.oninput=function(){tAnswers[idx]={val:this.value.trim(),correct};};
-      d.appendChild(inp); blk.appendChild(d);
-    } else {
-      const d=document.createElement('div'); d.className='topts';
-      opts.forEach(o=>{
-        const b=document.createElement('button'); b.className='topt'; b.textContent=o;
-        b.dataset.val=o; b.dataset.correct=correct;
-        b.onclick=function(){blk.querySelectorAll('.topt').forEach(x=>x.classList.remove('sel'));this.classList.add('sel');tAnswers[idx]={val:o,correct};};
-        d.appendChild(b);
-      });
-      blk.appendChild(d);
-    }
+    if(fill){const d=document.createElement('div');d.className='t-fill';const inp=document.createElement('input');inp.type='text';inp.placeholder='Type your answer...';inp.dataset.correct=correct;inp.oninput=function(){tAnswers[idx]={val:this.value.trim(),correct};};d.appendChild(inp);blk.appendChild(d);}
+    else{const d=document.createElement('div');d.className='topts';opts.forEach(o=>{const b=document.createElement('button');b.className='topt';b.textContent=o;b.dataset.val=o;b.dataset.correct=correct;b.onclick=function(){blk.querySelectorAll('.topt').forEach(x=>x.classList.remove('sel'));this.classList.add('sel');tAnswers[idx]={val:o,correct};};d.appendChild(b);});blk.appendChild(d);}
     c.appendChild(blk);
   });
 }
 function submitTest(){
-  if(tTimer) clearInterval(tTimer);
-  let correct=0; const wrong=[];
+  if(tTimer)clearInterval(tTimer);let correct=0;const wrong=[];const t=getTopic('ts');
   tItems.forEach((item,idx)=>{
-    const ans=tAnswers[idx];
-    const given=ans?ans.val:''; const cv=ans?ans.correct:'';
+    const ans=tAnswers[idx];const given=ans?ans.val:'';const cv=ans?ans.correct:'';
     const ok=given.toLowerCase().trim()===cv.toLowerCase().trim();
-    if(ok){correct++;if(tTopic==='states')P.sKnown[item.a]=true;else P.rKnown[item.root]=true;}
-    else{if(tTopic==='states')P.sErr[item.a]=(P.sErr[item.a]||0)+1;else P.rErr[item.root]=(P.rErr[item.root]||0)+1;}
+    if(ok){correct++;if(t==='states')P.sKnown[item.a]=true;else P.rKnown[item.root]=true;}
+    else{if(t==='states')P.sErr[item.a]=(P.sErr[item.a]||0)+1;else P.rErr[item.root]=(P.rErr[item.root]||0)+1;}
     const blk=document.getElementById('tq'+idx);
-    if(blk){
-      blk.querySelectorAll('.topt').forEach(o=>{if(o.dataset.val===cv)o.classList.add('ok');else if(o.classList.contains('sel')&&!ok)o.classList.add('ng');});
-      const inp=blk.querySelector('input');
-      if(inp){inp.readOnly=true;inp.classList.add(ok?'ok':'ng');
-        if(!ok){const n=document.createElement('div');n.className='t-note';n.textContent='✓ Correct answer: '+cv;blk.appendChild(n);}
-      }
-    }
-    if(!ok) wrong.push({n:idx+1,given:given||'(none)',correct:cv,item});
+    if(blk){blk.querySelectorAll('.topt').forEach(o=>{if(o.dataset.val===cv)o.classList.add('ok');else if(o.classList.contains('sel')&&!ok)o.classList.add('ng');});const inp=blk.querySelector('input');if(inp){inp.readOnly=true;inp.classList.add(ok?'ok':'ng');if(!ok){const n=document.createElement('div');n.className='t-note';n.textContent='Correct: '+cv;blk.appendChild(n);}}}
+    if(!ok)wrong.push({n:idx+1,given:given||'(none)',correct:cv});
   });
-  P.tests++; save(); updateProg();
-  const pct=Math.round(correct/tItems.length*100);
-  document.getElementById('ts-area').style.display='none';
-  document.getElementById('ts-res').style.display='';
-  setText('tr-sc',correct+'/'+tItems.length);
-  setText('tr-tot',tItems.length);
-  setText('tr-gr',gradeText(pct));
+  P.tests++;save();updateProg();const pct=Math.round(correct/tItems.length*100);
+  document.getElementById('ts-area').style.display='none';document.getElementById('ts-res').style.display='';
+  setText('tr-sc',correct+'/'+tItems.length);setText('tr-tot',tItems.length);setText('tr-gr',gradeText(pct));
   const rv=document.getElementById('tr-rev');
-  if(!wrong.length){rv.innerHTML='<p style="color:var(--sage);font-style:italic;font-size:15px">All correct — outstanding work.</p>';}
-  else{rv.innerHTML=`<p style="font-size:13px;color:var(--il);margin-bottom:12px"><strong>${wrong.length}</strong> incorrect answer${wrong.length>1?'s':''}:</p>`+wrong.map(w=>`<div class="wrong-item"><strong>Q${w.n}.</strong> You wrote: <em>"${w.given}"</em> &nbsp;·&nbsp; Correct: <strong>${w.correct}</strong></div>`).join('');}
+  if(!wrong.length){rv.innerHTML='<p style="color:var(--sage);font-style:italic;font-size:15px">All correct — outstanding.</p>';}
+  else{rv.innerHTML=`<p style="font-size:13px;color:var(--il);margin-bottom:12px"><strong>${wrong.length}</strong> incorrect:</p>`+wrong.map(w=>`<div class="wrong-item"><strong>Q${w.n}.</strong> You wrote: <em>"${w.given}"</em> &nbsp;&middot;&nbsp; Correct: <strong>${w.correct}</strong></div>`).join('');}
 }
-function startTimer(){
-  tSec=0; setText('ts-tm','0:00');
-  tTimer=setInterval(()=>{tSec++;const m=Math.floor(tSec/60),s=tSec%60;setText('ts-tm',`${m}:${s.toString().padStart(2,'0')}`);},1000);
+function startTimer(){tSec=0;setText('ts-tm','0:00');tTimer=setInterval(()=>{tSec++;const m=Math.floor(tSec/60),s=tSec%60;setText('ts-tm',`${m}:${s.toString().padStart(2,'0')}`);},1000);}
+
+// ═══════════════════════════════
+// DICTIONARY
+// ═══════════════════════════════
+function initDict(){
+  const t=getTopic('dict');
+  dictFilterAlpha='';dictSearchQ='';dictSelIdx=-1;
+  document.getElementById('dict-q').value='';
+  buildAlpha(t);renderDictList(t);
+  document.getElementById('dict-entry-wrap').innerHTML='<div class="dict-entry-none"><p>Select an entry on the left to view it.</p></div>';
 }
-
-// ══════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════
-function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function gradeText(p){
-  if(p===100) return '★ Perfect Score ★';
-  if(p>=90) return 'Excellent — '+p+'%';
-  if(p>=80) return 'Good — '+p+'%';
-  if(p>=70) return 'Fair — '+p+'%';
-  if(p>=60) return 'Needs Work — '+p+'%';
-  return 'Keep Studying — '+p+'%';
-}
-
-// ══════════════════════════════════════
-// CUSTOM DECKS
-// ══════════════════════════════════════
-// Structure: P.decks = [{id, name, icon, color, cards:[{id,front,back,hint,known}]}, ...]
-// P.customProgress = {deckId: {cardId: 'known'|'learn'|null}}
-
-const SWATCH_COLORS = ['#c9922a','#3d6b4f','#2c5f8a','#9e3a1e','#6b4f9e','#1e7a6e','#8b4a00','#555'];
-
-let cdActiveDeckId = null;
-let cdStudyDeck = []; // working array for study session
-let cdStudyIdx = 0;
-let cdStudyFlipped = false;
-let cdEditCardId = null; // null = new card, else id of card being edited
-let newDeckColor = SWATCH_COLORS[0];
-
-function ensureDecks(){
-  if(!P.decks) P.decks = [];
-  if(!P.customProgress) P.customProgress = {};
-}
-
-// ── Sidebar custom deck links ──
-function renderSbCustomDecks(){
-  ensureDecks();
-  const c = document.getElementById('sb-custom-decks');
-  if(!P.decks.length){ c.innerHTML=''; return; }
-  c.innerHTML = P.decks.map(d=>`
-    <button class="nb" style="padding-left:28px;font-size:13px" onclick="go('cd');openDeck('${d.id}')">
-      <span class="ic" style="font-size:13px">${d.icon||'🃏'}</span>
-      <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px">${d.name}</span>
-    </button>`).join('');
-}
-
-// ── Main decks page ──
-function renderDecksPage(){
-  ensureDecks();
-  renderSbCustomDecks();
-  const ul = document.getElementById('cd-deck-list');
-  if(!P.decks.length){
-    ul.innerHTML='<li class="cd-empty">No decks yet. Create one to get started.</li>';
-    return;
+function buildAlpha(topic){
+  const wrap=document.getElementById('dict-alpha');
+  if(topic==='states'){
+    const letters=[...new Set(STATES.map(s=>s.s[0]))].sort();
+    wrap.innerHTML='<button class="'+(dictFilterAlpha===''?'on':'')+'" onclick="setDictAlpha(\'\')">All</button>'+letters.map(l=>`<button class="${dictFilterAlpha===l?'on':''}" onclick="setDictAlpha('${l}')">${l}</button>`).join('');
+  }else{
+    const letters=[...new Set(ROOTS.map(r=>r.root[0].toUpperCase()))].sort();
+    wrap.innerHTML='<button class="'+(dictFilterAlpha===''?'on':'')+'" onclick="setDictAlpha(\'\')">All</button>'+letters.map(l=>`<button class="${dictFilterAlpha===l?'on':''}" onclick="setDictAlpha('${l}')">${l}</button>`).join('');
   }
-  ul.innerHTML = P.decks.map(d=>{
-    const prog = P.customProgress[d.id]||{};
-    const known = d.cards.filter(c=>prog[c.id]==='known').length;
-    return `<li class="cd-deck-item${cdActiveDeckId===d.id?' active':''}" onclick="openDeck('${d.id}')">
-      <span class="dk-icon" style="color:${d.color||'var(--gold)'}">${d.icon||'🃏'}</span>
-      <span class="dk-info">
-        <span class="dk-name">${d.name}</span>
-        <span class="dk-count">${d.cards.length} card${d.cards.length!==1?'s':''} · ${known} known</span>
-      </span>
-      <button class="dk-del" onclick="deleteDeck('${d.id}',event)" title="Delete deck">✕</button>
-    </li>`;
+}
+function setDictAlpha(l){dictFilterAlpha=l;buildAlpha(getTopic('dict'));renderDictList(getTopic('dict'));}
+function dictSearch(){dictSearchQ=document.getElementById('dict-q').value.trim().toLowerCase();dictFilterAlpha='';buildAlpha(getTopic('dict'));renderDictList(getTopic('dict'));}
+function renderDictList(topic){
+  const wrap=document.getElementById('dict-list');
+  let items;
+  if(topic==='states'){
+    items=STATES.filter(s=>{
+      if(dictSearchQ&&!s.s.toLowerCase().includes(dictSearchQ)&&!s.c.toLowerCase().includes(dictSearchQ)&&!s.a.toLowerCase().includes(dictSearchQ))return false;
+      if(dictFilterAlpha&&s.s[0].toUpperCase()!==dictFilterAlpha)return false;
+      return true;
+    });
+    wrap.innerHTML=items.length?items.map((s,i)=>`<div class="dict-item${dictSelIdx===i?' on':''}" onclick="showDictEntry(${i},'states')"><span class="dict-item-term">${s.s}</span><span class="dict-item-type">${s.r}</span></div>`).join(''):'<div class="dict-empty">No results.</div>';
+  }else{
+    items=ROOTS.filter(r=>{
+      if(dictSearchQ&&!r.root.toLowerCase().includes(dictSearchQ)&&!r.meaning.toLowerCase().includes(dictSearchQ)&&!r.examples.join(' ').toLowerCase().includes(dictSearchQ))return false;
+      if(dictFilterAlpha&&r.root[0].toUpperCase()!==dictFilterAlpha)return false;
+      return true;
+    });
+    wrap.innerHTML=items.length?items.map((r,i)=>`<div class="dict-item${dictSelIdx===i?' on':''}" onclick="showDictEntry(${i},'roots')"><span class="dict-item-term">${r.root}</span><span class="dict-item-type">${r.type}</span></div>`).join(''):'<div class="dict-empty">No results.</div>';
+  }
+  // store filtered for index lookup
+  wrap._items=items;
+}
+function showDictEntry(i,topic){
+  dictSelIdx=i;
+  const wrap=document.getElementById('dict-list');
+  const items=wrap._items||[];const item=items[i];if(!item)return;
+  document.querySelectorAll('.dict-item').forEach((el,j)=>el.classList.toggle('on',j===i));
+  const ew=document.getElementById('dict-entry-wrap');
+  if(topic==='states'){
+    ew.innerHTML=`<div class="dict-entry">
+      <div class="de-header">
+        <div>
+          <div class="de-term">${item.s}</div>
+          <div class="de-meta">
+            <span class="de-origin-pill Latin" style="background:var(--sky)">${item.r}</span>
+            <span class="de-origin-pill mixed" style="background:var(--sage)">${item.a}</span>
+          </div>
+        </div>
+      </div>
+      <div class="de-meaning">Capital: ${item.c}</div>
+      <hr class="div">
+      <div class="de-section-lbl">Location on Map</div>
+      <div style="margin-top:8px">${miniMap(item.a)||'<span style="color:var(--iv);font-size:13px">Map unavailable</span>'}</div>
+    </div>`;
+  }else{
+    const rel=ROOTS.filter(r=>r.root!==item.root&&(r.type===item.type||r.meaning.split(/[,\s]/)[0]===item.meaning.split(/[,\s]/)[0])).slice(0,5);
+    ew.innerHTML=`<div class="dict-entry">
+      <div class="de-header">
+        <div>
+          <div class="de-term">${item.root}</div>
+          <div class="de-meta">
+            <span class="de-origin-pill ${item.type==='Greek/Latin'?'mixed':item.type}">${item.origin}</span>
+          </div>
+        </div>
+      </div>
+      <div class="de-meaning">${item.meaning}</div>
+      <div class="de-note">${item.note}</div>
+      <div class="de-section-lbl">Example Words</div>
+      <div class="de-examples">${item.examples.map(e=>`<span class="de-ex">${e}</span>`).join('')}</div>
+      ${rel.length?`<hr class="div"><div class="de-section-lbl">Related Roots</div><div class="de-related">${rel.map(r=>`<span class="de-rel-item" onclick="showRelRoot('${r.root}')">${r.root} <span style="color:var(--iv);font-size:12px">&mdash; ${r.meaning}</span></span>`).join('')}</div>`:''}
+    </div>`;
+  }
+}
+function showRelRoot(rootStr){
+  const wrap=document.getElementById('dict-list');
+  const items=wrap._items||[];
+  const i=items.findIndex(r=>r.root===rootStr);
+  if(i>=0)showDictEntry(i,'roots');
+}
+
+// ═══════════════════════════════
+// CUSTOM DECKS
+// ═══════════════════════════════
+const SWATCHES=['#c9922a','#3d6b4f','#2c5f8a','#9e3a1e','#6b4f9e','#1e7a6e','#8b4a00','#555555'];
+function ensureDecks(){if(!P.decks)P.decks=[];if(!P.customProgress)P.customProgress={};}
+function renderSbDecks(){
+  ensureDecks();const c=document.getElementById('sb-custom-decks');
+  c.innerHTML=P.decks.map(d=>`<button class="nb" style="padding-left:28px;font-size:13px" onclick="go('cd');setTimeout(()=>openDeck('${d.id}'),50)"><span style="width:10px;height:10px;border-radius:50%;background:${d.color||'var(--gold)'};display:inline-block;flex-shrink:0;margin-right:4px"></span>${d.name}</button>`).join('');
+}
+function renderDecksPage(){
+  ensureDecks();renderSbDecks();
+  const ul=document.getElementById('cd-deck-list');
+  if(!P.decks.length){ul.innerHTML='<li class="cd-empty">No decks yet.</li>';return;}
+  ul.innerHTML=P.decks.map(d=>{const prog=P.customProgress[d.id]||{};const kn=d.cards.filter(c=>prog[c.id]==='known').length;
+    return `<li class="cd-deck-item${cdActiveDeckId===d.id?' active':''}" onclick="openDeck('${d.id}')"><span class="dk-swatch" style="background:${d.color||'#c9922a'}"></span><span class="dk-info"><span class="dk-name">${d.name}</span><span class="dk-count">${d.cards.length} cards &middot; ${kn} known</span></span><button class="dk-del" onclick="deleteDeck('${d.id}',event)">&times;</button></li>`;
   }).join('');
 }
-
 function openDeck(id){
-  ensureDecks();
-  cdActiveDeckId = id;
-  const deck = P.decks.find(d=>d.id===id);
-  if(!deck) return;
-  renderDecksPage();
-
-  const right = document.getElementById('cd-right');
-  const prog = P.customProgress[id]||{};
-  const known = deck.cards.filter(c=>prog[c.id]==='known').length;
-  const learn = deck.cards.filter(c=>prog[c.id]==='learn').length;
-
-  right.innerHTML = `
-    <div class="cd-editor">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">
-        <span style="font-size:36px;color:${deck.color||'var(--gold)'}">${deck.icon||'🃏'}</span>
-        <div style="flex:1">
-          <h3 style="margin-bottom:3px">${deck.name}</h3>
-          <div style="font-size:13px;color:var(--iv)">${deck.cards.length} cards &nbsp;·&nbsp; ${known} known &nbsp;·&nbsp; ${learn} still learning</div>
-        </div>
-        <div style="display:flex;gap:7px;flex-wrap:wrap">
-          ${deck.cards.length>0?`<button class="btn b-gold" style="padding:7px 18px;font-size:14px" onclick="startCustomStudy('${id}')">Study Deck</button>`:''}
-          <button class="btn b-wht" style="padding:7px 14px;font-size:13px" onclick="openRenameModal('${id}')">Rename</button>
-        </div>
+  ensureDecks();cdActiveDeckId=id;const deck2=P.decks.find(d=>d.id===id);if(!deck2)return;
+  renderDecksPage();const prog=P.customProgress[id]||{};const kn=deck2.cards.filter(c=>prog[c.id]==='known').length;const ln=deck2.cards.filter(c=>prog[c.id]==='learn').length;
+  document.getElementById('cd-right').innerHTML=`<div class="cd-editor">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="width:18px;height:18px;border-radius:50%;background:${deck2.color||'#c9922a'};flex-shrink:0"></div>
+      <div style="flex:1"><h3 style="font-size:19px;font-style:italic;margin:0">${deck2.name}</h3><div style="font-size:13px;color:var(--iv)">${deck2.cards.length} cards &middot; ${kn} known &middot; ${ln} learning</div></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        ${deck2.cards.length>0?`<button class="btn b-gold" style="padding:7px 18px;font-size:14px" onclick="startCustomStudy('${id}')">Study Deck</button>`:''}
+        <button class="btn b-wht" style="padding:7px 14px;font-size:13px" onclick="openRenameModal('${id}')">Rename</button>
       </div>
     </div>
-    <div class="cd-cards-list">
-      <div class="cd-cards-head">
-        <h4>Cards ${deck.cards.length>0?'('+deck.cards.length+')':''}</h4>
-        <button class="btn b-gold" style="padding:5px 14px;font-size:13px" onclick="openAddCardModal('${id}')">+ Add Card</button>
-      </div>
-      ${deck.cards.length===0
-        ? `<div class="cd-no-cards">No cards yet. Add your first card above.</div>`
-        : deck.cards.map((c,i)=>{
-            const st = prog[c.id];
-            const dot = st==='known'?'#3d6b4f':st==='learn'?'#9e3a1e':'var(--bdrl)';
-            return `<div class="cd-card-row" id="cdr-${c.id}">
-              <div style="width:8px;height:8px;border-radius:50%;background:${dot};flex-shrink:0"></div>
-              <div class="cd-card-front">${c.front}</div>
-              <div class="cd-card-back">${c.back}</div>
-              <div class="cd-card-actions">
-                <button class="cd-act-btn" onclick="openEditCardModal('${id}','${c.id}')">Edit</button>
-                <button class="cd-act-btn del" onclick="deleteCard('${id}','${c.id}')">✕</button>
-              </div>
-            </div>`;
-          }).join('')
-      }
-    </div>`;
+  </div>
+  <div class="cd-cards-list">
+    <div class="cd-cards-head"><h4>Cards${deck2.cards.length?' ('+deck2.cards.length+')':''}</h4><button class="btn b-gold" style="padding:5px 14px;font-size:13px" onclick="openAddCardModal('${id}')">+ Add Card</button></div>
+    ${deck2.cards.length?deck2.cards.map(c=>{const st=prog[c.id];const dot=st==='known'?'#3d6b4f':st==='learn'?'#9e3a1e':'var(--bdrl)';return `<div class="cd-card-row"><div style="width:8px;height:8px;border-radius:50%;background:${dot};flex-shrink:0"></div><div class="cd-card-front">${c.front}</div><div class="cd-card-back">${c.back}</div><div class="cd-card-actions"><button class="cd-act-btn" onclick="openEditCardModal('${id}','${c.id}')">Edit</button><button class="cd-act-btn del" onclick="deleteCard('${id}','${c.id}')">&times;</button></div></div>`;}).join(''):'<div class="cd-no-cards">No cards yet. Add your first card above.</div>'}
+  </div>`;
 }
-
-// ── New deck modal ──
 function openNewDeckModal(){
-  document.getElementById('nd-name').value='';
-  document.getElementById('nd-icon').value='🃏';
-  newDeckColor = SWATCH_COLORS[0];
-  // Build swatches
-  const sw = document.getElementById('color-swatches');
-  sw.innerHTML = SWATCH_COLORS.map(c=>`<div class="swatch${c===newDeckColor?' picked':''}" style="background:${c}" onclick="pickColor('${c}',this)"></div>`).join('');
-  document.getElementById('new-deck-mo').classList.add('on');
-  setTimeout(()=>document.getElementById('nd-name').focus(),80);
+  document.getElementById('nd-name').value='';newDeckColor=SWATCHES[0];
+  document.getElementById('color-swatches').innerHTML=SWATCHES.map(c=>`<div class="swatch${c===newDeckColor?' picked':''}" style="background:${c}" onclick="pickColor('${c}',this)"></div>`).join('');
+  document.getElementById('new-deck-mo').classList.add('on');setTimeout(()=>document.getElementById('nd-name').focus(),80);
 }
-function pickColor(c,el){
-  newDeckColor=c;
-  document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('picked'));
-  el.classList.add('picked');
-}
-function saveNewDeck(){
-  const name = document.getElementById('nd-name').value.trim();
-  if(!name) return;
-  const icon = document.getElementById('nd-icon').value.trim()||'🃏';
-  ensureDecks();
-  const id = 'dk_'+Date.now();
-  P.decks.push({id,name,icon,color:newDeckColor,cards:[]});
-  P.customProgress[id]={};
-  save();
-  closeModal('new-deck-mo');
-  renderDecksPage();
-  renderSbCustomDecks();
-  openDeck(id);
-}
-
-// ── Rename deck ──
-function openRenameModal(id){
-  const deck = P.decks.find(d=>d.id===id);
-  if(!deck) return;
-  document.getElementById('rd-name').value=deck.name;
-  document.getElementById('rename-deck-mo').classList.add('on');
-  document.getElementById('rename-deck-mo').dataset.deckId=id;
-  setTimeout(()=>document.getElementById('rd-name').focus(),80);
-}
-function saveRenameDeck(){
-  const id = document.getElementById('rename-deck-mo').dataset.deckId;
-  const name = document.getElementById('rd-name').value.trim();
-  if(!name||!id) return;
-  const deck = P.decks.find(d=>d.id===id);
-  if(deck){ deck.name=name; save(); renderDecksPage(); renderSbCustomDecks(); openDeck(id); }
-  closeModal('rename-deck-mo');
-}
-
-// ── Delete deck ──
-function deleteDeck(id,e){
-  e.stopPropagation();
-  if(!confirm('Delete this deck and all its cards?')) return;
-  ensureDecks();
-  P.decks = P.decks.filter(d=>d.id!==id);
-  delete P.customProgress[id];
-  save();
-  if(cdActiveDeckId===id){ cdActiveDeckId=null; document.getElementById('cd-right').innerHTML='<div style="padding:48px;text-align:center;background:var(--w);border:1px solid var(--bdr);border-radius:6px;box-shadow:0 2px 10px var(--sh);"><div style="font-size:17px;font-style:italic;color:var(--im)">Deck deleted.</div></div>'; }
-  renderDecksPage(); renderSbCustomDecks();
-}
-
-// ── Add/Edit card modal ──
-function openAddCardModal(deckId){
-  cdEditCardId = null;
-  document.getElementById('ec-title').textContent='Add Card';
-  document.getElementById('ec-save-btn').textContent='Add Card';
-  document.getElementById('ec-front').value='';
-  document.getElementById('ec-back').value='';
-  document.getElementById('ec-hint').value='';
-  document.getElementById('edit-card-mo').dataset.deckId=deckId;
-  document.getElementById('edit-card-mo').classList.add('on');
-  setTimeout(()=>document.getElementById('ec-front').focus(),80);
-}
-function openEditCardModal(deckId,cardId){
-  const deck = P.decks.find(d=>d.id===deckId);
-  const card = deck&&deck.cards.find(c=>c.id===cardId);
-  if(!card) return;
-  cdEditCardId = cardId;
-  document.getElementById('ec-title').textContent='Edit Card';
-  document.getElementById('ec-save-btn').textContent='Save Changes';
-  document.getElementById('ec-front').value=card.front;
-  document.getElementById('ec-back').value=card.back;
-  document.getElementById('ec-hint').value=card.hint||'';
-  document.getElementById('edit-card-mo').dataset.deckId=deckId;
-  document.getElementById('edit-card-mo').classList.add('on');
-  setTimeout(()=>document.getElementById('ec-front').focus(),80);
-}
-function saveCard(){
-  const deckId = document.getElementById('edit-card-mo').dataset.deckId;
-  const front = document.getElementById('ec-front').value.trim();
-  const back = document.getElementById('ec-back').value.trim();
-  const hint = document.getElementById('ec-hint').value.trim();
-  if(!front||!back){ alert('Front and back are required.'); return; }
-  const deck = P.decks.find(d=>d.id===deckId);
-  if(!deck) return;
-  if(cdEditCardId){
-    const card = deck.cards.find(c=>c.id===cdEditCardId);
-    if(card){ card.front=front; card.back=back; card.hint=hint; }
-  } else {
-    const id='c_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
-    deck.cards.push({id,front,back,hint});
-    if(!P.customProgress[deckId]) P.customProgress[deckId]={};
-  }
-  save();
-  closeModal('edit-card-mo');
-  openDeck(deckId);
-}
-
-// ── Delete card ──
-function deleteCard(deckId,cardId){
-  const deck = P.decks.find(d=>d.id===deckId);
-  if(!deck) return;
-  deck.cards = deck.cards.filter(c=>c.id!==cardId);
-  if(P.customProgress[deckId]) delete P.customProgress[deckId][cardId];
-  save(); openDeck(deckId);
-}
-
-// ── Custom study session ──
-function startCustomStudy(deckId){
-  ensureDecks();
-  const deck = P.decks.find(d=>d.id===deckId);
-  if(!deck||!deck.cards.length) return;
-  cdActiveDeckId = deckId;
-  cdStudyDeck = [...deck.cards]; shuf(cdStudyDeck);
-  cdStudyIdx = 0; cdStudyFlipped = false;
-  setText('cd-study-title', deck.name);
-  setText('cd-study-sub', deck.cards.length+' cards');
-  document.getElementById('cd-main-view').style.display='none';
-  document.getElementById('cd-study-view').style.display='';
-  renderCustomCard(); buildCustomDots(); buildCustomList();
-}
-
-function exitCustomStudy(){
-  document.getElementById('cd-main-view').style.display='';
-  document.getElementById('cd-study-view').style.display='none';
-  if(cdActiveDeckId) openDeck(cdActiveDeckId);
-}
-
-function renderCustomCard(){
-  if(!cdStudyDeck.length) return;
-  const card = cdStudyDeck[cdStudyIdx];
-  const fc = document.getElementById('cd-fc-card');
-  fc.classList.remove('flip'); cdStudyFlipped=false;
-  setText('cd-fc-fl','Front'); setText('cd-fc-fm',card.front); setText('cd-fc-fs','');
-  setText('cd-fc-bl','Back'); setText('cd-fc-bm',card.back);
-  document.getElementById('cd-fc-bs').textContent = card.hint||'';
-  setText('cd-fc-i',cdStudyIdx+1); setText('cd-fc-t',cdStudyDeck.length);
-  updateCustomDots(); updateCustomList();
-}
-
+function pickColor(c,el){newDeckColor=c;document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('picked'));el.classList.add('picked');}
+function saveNewDeck(){const name=document.getElementById('nd-name').value.trim();if(!name)return;ensureDecks();const id='dk_'+Date.now();P.decks.push({id,name,color:newDeckColor,cards:[]});P.customProgress[id]={};save();closeModal('new-deck-mo');renderDecksPage();renderSbDecks();openDeck(id);}
+function openRenameModal(id){const d=P.decks.find(x=>x.id===id);if(!d)return;document.getElementById('rd-name').value=d.name;document.getElementById('rename-deck-mo').dataset.deckId=id;document.getElementById('rename-deck-mo').classList.add('on');setTimeout(()=>document.getElementById('rd-name').focus(),80);}
+function saveRenameDeck(){const id=document.getElementById('rename-deck-mo').dataset.deckId;const name=document.getElementById('rd-name').value.trim();if(!name||!id)return;const d=P.decks.find(x=>x.id===id);if(d){d.name=name;save();renderDecksPage();renderSbDecks();openDeck(id);}closeModal('rename-deck-mo');}
+function deleteDeck(id,e){e.stopPropagation();if(!confirm('Delete this deck?'))return;ensureDecks();P.decks=P.decks.filter(d=>d.id!==id);delete P.customProgress[id];save();if(cdActiveDeckId===id){cdActiveDeckId=null;document.getElementById('cd-right').innerHTML='<div style="padding:32px;text-align:center;background:var(--w);border:1px solid var(--bdr);border-radius:6px"><div style="font-style:italic;color:var(--im)">Deck deleted.</div></div>';}renderDecksPage();renderSbDecks();}
+function openAddCardModal(deckId){cdEditCardId=null;document.getElementById('ec-title').textContent='Add Card';document.getElementById('ec-save-btn').textContent='Add Card';document.getElementById('ec-front').value='';document.getElementById('ec-back').value='';document.getElementById('ec-hint').value='';document.getElementById('edit-card-mo').dataset.deckId=deckId;document.getElementById('edit-card-mo').classList.add('on');setTimeout(()=>document.getElementById('ec-front').focus(),80);}
+function openEditCardModal(deckId,cardId){const deck2=P.decks.find(d=>d.id===deckId);const card=deck2&&deck2.cards.find(c=>c.id===cardId);if(!card)return;cdEditCardId=cardId;document.getElementById('ec-title').textContent='Edit Card';document.getElementById('ec-save-btn').textContent='Save';document.getElementById('ec-front').value=card.front;document.getElementById('ec-back').value=card.back;document.getElementById('ec-hint').value=card.hint||'';document.getElementById('edit-card-mo').dataset.deckId=deckId;document.getElementById('edit-card-mo').classList.add('on');setTimeout(()=>document.getElementById('ec-front').focus(),80);}
+function saveCard(){const deckId=document.getElementById('edit-card-mo').dataset.deckId;const front=document.getElementById('ec-front').value.trim();const back=document.getElementById('ec-back').value.trim();const hint=document.getElementById('ec-hint').value.trim();if(!front||!back){alert('Front and back are required.');return;}const deck2=P.decks.find(d=>d.id===deckId);if(!deck2)return;if(cdEditCardId){const c=deck2.cards.find(x=>x.id===cdEditCardId);if(c){c.front=front;c.back=back;c.hint=hint;}}else{const id='c_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);deck2.cards.push({id,front,back,hint});if(!P.customProgress[deckId])P.customProgress[deckId]={};}save();closeModal('edit-card-mo');openDeck(deckId);}
+function deleteCard(deckId,cardId){const d=P.decks.find(x=>x.id===deckId);if(!d)return;d.cards=d.cards.filter(c=>c.id!==cardId);if(P.customProgress[deckId])delete P.customProgress[deckId][cardId];save();openDeck(deckId);}
+function startCustomStudy(deckId){ensureDecks();const d=P.decks.find(x=>x.id===deckId);if(!d||!d.cards.length)return;cdActiveDeckId=deckId;cdStudyDeck=[...d.cards];shuf(cdStudyDeck);cdStudyIdx=0;cdStudyFlipped=false;setText('cd-study-title',d.name);document.getElementById('cd-main-view').style.display='none';document.getElementById('cd-study-view').style.display='';renderCustomCard();buildCustomDots();buildCustomList();}
+function exitCustomStudy(){document.getElementById('cd-main-view').style.display='';document.getElementById('cd-study-view').style.display='none';if(cdActiveDeckId)openDeck(cdActiveDeckId);}
+function renderCustomCard(){if(!cdStudyDeck.length)return;const card=cdStudyDeck[cdStudyIdx];document.getElementById('cd-fc-card').classList.remove('flip');cdStudyFlipped=false;setText('cd-fc-fm',card.front);setText('cd-fc-fs','');setText('cd-fc-bm',card.back);document.getElementById('cd-fc-bs').textContent=card.hint||'';setText('cd-fc-i',cdStudyIdx+1);setText('cd-fc-t',cdStudyDeck.length);updateCustomDots();updateCustomList();}
 function flipCustomCard(){document.getElementById('cd-fc-card').classList.toggle('flip');cdStudyFlipped=!cdStudyFlipped;}
 function prevCustomCard(){if(cdStudyIdx>0){cdStudyIdx--;renderCustomCard();}}
 function nextCustomCard(){if(cdStudyIdx<cdStudyDeck.length-1){cdStudyIdx++;renderCustomCard();}}
-
-function markCustomCard(st){
-  const card = cdStudyDeck[cdStudyIdx];
-  if(!P.customProgress[cdActiveDeckId]) P.customProgress[cdActiveDeckId]={};
-  P.customProgress[cdActiveDeckId][card.id]=st;
-  save(); updateCustomDots(); updateCustomList();
-  if(cdStudyIdx<cdStudyDeck.length-1){cdStudyIdx++;renderCustomCard();}
-}
-
+function markCustomCard(st){const card=cdStudyDeck[cdStudyIdx];if(!P.customProgress[cdActiveDeckId])P.customProgress[cdActiveDeckId]={};P.customProgress[cdActiveDeckId][card.id]=st;save();updateCustomDots();updateCustomList();if(cdStudyIdx<cdStudyDeck.length-1){cdStudyIdx++;renderCustomCard();}}
 function shuffleCustomDeck(){shuf(cdStudyDeck);cdStudyIdx=0;renderCustomCard();buildCustomList();}
-function filterCustomUnknown(){
-  const deck = P.decks.find(d=>d.id===cdActiveDeckId);
-  if(!deck) return;
-  const prog = P.customProgress[cdActiveDeckId]||{};
-  const unknown = deck.cards.filter(c=>prog[c.id]!=='known');
-  cdStudyDeck = unknown.length>0?[...unknown]:[...deck.cards];
-  shuf(cdStudyDeck); cdStudyIdx=0; renderCustomCard(); buildCustomDots(); buildCustomList();
-}
-function resetCustomDeck(){
-  if(!P.customProgress[cdActiveDeckId]) return;
-  P.customProgress[cdActiveDeckId]={};
-  save(); const deck=P.decks.find(d=>d.id===cdActiveDeckId);
-  if(deck){cdStudyDeck=[...deck.cards];shuf(cdStudyDeck);}
-  cdStudyIdx=0; renderCustomCard(); buildCustomDots(); buildCustomList();
-}
-
-function buildCustomDots(){
-  const w=document.getElementById('cd-fc-dots');
-  w.innerHTML=cdStudyDeck.map((_,i)=>`<div class="dot" id="cd${i}"></div>`).join('');
-}
-function updateCustomDots(){
-  cdStudyDeck.forEach((card,i)=>{
-    const d=document.getElementById('cd'+i);if(!d)return;
-    const st=(P.customProgress[cdActiveDeckId]||{})[card.id];
-    d.className='dot'+(i===cdStudyIdx?' cur':st==='known'?' known':st==='learn'?' learn':'');
-  });
-}
-function buildCustomList(){
-  const ul=document.getElementById('cd-fc-list');
-  const prog=P.customProgress[cdActiveDeckId]||{};
-  ul.innerHTML=cdStudyDeck.map((card,i)=>{
-    const st=prog[card.id];
-    return `<li class="fsl-item${i===cdStudyIdx?' cur':''}" onclick="jumpCustomCard(${i})">
-      <span class="fsl-dot${st==='known'?' known':st==='learn'?' learn':''}"></span>
-      <span><strong style="font-size:13px">${card.front}</strong><span style="font-size:11px;color:var(--iv);display:block">${card.back}</span></span>
-    </li>`;
-  }).join('');
-}
-function updateCustomList(){
-  document.querySelectorAll('#cd-fc-list .fsl-item').forEach((el,i)=>el.classList.toggle('cur',i===cdStudyIdx));
-  const cur=document.querySelector('#cd-fc-list .fsl-item.cur');
-  if(cur) cur.scrollIntoView({block:'nearest',behavior:'smooth'});
-}
+function filterCustomUnknown(){const d=P.decks.find(x=>x.id===cdActiveDeckId);if(!d)return;const prog=P.customProgress[cdActiveDeckId]||{};const unk=d.cards.filter(c=>prog[c.id]!=='known');cdStudyDeck=unk.length?[...unk]:[...d.cards];shuf(cdStudyDeck);cdStudyIdx=0;renderCustomCard();buildCustomDots();buildCustomList();}
+function resetCustomDeck(){if(!P.customProgress[cdActiveDeckId])return;P.customProgress[cdActiveDeckId]={};save();const d=P.decks.find(x=>x.id===cdActiveDeckId);if(d){cdStudyDeck=[...d.cards];shuf(cdStudyDeck);}cdStudyIdx=0;renderCustomCard();buildCustomDots();buildCustomList();}
+function buildCustomDots(){const w=document.getElementById('cd-fc-dots');w.innerHTML=cdStudyDeck.map((_,i)=>`<div class="dot" id="cd${i}"></div>`).join('');}
+function updateCustomDots(){cdStudyDeck.forEach((card,i)=>{const d=document.getElementById('cd'+i);if(!d)return;const st=(P.customProgress[cdActiveDeckId]||{})[card.id];d.className='dot'+(i===cdStudyIdx?' cur':st==='known'?' known':st==='learn'?' learn':'');});}
+function buildCustomList(){const prog=P.customProgress[cdActiveDeckId]||{};document.getElementById('cd-fc-list').innerHTML=cdStudyDeck.map((card,i)=>{const st=prog[card.id];return `<li class="fsl-item${i===cdStudyIdx?' cur':''}" onclick="jumpCustomCard(${i})"><span class="fsl-dot${st==='known'?' known':st==='learn'?' learn':''}"></span><span><strong style="font-size:13px">${card.front}</strong><span style="font-size:11px;color:var(--iv);display:block">${card.back}</span></span></li>`;}).join('');}
+function updateCustomList(){document.querySelectorAll('#cd-fc-list .fsl-item').forEach((el,i)=>el.classList.toggle('cur',i===cdStudyIdx));const cur=document.querySelector('#cd-fc-list .fsl-item.cur');if(cur)cur.scrollIntoView({block:'nearest',behavior:'smooth'});}
 function jumpCustomCard(i){cdStudyIdx=i;renderCustomCard();}
 
-// ── Modal helper ──
-function closeModal(id){ document.getElementById(id).classList.remove('on'); }
-// Close modal on overlay click
-document.querySelectorAll('.mo').forEach(mo=>{
-  mo.addEventListener('click',e=>{ if(e.target===mo) mo.classList.remove('on'); });
-});
+// ═══════════════════════════════
+// MODAL + KEYBOARD + UTILS
+// ═══════════════════════════════
+function closeModal(id){document.getElementById(id).classList.remove('on');}
+document.querySelectorAll('.mo').forEach(mo=>{mo.addEventListener('click',e=>{if(e.target===mo)mo.classList.remove('on');});});
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function gradeText(p){if(p===100)return '\u2605 Perfect Score \u2605';if(p>=90)return 'Excellent \u2014 '+p+'%';if(p>=80)return 'Good \u2014 '+p+'%';if(p>=70)return 'Fair \u2014 '+p+'%';if(p>=60)return 'Needs Work \u2014 '+p+'%';return 'Keep Studying \u2014 '+p+'%';}
 
-// Extend keyboard nav to custom study
 document.addEventListener('keydown',e=>{
-  if(curPg==='cd'&&document.getElementById('cd-study-view').style.display!=='none'){
-    if(e.key==='ArrowRight'||e.key==='ArrowDown') nextCustomCard();
-    else if(e.key==='ArrowLeft'||e.key==='ArrowUp') prevCustomCard();
+  const inInput=e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA';if(inInput)return;
+  if(curPg==='fc'){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')nextCard();
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp')prevCard();
+    else if(e.key===' '){e.preventDefault();flipCard();}
+    else if(e.key==='k'||e.key==='K')markCard('known');
+    else if(e.key==='l'||e.key==='L')markCard('learn');
+  } else if(curPg==='cd'&&document.getElementById('cd-study-view').style.display!=='none'){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')nextCustomCard();
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp')prevCustomCard();
     else if(e.key===' '){e.preventDefault();flipCustomCard();}
-    else if(e.key==='k'||e.key==='K') markCustomCard('known');
-    else if(e.key==='l'||e.key==='L') markCustomCard('learn');
-    return;
+    else if(e.key==='k'||e.key==='K')markCustomCard('known');
+    else if(e.key==='l'||e.key==='L')markCustomCard('learn');
   }
-  if(curPg!=='fc') return;
-  if(e.key==='ArrowRight'||e.key==='ArrowDown') nextCard();
-  else if(e.key==='ArrowLeft'||e.key==='ArrowUp') prevCard();
-  else if(e.key===' '){e.preventDefault();flipCard();}
-  else if(e.key==='k'||e.key==='K') markCard('known');
-  else if(e.key==='l'||e.key==='L') markCard('learn');
 });
 
-// Patch go() to handle custom decks page without recursion
-const _goOrig = go;
-go = function(pg,topic){
-  if(pg==='cd'){
-    // manually do what go() does for 'cd'
-    curPg='cd';
-    document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
-    document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-    document.getElementById('pg-cd').classList.add('on');
-    const nb=document.getElementById('n-cd');
-    if(nb) nb.classList.add('on');
-    document.getElementById('cd-main-view').style.display='';
-    document.getElementById('cd-study-view').style.display='none';
-    renderDecksPage();
-    logActivity();
-    return;
-  }
-  _goOrig(pg,topic);
-};
-
-// ══════════════════════════════════════
+// ═══════════════════════════════
 // INIT
-// ══════════════════════════════════════
+// ═══════════════════════════════
 (function(){
-  load();
-  ensureDecks();
+  load();ensureDecks();
   if(!uName){document.getElementById('name-mo').classList.add('on');setTimeout(()=>document.getElementById('name-inp').focus(),150);}
   else updateUI();
-  renderDash(); updateProg(); renderSbCustomDecks();
+  renderDash();updateProg();renderSbDecks();
 })();
 </script>
 </body>
