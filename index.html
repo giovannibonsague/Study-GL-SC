@@ -646,11 +646,79 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
 
 <script>
 // ═══════════════════════════════
-// STATE MAP DATA
+// INLINE US MAP — no external requests
 // ═══════════════════════════════
-const MAP_URL='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Map_of_USA_with_state_names.svg/800px-Map_of_USA_with_state_names.svg.png';
-const SD={AL:{cx:520,cy:330},AK:{cx:130,cy:420},AZ:{cx:195,cy:300},AR:{cx:465,cy:300},CA:{cx:115,cy:255},CO:{cx:270,cy:240},CT:{cx:700,cy:155},DE:{cx:685,cy:195},FL:{cx:565,cy:390},GA:{cx:545,cy:340},HI:{cx:270,cy:430},ID:{cx:195,cy:165},IL:{cx:490,cy:225},IN:{cx:520,cy:215},IA:{cx:445,cy:195},KS:{cx:385,cy:255},KY:{cx:530,cy:255},LA:{cx:465,cy:360},ME:{cx:730,cy:105},MD:{cx:670,cy:200},MA:{cx:715,cy:145},MI:{cx:525,cy:170},MN:{cx:430,cy:145},MS:{cx:490,cy:335},MO:{cx:450,cy:250},MT:{cx:250,cy:145},NE:{cx:370,cy:220},NV:{cx:155,cy:225},NH:{cx:710,cy:130},NJ:{cx:685,cy:185},NM:{cx:255,cy:310},NY:{cx:665,cy:155},NC:{cx:600,cy:275},ND:{cx:360,cy:145},OH:{cx:560,cy:215},OK:{cx:390,cy:295},OR:{cx:150,cy:170},PA:{cx:635,cy:185},RI:{cx:715,cy:155},SC:{cx:580,cy:305},SD:{cx:360,cy:185},TN:{cx:530,cy:285},TX:{cx:370,cy:345},UT:{cx:215,cy:245},VT:{cx:695,cy:128},VA:{cx:625,cy:240},WA:{cx:155,cy:120},WV:{cx:590,cy:230},WI:{cx:470,cy:165},WY:{cx:265,cy:195}};
-function miniMap(a){const p=SD[a];if(!p)return '';return `<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:260px;border-radius:4px;border:1px solid var(--bdrl)"><image href="${MAP_URL}" width="800" height="500"/><circle cx="${p.cx}" cy="${p.cy}" r="14" fill="rgba(201,146,42,.3)"/><circle cx="${p.cx}" cy="${p.cy}" r="8" fill="var(--gold)" stroke="white" stroke-width="2"/></svg>`;}
+// Simplified state paths on a 960x600 viewBox (public domain geometry)
+const STATE_PATHS = {
+  AL:"M 552 353 L 554 378 L 556 400 L 520 406 L 516 378 L 514 353 L 517 332 L 540 330 Z",
+  AK:"M 145 440 L 200 440 L 210 460 L 190 480 L 155 475 L 140 460 Z",
+  AZ:"M 185 295 L 235 295 L 240 360 L 190 363 L 155 340 L 155 300 Z",
+  AR:"M 480 295 L 530 295 L 532 340 L 480 340 L 475 318 Z",
+  CA:"M 90 220 L 130 200 L 155 230 L 160 290 L 145 330 L 100 310 L 78 270 Z",
+  CO:"M 270 230 L 360 228 L 362 285 L 272 287 Z",
+  CT:"M 710 152 L 730 150 L 732 172 L 710 173 Z",
+  DE:"M 700 185 L 715 182 L 718 205 L 700 207 Z",
+  FL:"M 530 385 L 590 380 L 610 420 L 590 460 L 555 455 L 520 420 Z",
+  GA:"M 540 330 L 590 328 L 595 385 L 555 390 L 530 370 Z",
+  HI:"M 270 465 L 295 460 L 300 478 L 275 480 Z",
+  ID:"M 195 150 L 240 148 L 245 220 L 215 235 L 195 210 Z",
+  IL:"M 490 215 L 525 213 L 528 275 L 490 278 Z",
+  IN:"M 528 210 L 558 208 L 560 265 L 528 268 Z",
+  IA:"M 450 185 L 510 183 L 512 225 L 450 228 Z",
+  KS:"M 370 248 L 465 246 L 467 285 L 372 287 Z",
+  KY:"M 518 255 L 595 250 L 598 278 L 520 282 Z",
+  LA:"M 465 350 L 510 348 L 515 390 L 478 395 L 455 375 Z",
+  ME:"M 735 95 L 765 92 L 768 130 L 738 132 Z",
+  MD:"M 658 192 L 700 188 L 703 210 L 660 213 Z",
+  MA:"M 705 138 L 745 135 L 748 158 L 707 160 Z",
+  MI:"M 520 155 L 565 152 L 568 195 L 522 198 Z",
+  MN:"M 420 130 L 480 128 L 483 180 L 422 182 Z",
+  MS:"M 490 328 L 525 326 L 528 390 L 490 393 Z",
+  MO:"M 450 240 L 510 238 L 513 290 L 452 293 Z",
+  MT:"M 220 120 L 360 118 L 362 178 L 222 180 Z",
+  NE:"M 365 210 L 460 208 L 462 248 L 367 250 Z",
+  NV:"M 150 205 L 200 202 L 205 270 L 152 275 Z",
+  NH:"M 718 118 L 738 116 L 740 158 L 720 160 Z",
+  NJ:"M 695 172 L 715 170 L 718 205 L 696 207 Z",
+  NM:"M 245 288 L 310 286 L 312 355 L 247 357 Z",
+  NY:"M 645 140 L 715 136 L 718 172 L 647 175 Z",
+  NC:"M 575 260 L 658 256 L 661 285 L 577 288 Z",
+  ND:"M 340 125 L 435 123 L 437 162 L 342 164 Z",
+  OH:"M 558 200 L 600 198 L 603 250 L 560 252 Z",
+  OK:"M 368 280 L 468 278 L 470 318 L 370 320 Z",
+  OR:"M 135 148 L 205 145 L 208 195 L 137 198 Z",
+  PA:"M 618 170 L 700 166 L 703 205 L 620 208 Z",
+  RI:"M 740 150 L 752 148 L 754 165 L 741 166 Z",
+  SC:"M 572 295 L 615 292 L 618 328 L 574 330 Z",
+  SD:"M 340 162 L 435 160 L 437 205 L 342 207 Z",
+  TN:"M 515 270 L 598 266 L 601 292 L 517 295 Z",
+  TX:"M 330 300 L 455 298 L 458 395 L 332 398 Z",
+  UT:"M 200 228 L 255 226 L 258 290 L 202 292 Z",
+  VT:"M 710 118 L 728 116 L 730 152 L 712 153 Z",
+  VA:"M 608 228 L 682 224 L 685 258 L 610 261 Z",
+  WA:"M 138 105 L 210 102 L 212 148 L 140 150 Z",
+  WV:"M 590 215 L 635 212 L 638 252 L 592 255 Z",
+  WI:"M 460 148 L 510 145 L 513 195 L 462 198 Z",
+  WY:"M 253 175 L 358 173 L 360 228 L 255 230 Z"
+};
+
+// Center coords for the pin (used in dict too)
+const SD={AL:{cx:535,cy:368},AK:{cx:173,cy:460},AZ:{cx:197,cy:330},AR:{cx:505,cy:318},CA:{cx:117,cy:270},CO:{cx:316,cy:258},CT:{cx:721,cy:162},DE:{cx:709,cy:195},FL:{cx:565,cy:420},GA:{cx:562,cy:358},HI:{cx:285,cy:472},ID:{cx:220,cy:192},IL:{cx:508,cy:246},IN:{cx:544,cy:238},IA:{cx:481,cy:206},KS:{cx:418,cy:267},KY:{cx:558,cy:266},LA:{cx:485,cy:372},ME:{cx:751,cy:112},MD:{cx:681,cy:201},MA:{cx:726,cy:147},MI:{cx:544,cy:175},MN:{cx:451,cy:155},MS:{cx:508,cy:360},MO:{cx:481,cy:266},MT:{cx:291,cy:149},NE:{cx:413,cy:229},NV:{cx:177,cy:238},NH:{cx:729,cy:137},NJ:{cx:707,cy:188},NM:{cx:278,cy:322},NY:{cx:681,cy:158},NC:{cx:618,cy:272},ND:{cx:388,cy:144},OH:{cx:581,cy:225},OK:{cx:419,cy:299},OR:{cx:171,cy:172},PA:{cx:659,cy:188},RI:{cx:746,cy:157},SC:{cx:594,cy:312},SD:{cx:388,cy:184},TN:{cx:557,cy:279},TX:{cx:393,cy:348},UT:{cx:228,cy:260},VT:{cx:721,cy:135},VA:{cx:646,cy:243},WA:{cx:175,cy:126},WV:{cx:613,cy:234},WI:{cx:486,cy:172},WY:{cx:307,cy:202}};
+
+function miniMap(abbr){
+  const pos=SD[abbr];
+  if(!pos) return '';
+  // Build all state paths; highlight the selected one
+  let paths='';
+  for(const [a,d] of Object.entries(STATE_PATHS)){
+    const isHL=a===abbr;
+    paths+=`<path d="${d}" fill="${isHL?'#c9922a':'#d9c9a8'}" stroke="#fff" stroke-width="${isHL?1.5:.7}" opacity="${isHL?1:.9}"/>`;
+  }
+  // Add pulsing ring + pin dot on top
+  paths+=`<circle cx="${pos.cx}" cy="${pos.cy}" r="16" fill="rgba(201,146,42,.22)"/>`;
+  paths+=`<circle cx="${pos.cx}" cy="${pos.cy}" r="8" fill="#c9922a" stroke="white" stroke-width="2.5"/>`;
+  return `<svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;border-radius:5px;border:1px solid var(--bdrl);background:#f0ebe0">${paths}</svg>`;
+}
 
 // ═══════════════════════════════
 // DATA — STATES
@@ -951,7 +1019,7 @@ function buildList(){
   const t=getTopic('fc');
   document.getElementById('fc-list').innerHTML=deck.map((item,i)=>{
     const k=t==='states'?P.sKnown[item.a]:P.rKnown[item.root];
-    const lbl=t==='states'?item.s:item.root;const sub=t==='states'?item.c:item.meaning;
+    const lbl=t==='states'?item.s:item.root;const sub=t==='states'?item.r:item.origin;
     return `<li class="fsl-item${i===dIdx?' cur':''}" onclick="jumpCard(${i})"><span class="fsl-dot${k===true?' known':k===false?' learn':''}"></span><span><strong style="font-size:13px">${lbl}</strong><span style="font-size:11px;color:var(--iv);display:block">${sub}</span></span></li>`;
   }).join('');
 }
@@ -966,7 +1034,7 @@ function startQuiz(){
   buildFilters('qz-fbar',t==='states'?S_REG:['All','Greek','Latin'],t);
   qIdx=0;qRight=0;qAns=false;
   const pool=t==='states'?fS():fR();const p=[...pool];shuf(p);
-  qItems=p.slice(0,Math.min(10,p.length));
+  qItems=p;
   document.getElementById('qz-res').style.display='none';document.getElementById('qz-active').style.display='';
   setText('qz-sc',0);setText('qz-tot',qItems.length);renderQ();
 }
