@@ -56,6 +56,28 @@ nav{flex:1;padding:8px 0 6px;}
 .tt-btn{padding:5px 18px;border-radius:20px;border:none;background:transparent;font-family:'EB Garamond',Georgia,serif;font-size:13px;color:var(--im);cursor:pointer;transition:all .18s;white-space:nowrap;}
 .tt-btn.on{background:var(--gold);color:#fff;box-shadow:0 1px 4px rgba(90,60,10,.2);}
 
+/* MAP LOCATE MODE */
+.map-locate-wrap{max-width:680px;}
+.mlc-prompt{font-size:20px;color:var(--ink);margin-bottom:18px;text-align:center;font-style:italic;background:var(--w);border:1px solid var(--bdr);border-radius:6px;padding:20px 28px;box-shadow:0 4px 16px var(--sh);}
+.mlc-prompt strong{font-style:normal;}
+.map-svg-wrap{position:relative;background:#f0ebe0;border-radius:6px;border:1px solid var(--bdrl);cursor:crosshair;box-shadow:0 4px 16px var(--sh);overflow:hidden;}
+.map-svg-wrap svg{width:100%;height:auto;display:block;}
+.msp{fill:#d9c9a8;stroke:#fff;stroke-width:.7;cursor:pointer;transition:fill .15s;}
+.msp:hover{fill:#b8a888;}
+.msp.correct{fill:#3d6b4f !important;stroke:#2a5038;cursor:default;}
+.msp.wrong{fill:#9e3a1e !important;stroke:#7a2c14;cursor:default;}
+.msp.reveal{fill:#c9922a !important;stroke:#8b6318;cursor:default;}
+.msp.dim{fill:#e8e0d0;cursor:default;}
+.mlc-fb{text-align:center;font-size:16px;min-height:28px;margin-top:14px;font-style:italic;padding:10px;}
+.mlc-fb.ok{color:var(--sage);}
+.mlc-fb.ng{color:var(--rust);}
+.mlc-stats{display:flex;justify-content:center;gap:32px;margin:14px 0;flex-wrap:wrap;}
+.mlc-stat{text-align:center;}
+.mlc-stat .msn{font-size:28px;color:var(--ink);line-height:1;}
+.mlc-stat .msl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--iv);margin-top:2px;}
+.mlc-ctrls{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+
+
 /* FILTER BAR */
 .fbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:20px;}
 .fbar label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--iv);margin-right:2px;}
@@ -374,6 +396,7 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
       <div class="topic-toggle">
         <button class="tt-btn on" id="fc-tt-s" onclick="setTopic('fc','states')">States &amp; Capitals</button>
         <button class="tt-btn" id="fc-tt-r" onclick="setTopic('fc','roots')">Greek &amp; Latin Roots</button>
+        <button class="tt-btn" id="fc-tt-m" onclick="setTopic('fc','map')">Locate the State</button>
       </div>
     </div>
     <hr class="rule">
@@ -416,6 +439,27 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
         <h4>Cards in Deck</h4>
         <ul class="fc-side-list" id="fc-list"></ul>
       </div>
+
+  <!-- MAP LOCATE FLASHCARD MODE -->
+  <div id="fc-map-mode" style="display:none">
+    <div class="map-locate-wrap">
+      <div class="mlc-stats">
+        <div class="mlc-stat"><span class="msn" id="mlc-fc-correct">0</span><div class="msl">Correct</div></div>
+        <div class="mlc-stat"><span class="msn" id="mlc-fc-wrong">0</span><div class="msl">Wrong</div></div>
+        <div class="mlc-stat"><span class="msn" id="mlc-fc-prog">1 / 50</span><div class="msl">Progress</div></div>
+      </div>
+      <div class="mlc-prompt"><strong id="mlc-fc-name">&#8212;</strong><br><span style="font-size:14px;color:var(--iv)">Click the state on the map</span></div>
+      <div class="map-svg-wrap" id="mlc-fc-svg-wrap"></div>
+      <div class="mlc-fb" id="mlc-fc-fb"></div>
+      <div class="mlc-ctrls">
+        <button class="btn b-red" id="mlc-fc-skip" onclick="mlcFcSkip()">Skip</button>
+        <button class="btn b-gold" id="mlc-fc-next" onclick="mlcFcNext()" style="display:none">Next &#8594;</button>
+        <button class="btn b-wht" onclick="shuffleMLCFc()">&#8644; Shuffle</button>
+        <button class="btn b-wht" onclick="resetMLCFc()">&#8634; Restart</button>
+      </div>
+      <div class="fc-dots" id="mlc-fc-dots" style="margin-top:14px"></div>
+    </div>
+  </div>
     </div>
   </div>
 
@@ -426,6 +470,7 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
       <div class="topic-toggle">
         <button class="tt-btn on" id="qz-tt-s" onclick="setTopic('qz','states')">States &amp; Capitals</button>
         <button class="tt-btn" id="qz-tt-r" onclick="setTopic('qz','roots')">Greek &amp; Latin Roots</button>
+        <button class="tt-btn" id="qz-tt-m" onclick="setTopic('qz','map')">Locate the State</button>
       </div>
     </div>
     <hr class="rule">
@@ -457,6 +502,27 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
           <button class="btn b-wht" onclick="go('dash')">Dashboard</button>
         </div>
       </div>
+      <!-- MAP LOCATE QUIZ MODE -->
+      <div id="qz-map-mode" style="display:none">
+        <div class="map-locate-wrap">
+          <div class="qpbar"><div class="qpfill" id="qz-map-pf" style="width:0%"></div></div>
+          <div class="qmeta"><span>Question <span id="qz-map-n">1</span> of <span id="qz-map-tot">50</span></span><span>Score: <span id="qz-map-sc">0</span></span></div>
+          <div class="mlc-prompt"><strong id="qz-map-name">&#8212;</strong><br><span style="font-size:14px;color:var(--iv)">Click the correct state on the map</span></div>
+          <div class="map-svg-wrap" id="qz-map-svg-wrap"></div>
+          <div class="mlc-fb" id="qz-map-fb"></div>
+          <div class="qnxt" style="margin-top:14px"><button class="btn b-gold" id="qz-map-nxt" onclick="nextMapQ()" style="display:none">Next &#8594;</button></div>
+        </div>
+        <div id="qz-map-res" style="display:none">
+          <div class="res-card">
+            <div style="font-size:14px;color:var(--il)">Map Quiz Complete</div>
+            <div class="res-sc" id="qz-map-res-sc">&#8212;</div>
+            <div class="res-of">out of <span id="qz-map-res-tot">50</span></div>
+            <div class="res-gr" id="qz-map-res-gr">&#8212;</div>
+            <button class="btn b-gold" onclick="startMapQuiz()">Try Again</button>&nbsp;
+            <button class="btn b-wht" onclick="go('dash')">Dashboard</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -467,6 +533,7 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
       <div class="topic-toggle">
         <button class="tt-btn on" id="ts-tt-s" onclick="setTopic('ts','states')">States &amp; Capitals</button>
         <button class="tt-btn" id="ts-tt-r" onclick="setTopic('ts','roots')">Greek &amp; Latin Roots</button>
+        <button class="tt-btn" id="ts-tt-m" onclick="setTopic('ts','map')">Locate the State</button>
       </div>
     </div>
     <hr class="rule">
@@ -501,6 +568,39 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
         <div id="tr-rev"></div>
         <div style="text-align:center;margin-top:22px">
           <button class="btn b-gold" onclick="beginTest()">Retake</button>&nbsp;
+          <button class="btn b-wht" onclick="go('dash')">Dashboard</button>
+        </div>
+      </div>
+    </div>
+    <!-- MAP TEST MODE -->
+    <div id="ts-map-mode" style="display:none">
+      <div class="t-timer">&#9201;&nbsp;<span class="t-tval" id="ts-map-tm">0:00</span>&nbsp;elapsed</div>
+      <div class="map-locate-wrap">
+        <div class="mlc-stats">
+          <div class="mlc-stat"><span class="msn" id="tsm-correct">0</span><div class="msl">Correct</div></div>
+          <div class="mlc-stat"><span class="msn" id="tsm-wrong">0</span><div class="msl">Wrong</div></div>
+          <div class="mlc-stat"><span class="msn" id="tsm-prog">0 / 50</span><div class="msl">Progress</div></div>
+        </div>
+        <div class="mlc-prompt"><strong id="tsm-name">&#8212;</strong><br><span style="font-size:14px;color:var(--iv)">Click the correct state on the map</span></div>
+        <div class="map-svg-wrap" id="tsm-svg-wrap"></div>
+        <div class="mlc-fb" id="tsm-fb"></div>
+        <div class="mlc-ctrls" style="margin-top:14px">
+          <button class="btn b-gold" id="tsm-next" onclick="nextMapTestQ()" style="display:none">Next &#8594;</button>
+        </div>
+      </div>
+    </div>
+    <div id="ts-map-res" style="display:none">
+      <div class="t-res-card">
+        <div style="text-align:center">
+          <h2 style="font-style:italic;margin-bottom:6px">Map Test Results</h2>
+          <div class="res-sc" id="tsm-res-sc">&#8212;</div>
+          <div class="res-of">out of <span id="tsm-res-tot">50</span></div>
+          <div class="res-gr" id="tsm-res-gr">&#8212;</div>
+        </div>
+        <hr class="div">
+        <div id="tsm-rev"></div>
+        <div style="text-align:center;margin-top:22px">
+          <button class="btn b-gold" onclick="beginMapTest()">Retake</button>&nbsp;
           <button class="btn b-wht" onclick="go('dash')">Dashboard</button>
         </div>
       </div>
@@ -781,65 +881,96 @@ const S_REG=["All","Northeast","Southeast","Midwest","Southwest","West"];
 // DATA — ROOTS
 // ═══════════════════════════════
 const ROOTS=[
-  {root:"aqu",origin:"Latin",meaning:"water",examples:["aquarium","aquatic","aqueduct"],note:"From Latin aqua. Water was central to Roman infrastructure.",type:"Latin"},
-  {root:"aud",origin:"Latin",meaning:"hear, listen",examples:["audible","audience","auditorium"],note:"From Latin audire. An audience literally means those who hear.",type:"Latin"},
-  {root:"bene / ben",origin:"Latin",meaning:"good, well",examples:["benefit","benevolent","benign"],note:"From Latin bene. Note: not to be confused with French/Spanish bien.",type:"Latin"},
+  // ── GREEK (43) ──────────────────────────────────────────────────
+  {root:"acro",origin:"Greek",meaning:"high, top",examples:["acropolis","acrobat","acronym"],note:"From Greek akros. An acrobat performs feats at great heights.",type:"Greek"},
+  {root:"anthropo",origin:"Greek",meaning:"human, humanity",examples:["anthropology","philanthropist","misanthrope"],note:"From Greek anthropos. Anthropology is the study of humanity.",type:"Greek"},
+  {root:"anti",origin:"Greek",meaning:"against",examples:["antidote","antibacterial","antonym"],note:"From Greek anti. An antidote works against a poison.",type:"Greek"},
+  {root:"arch",origin:"Greek",meaning:"chief, first, rule",examples:["monarch","archaeology","archetype"],note:"From Greek arkhein. A monarch is the chief ruler.",type:"Greek"},
+  {root:"ast / astro",origin:"Greek",meaning:"star",examples:["astronomy","astronaut","asteroid"],note:"From Greek astron. An astronaut sails among the stars.",type:"Greek"},
+  {root:"auto",origin:"Greek",meaning:"self",examples:["autograph","automatic","autobiography"],note:"From Greek autos. An autograph is writing your own name.",type:"Greek"},
   {root:"bio",origin:"Greek",meaning:"life",examples:["biology","biography","antibiotic"],note:"From Greek bios. Biology is literally the study of life.",type:"Greek"},
-  {root:"cap / cept",origin:"Latin",meaning:"take, seize",examples:["capture","receptive","intercept"],note:"From Latin capere. To intercept is to seize something in between.",type:"Latin"},
-  {root:"chron",origin:"Greek",meaning:"time",examples:["chronology","chronic","anachronism"],note:"From Greek khronos, the god of time.",type:"Greek"},
-  {root:"cred",origin:"Latin",meaning:"believe, trust",examples:["credible","incredible","credentials"],note:"From Latin credere. Credit means trusting someone to repay.",type:"Latin"},
-  {root:"dem",origin:"Greek",meaning:"people",examples:["democracy","epidemic","demographic"],note:"From Greek demos. Democracy = rule by the people.",type:"Greek"},
+  {root:"chrome",origin:"Greek",meaning:"color",examples:["chromatic","monochrome","chromosome"],note:"From Greek khroma. Monochrome means a single color.",type:"Greek"},
+  {root:"chron",origin:"Greek",meaning:"time",examples:["chronology","synchronize","chronic"],note:"From Greek khronos, the personification of time.",type:"Greek"},
+  {root:"cycl",origin:"Greek",meaning:"circle, wheel",examples:["bicycle","cyclone","encyclopedia"],note:"From Greek kyklos. A cyclone is a circular wind system.",type:"Greek"},
+  {root:"dem",origin:"Greek",meaning:"people",examples:["democracy","epidemic","demographic"],note:"From Greek demos. Democracy means rule by the people.",type:"Greek"},
+  {root:"dyn / dynam",origin:"Greek",meaning:"power, strength",examples:["dynamo","dynamic","dynamite"],note:"From Greek dynamis. Dynamite was named for its explosive power.",type:"Greek"},
+  {root:"dys",origin:"Greek",meaning:"bad, difficult, abnormal",examples:["dysfunction","dystopia","dyslexia"],note:"From Greek dys. Dysfunction means not performing correctly.",type:"Greek"},
+  {root:"geo",origin:"Greek",meaning:"earth",examples:["geography","geology","geometry"],note:"From Greek ge. Geometry was originally the measurement of land.",type:"Greek"},
+  {root:"graph / gram",origin:"Greek",meaning:"write, draw",examples:["paragraph","grammar","autograph"],note:"From Greek graphein. A paragraph marks a written section.",type:"Greek"},
+  {root:"hetero",origin:"Greek",meaning:"different",examples:["heterogeneous","heterosexual","heterodox"],note:"From Greek heteros. The opposite of homo- (same).",type:"Greek"},
+  {root:"homo",origin:"Greek",meaning:"same",examples:["homonym","homogeneous","homophone"],note:"From Greek homos. Homophones sound the same but differ in meaning.",type:"Greek"},
+  {root:"hydr",origin:"Greek",meaning:"water",examples:["hydrant","hydroelectric","dehydrate"],note:"From Greek hydor. Hydraulics uses water pressure to do work.",type:"Greek"},
+  {root:"hyper",origin:"Greek",meaning:"over, above",examples:["hyperactive","hyperbole","hyperlink"],note:"From Greek hyper. Hyperbole is exaggeration taken over the top.",type:"Greek"},
+  {root:"hypo",origin:"Greek",meaning:"under, below",examples:["hypothermia","hypodermic","hypothesis"],note:"From Greek hypo. Hypothermia is dangerously low body heat.",type:"Greek"},
+  {root:"log / logy",origin:"Greek",meaning:"word, study",examples:["dialogue","biology","monologue"],note:"From Greek logos. Every -ology is literally a study of something.",type:"Greek"},
+  {root:"mega / megalo",origin:"Greek",meaning:"great, large",examples:["megaphone","megalopolis","megabyte"],note:"From Greek megas. A megalopolis is a sprawling large city.",type:"Greek"},
+  {root:"metr / meter",origin:"Greek",meaning:"measure",examples:["speedometer","barometer","thermometer"],note:"From Greek metron. Every -meter instrument measures something.",type:"Greek"},
+  {root:"micro",origin:"Greek",meaning:"small",examples:["microscope","microchip","microbiology"],note:"From Greek mikros. The opposite of macro- and mega-.",type:"Greek"},
+  {root:"mis / miso",origin:"Greek",meaning:"hate",examples:["misogyny","misanthrope","misophonia"],note:"From Greek misein. A misanthrope hates or distrusts people.",type:"Greek"},
+  {root:"morph",origin:"Greek",meaning:"form, shape",examples:["metamorphosis","morphology","amorphous"],note:"From Greek morphe. Metamorphosis means a change of form.",type:"Greek"},
+  {root:"narc",origin:"Greek",meaning:"sleep",examples:["narcotic","narcolepsy","narcosis"],note:"From Greek narkoun. Narcotics induce a sleep-like state.",type:"Greek"},
+  {root:"naut",origin:"Greek",meaning:"sailor, ship",examples:["astronaut","nautical","cosmonaut"],note:"From Greek nautes. An astronaut is a sailor of the stars.",type:"Greek"},
+  {root:"nym",origin:"Greek",meaning:"name",examples:["pseudonym","antonym","synonym"],note:"From Greek onoma. A synonym is a word with the same name-value.",type:"Greek"},
+  {root:"path",origin:"Greek",meaning:"feeling, disease",examples:["sympathy","pathology","empathy"],note:"From Greek pathos. Empathy is feeling into another's experience.",type:"Greek"},
+  {root:"phil",origin:"Greek",meaning:"love",examples:["philosophy","philanthropist","bibliophile"],note:"From Greek philos. Philosophy means love of wisdom.",type:"Greek"},
+  {root:"phobia",origin:"Greek",meaning:"fear of",examples:["claustrophobia","arachnophobia","xenophobia"],note:"From Greek phobos. Every -phobia names a specific fear.",type:"Greek"},
+  {root:"phon",origin:"Greek",meaning:"sound",examples:["telephone","symphony","phonics"],note:"From Greek phone. A symphony is a sounding together.",type:"Greek"},
+  {root:"photo",origin:"Greek",meaning:"light",examples:["photograph","photosynthesis","photon"],note:"From Greek phos. Photosynthesis means making food with light.",type:"Greek"},
+  {root:"polis / polit",origin:"Greek",meaning:"city, citizen",examples:["metropolis","politics","cosmopolitan"],note:"From Greek polis. Politics is the art of governing a city-state.",type:"Greek"},
+  {root:"pseudo",origin:"Greek",meaning:"false, pretended",examples:["pseudonym","pseudoscientific","pseudocode"],note:"From Greek pseudos. A pseudonym is a false name.",type:"Greek"},
+  {root:"psych",origin:"Greek",meaning:"mind, soul",examples:["psychology","psychic","psychiatry"],note:"From Greek psyche. Psychology is the study of the mind.",type:"Greek"},
+  {root:"scope",origin:"Greek",meaning:"look at, examine",examples:["microscope","periscope","telescope"],note:"From Greek skopein. Every -scope is a tool for looking.",type:"Greek"},
+  {root:"syn",origin:"Greek",meaning:"together, with",examples:["photosynthesis","synchronize","syndrome"],note:"From Greek syn. To synchronize is to make things happen together.",type:"Greek"},
+  {root:"techno",origin:"Greek",meaning:"art, craft, skill",examples:["technique","technology","technical"],note:"From Greek tekhne. Technology is the application of skill.",type:"Greek"},
+  {root:"tele",origin:"Greek",meaning:"far, distant",examples:["television","telescope","telephone"],note:"From Greek tele. A telescope lets you see far away.",type:"Greek"},
+  {root:"theo",origin:"Greek",meaning:"god",examples:["theology","monotheism","atheist"],note:"From Greek theos. Theology is the study of god or religion.",type:"Greek"},
+  {root:"therm",origin:"Greek",meaning:"heat",examples:["thermometer","thermal","thermostat"],note:"From Greek therme. A thermostat regulates heat.",type:"Greek"},
+  // ── LATIN (45) ──────────────────────────────────────────────────
+  {root:"ab",origin:"Latin",meaning:"away, off",examples:["abstain","absent","abstract"],note:"From Latin ab. To abstain is to keep yourself away from something.",type:"Latin"},
+  {root:"act",origin:"Latin",meaning:"to do",examples:["action","actor","enact"],note:"From Latin agere/actum. An actor is one who does or performs.",type:"Latin"},
+  {root:"ambi",origin:"Latin",meaning:"both, around",examples:["ambiguous","ambidextrous","ambivalent"],note:"From Latin ambo. Ambidextrous means skilled with both hands.",type:"Latin"},
+  {root:"aqua",origin:"Latin",meaning:"water",examples:["aquarium","aquatic","aqueduct"],note:"From Latin aqua. Water was central to Roman infrastructure.",type:"Latin"},
+  {root:"aud",origin:"Latin",meaning:"hear",examples:["audience","audible","auditorium"],note:"From Latin audire. An audience literally means those who hear.",type:"Latin"},
+  {root:"bene",origin:"Latin",meaning:"good, well",examples:["benefit","benevolent","benign"],note:"From Latin bene. The opposite is mal- (bad).",type:"Latin"},
+  {root:"cent",origin:"Latin",meaning:"hundred",examples:["century","percent","centimeter"],note:"From Latin centum. A century spans one hundred years.",type:"Latin"},
+  {root:"circum",origin:"Latin",meaning:"around",examples:["circumference","circulate","circumvent"],note:"From Latin circum. Circumference is the measurement around a circle.",type:"Latin"},
+  {root:"contra / counter",origin:"Latin",meaning:"against, opposite",examples:["contradict","counteract","contrast"],note:"From Latin contra. To contradict is to speak against something.",type:"Latin"},
   {root:"dict",origin:"Latin",meaning:"say, speak",examples:["dictate","predict","verdict"],note:"From Latin dicere. A verdict is what is truly spoken.",type:"Latin"},
-  {root:"duc / duct",origin:"Latin",meaning:"lead",examples:["conduct","educate","deduce"],note:"From Latin ducere. To educate is to lead out potential.",type:"Latin"},
-  {root:"eu",origin:"Greek",meaning:"good, well",examples:["euphoria","eulogy","euphemism"],note:"From Greek eu. A eulogy is literally good words (eu + logos).",type:"Greek"},
-  {root:"fac / fect",origin:"Latin",meaning:"make, do",examples:["factory","artifact","effect"],note:"From Latin facere. An artifact is something made by art or skill.",type:"Latin"},
-  {root:"fer",origin:"Latin",meaning:"carry, bear",examples:["transfer","fertile","defer"],note:"From Latin ferre. To transfer is to carry across.",type:"Latin"},
-  {root:"fid",origin:"Latin",meaning:"faith, trust",examples:["fidelity","confide","infidel"],note:"From Latin fides. Fidelity means faithfulness.",type:"Latin"},
-  {root:"flect / flex",origin:"Latin",meaning:"bend",examples:["reflect","flexible","deflect"],note:"From Latin flectere. To reflect is to bend back light or thought.",type:"Latin"},
-  {root:"geo",origin:"Greek",meaning:"earth",examples:["geology","geography","geometry"],note:"From Greek ge. Geometry was originally the measurement of land.",type:"Greek"},
-  {root:"graph / gram",origin:"Greek",meaning:"write, draw, record",examples:["paragraph","telegram","autograph"],note:"From Greek graphein. A paragraph marks a written section.",type:"Greek"},
-  {root:"greg",origin:"Latin",meaning:"group, flock",examples:["congregate","segregate","gregarious"],note:"From Latin grex. Gregarious means fond of being in groups.",type:"Latin"},
-  {root:"hetero",origin:"Greek",meaning:"different, other",examples:["heterogeneous","heteronym","heterodox"],note:"From Greek heteros. The opposite of homo- (same).",type:"Greek"},
-  {root:"homo",origin:"Greek",meaning:"same",examples:["homophone","homogeneous","homonym"],note:"From Greek homos. Homophones sound the same but differ in meaning.",type:"Greek"},
-  {root:"hydr",origin:"Greek",meaning:"water",examples:["hydrant","hydraulic","dehydrate"],note:"From Greek hydor. Hydraulics uses water pressure to do work.",type:"Greek"},
-  {root:"ject",origin:"Latin",meaning:"throw",examples:["project","reject","inject"],note:"From Latin jacere. To project is to throw forward.",type:"Latin"},
-  {root:"log / logue",origin:"Greek",meaning:"word, reason, study",examples:["dialogue","prologue","monologue"],note:"From Greek logos. Dialogue is speaking between two parties.",type:"Greek"},
-  {root:"luc / lum",origin:"Latin",meaning:"light",examples:["lucid","illuminate","translucent"],note:"From Latin lux / lumen. Lucid means clear and full of light.",type:"Latin"},
-  {root:"mal",origin:"Latin",meaning:"bad, evil",examples:["malicious","malfunction","malady"],note:"From Latin malus. The opposite of bene- (good).",type:"Latin"},
-  {root:"man / manu",origin:"Latin",meaning:"hand",examples:["manual","manuscript","manipulate"],note:"From Latin manus. A manuscript was written by hand.",type:"Latin"},
-  {root:"mega",origin:"Greek",meaning:"large, great",examples:["megaphone","megabyte","megalopolis"],note:"From Greek megas. A megalopolis is a very large city or metro area.",type:"Greek"},
-  {root:"micro",origin:"Greek",meaning:"small",examples:["microscope","microphone","microbiology"],note:"From Greek mikros. The opposite of macro- and mega-.",type:"Greek"},
-  {root:"mit / miss",origin:"Latin",meaning:"send",examples:["transmit","dismiss","missile"],note:"From Latin mittere. To transmit is to send across.",type:"Latin"},
-  {root:"morph",origin:"Greek",meaning:"form, shape",examples:["metamorphosis","morphology","amorphous"],note:"From Greek morphe. Metamorphosis = change of form.",type:"Greek"},
-  {root:"mort",origin:"Latin",meaning:"death",examples:["mortal","immortal","mortuary"],note:"From Latin mors / mortis. Immortal means not subject to death.",type:"Latin"},
-  {root:"multi",origin:"Latin",meaning:"many",examples:["multiply","multilingual","multitask"],note:"From Latin multus. Multilingual = knowing many languages.",type:"Latin"},
-  {root:"nat / nasc",origin:"Latin",meaning:"born",examples:["native","innate","prenatal"],note:"From Latin nasci. Innate qualities are those born within you.",type:"Latin"},
-  {root:"neg",origin:"Latin",meaning:"not, deny",examples:["negative","negate","neglect"],note:"From Latin negare. To negate is to deny or cancel.",type:"Latin"},
-  {root:"omni",origin:"Latin",meaning:"all",examples:["omnivore","omnipotent","omniscient"],note:"From Latin omnis. An omnivore eats all types of food.",type:"Latin"},
-  {root:"pan",origin:"Greek",meaning:"all, every",examples:["pandemic","panorama","pantheon"],note:"From Greek pan. A panorama shows everything in view.",type:"Greek"},
-  {root:"path",origin:"Greek",meaning:"feeling, suffering",examples:["empathy","sympathy","pathology"],note:"From Greek pathos. Empathy = feeling into another's experience.",type:"Greek"},
-  {root:"ped / pod",origin:"Greek/Latin",meaning:"foot",examples:["pedestrian","podium","expedition"],note:"From Greek pous / Latin pes. A podium is what you stand on.",type:"Greek"},
-  {root:"phil",origin:"Greek",meaning:"love",examples:["philosophy","philanthropy","bibliophile"],note:"From Greek philos. Philosophy = love of wisdom.",type:"Greek"},
-  {root:"phon",origin:"Greek",meaning:"sound, voice",examples:["microphone","symphony","phonics"],note:"From Greek phone. A symphony is a sounding together.",type:"Greek"},
-  {root:"photo / phos",origin:"Greek",meaning:"light",examples:["photograph","photosynthesis","phosphorus"],note:"From Greek phos. Photosynthesis = making with light.",type:"Greek"},
-  {root:"port",origin:"Latin",meaning:"carry",examples:["transport","portable","export"],note:"From Latin portare. To export is to carry out of a country.",type:"Latin"},
-  {root:"psych",origin:"Greek",meaning:"mind, soul",examples:["psychology","psychic","psychiatry"],note:"From Greek psyche. The study of the mind and behavior.",type:"Greek"},
-  {root:"rupt",origin:"Latin",meaning:"break",examples:["disrupt","rupture","interrupt"],note:"From Latin rumpere. To interrupt is to break in between.",type:"Latin"},
-  {root:"scrib / script",origin:"Latin",meaning:"write",examples:["describe","manuscript","inscription"],note:"From Latin scribere. To describe is to write about.",type:"Latin"},
-  {root:"sect",origin:"Latin",meaning:"cut",examples:["dissect","section","bisect"],note:"From Latin secare. To bisect is to cut into two equal parts.",type:"Latin"},
-  {root:"sol",origin:"Latin",meaning:"sun",examples:["solar","solstice","parasol"],note:"From Latin sol. A solstice is when the sun stands still.",type:"Latin"},
-  {root:"spec / spect",origin:"Latin",meaning:"see, look",examples:["spectacle","inspect","perspective"],note:"From Latin specere. A spectacle is something worth seeing.",type:"Latin"},
-  {root:"struct",origin:"Latin",meaning:"build",examples:["structure","construct","instruct"],note:"From Latin struere. To instruct is to build knowledge in someone.",type:"Latin"},
-  {root:"tele",origin:"Greek",meaning:"far, distant",examples:["telephone","telescope","television"],note:"From Greek tele. A telescope lets you see far away.",type:"Greek"},
-  {root:"terr",origin:"Latin",meaning:"earth, land",examples:["territory","terrain","terrestrial"],note:"From Latin terra. Terrestrial means of or relating to the earth.",type:"Latin"},
-  {root:"therm",origin:"Greek",meaning:"heat",examples:["thermometer","thermostat","thermal"],note:"From Greek therme. A thermostat controls heat levels.",type:"Greek"},
-  {root:"tract",origin:"Latin",meaning:"pull, drag",examples:["traction","attract","extract"],note:"From Latin trahere. To attract is to pull toward.",type:"Latin"},
-  {root:"uni",origin:"Latin",meaning:"one",examples:["uniform","unify","unique"],note:"From Latin unus. Something unique is one of a kind.",type:"Latin"},
-  {root:"ver / veri",origin:"Latin",meaning:"truth",examples:["verify","verdict","verity"],note:"From Latin verus. To verify is to confirm as true.",type:"Latin"},
+  {root:"doc",origin:"Latin",meaning:"teach, prove",examples:["document","doctor","doctrine"],note:"From Latin docere. A doctor was originally a teacher.",type:"Latin"},
+  {root:"duc / duct",origin:"Latin",meaning:"lead",examples:["educate","conduct","deduce"],note:"From Latin ducere. To educate is to lead out potential.",type:"Latin"},
+  {root:"fac / fact",origin:"Latin",meaning:"make, do",examples:["factory","manufacture","artifact"],note:"From Latin facere. An artifact is something made by art or skill.",type:"Latin"},
+  {root:"form",origin:"Latin",meaning:"shape",examples:["transform","uniform","reform"],note:"From Latin forma. To transform is to change into a new shape.",type:"Latin"},
+  {root:"fort",origin:"Latin",meaning:"strong",examples:["fortress","fortify","effort"],note:"From Latin fortis. A fortress is built to be strong.",type:"Latin"},
+  {root:"fract / frag",origin:"Latin",meaning:"break",examples:["fracture","fragment","fragile"],note:"From Latin frangere. A fracture is a break in something solid.",type:"Latin"},
+  {root:"fund / found",origin:"Latin",meaning:"bottom, base",examples:["foundation","fundamental","profound"],note:"From Latin fundus. A foundation is the base of a structure.",type:"Latin"},
+  {root:"gen",origin:"Latin",meaning:"give birth to",examples:["genesis","generation","genetic"],note:"From Latin generare. Genesis means the origin or birth of something.",type:"Latin"},
+  {root:"ject",origin:"Latin",meaning:"throw",examples:["project","eject","inject"],note:"From Latin jacere. To project is to throw forward.",type:"Latin"},
+  {root:"jur",origin:"Latin",meaning:"law",examples:["jury","jurisdiction","perjury"],note:"From Latin jus/juris. A jury decides matters of law.",type:"Latin"},
+  {root:"lev",origin:"Latin",meaning:"lift",examples:["levitate","elevate","leverage"],note:"From Latin levare. To elevate is to lift something up.",type:"Latin"},
+  {root:"lumin / luc / lum",origin:"Latin",meaning:"light",examples:["illuminate","translucent","lucid"],note:"From Latin lux/lumen. Lucid means clear and full of light.",type:"Latin"},
+  {root:"mal",origin:"Latin",meaning:"bad",examples:["malfunction","malevolent","malady"],note:"From Latin malus. The opposite of bene- (good).",type:"Latin"},
+  {root:"manu / mani",origin:"Latin",meaning:"hand",examples:["manuscript","manicure","manipulate"],note:"From Latin manus. A manuscript was originally written by hand.",type:"Latin"},
+  {root:"mater / matr",origin:"Latin",meaning:"mother",examples:["maternity","matriarch","maternal"],note:"From Latin mater. Maternity relates to being a mother.",type:"Latin"},
+  {root:"mit / mis",origin:"Latin",meaning:"send",examples:["transmit","mission","dismiss"],note:"From Latin mittere. To transmit is to send across.",type:"Latin"},
+  {root:"mort",origin:"Latin",meaning:"death",examples:["mortal","immortal","mortuary"],note:"From Latin mors/mortis. Immortal means not subject to death.",type:"Latin"},
+  {root:"multi",origin:"Latin",meaning:"many",examples:["multicolor","multimedia","multiply"],note:"From Latin multus. Multimedia uses many forms of communication.",type:"Latin"},
+  {root:"omni",origin:"Latin",meaning:"all",examples:["omnivorous","omnipotent","omniscient"],note:"From Latin omnis. An omnivore eats all types of food.",type:"Latin"},
+  {root:"pac",origin:"Latin",meaning:"peace",examples:["pacify","pact","pacifist"],note:"From Latin pax/pacis. To pacify is to bring peace.",type:"Latin"},
+  {root:"pater / patr",origin:"Latin",meaning:"father",examples:["paternal","patriot","patron"],note:"From Latin pater. Paternal means relating to a father.",type:"Latin"},
+  {root:"port",origin:"Latin",meaning:"carry",examples:["transport","portable","export"],note:"From Latin portare. To export is to carry goods out of a country.",type:"Latin"},
+  {root:"rupt",origin:"Latin",meaning:"break",examples:["interrupt","erupt","rupture"],note:"From Latin rumpere. To interrupt is to break in between.",type:"Latin"},
+  {root:"scrib / script",origin:"Latin",meaning:"write",examples:["describe","manuscript","inscription"],note:"From Latin scribere. To describe is to write about something.",type:"Latin"},
+  {root:"sect / sec",origin:"Latin",meaning:"cut",examples:["section","dissect","bisect"],note:"From Latin secare. To bisect is to cut into two equal parts.",type:"Latin"},
+  {root:"sens",origin:"Latin",meaning:"feel",examples:["sensory","sentiment","sensation"],note:"From Latin sentire. Sentiment is a feeling or emotion.",type:"Latin"},
+  {root:"spect",origin:"Latin",meaning:"look, see",examples:["inspect","spectator","perspective"],note:"From Latin specere. A spectator is one who looks on.",type:"Latin"},
+  {root:"struct",origin:"Latin",meaning:"build",examples:["construct","structure","instruct"],note:"From Latin struere. To instruct is to build knowledge in someone.",type:"Latin"},
+  {root:"terr",origin:"Latin",meaning:"earth",examples:["territory","terrain","terrestrial"],note:"From Latin terra. Terrestrial means of or relating to the earth.",type:"Latin"},
+  {root:"timi",origin:"Latin",meaning:"fear",examples:["timid","intimidate","timidity"],note:"From Latin timere. To intimidate is to make someone feel fear.",type:"Latin"},
+  {root:"tract",origin:"Latin",meaning:"pull, drag",examples:["tractor","attract","extract"],note:"From Latin trahere. To attract is to pull toward.",type:"Latin"},
+  {root:"vac",origin:"Latin",meaning:"empty",examples:["evacuate","vacuum","vacant"],note:"From Latin vacuus. A vacuum is a completely empty space.",type:"Latin"},
   {root:"vid / vis",origin:"Latin",meaning:"see",examples:["video","vision","visible"],note:"From Latin videre. Vision is the power of seeing.",type:"Latin"},
-  {root:"vit / viv",origin:"Latin",meaning:"life",examples:["vital","vivid","survive"],note:"From Latin vita / vivere. Vital means necessary for life.",type:"Latin"},
-  {root:"voc / voke",origin:"Latin",meaning:"voice, call",examples:["vocal","invoke","advocate"],note:"From Latin vox / vocare. An advocate is one who calls in support.",type:"Latin"},
-  {root:"zoo",origin:"Greek",meaning:"animal",examples:["zoology","zodiac","protozoa"],note:"From Greek zoon. Zoology is the study of animals.",type:"Greek"}
+  {root:"voc / voke",origin:"Latin",meaning:"call, voice",examples:["vocal","provoke","advocate"],note:"From Latin vox/vocare. An advocate is one who calls in support.",type:"Latin"},
+  {root:"volv / volut",origin:"Latin",meaning:"roll, turn",examples:["revolve","evolution","involve"],note:"From Latin volvere. Evolution is a gradual turning or unfolding.",type:"Latin"}
 ];
 
 // ═══════════════════════════════
@@ -873,24 +1004,34 @@ function setTopic(pg,topic){
   P.pgTopics[pg]=topic;save();
   applyTopicToggle(pg,topic);
   if(pg==='fc'){AF={states:['All'],roots:['All']};initFC();}
-  else if(pg==='qz'){document.getElementById('qz-res').style.display='none';document.getElementById('qz-active').style.display='';startQuiz();}
-  else if(pg==='ts') refreshTestIntro();
+  else if(pg==='qz'){
+    if(topic==='map'){hideAllQzModes();document.getElementById('qz-map-mode').style.display='';document.getElementById('qz-map-res').style.display='none';startMapQuiz();}
+    else{hideAllQzModes();document.getElementById('qz-active').style.display='';document.getElementById('qz-res').style.display='none';startQuiz();}
+  }
+  else if(pg==='ts'){
+    if(topic==='map'){hideAllTsModes();document.getElementById('ts-map-mode').style.display='';document.getElementById('ts-map-res').style.display='none';beginMapTest();}
+    else{hideAllTsModes();refreshTestIntro();}
+  }
   else if(pg==='dict') initDict();
 }
 function applyTopicToggle(pg,topic){
-  ['s','r'].forEach(x=>{
+  ['s','r','m'].forEach(x=>{
     const b=document.getElementById(`${pg}-tt-${x}`);
-    if(b) b.classList.toggle('on',(topic==='states'&&x==='s')||(topic==='roots'&&x==='r')||(topic==='roots'&&x==='r'&&pg==='dict')||(topic==='states'&&x==='s'&&pg==='dict'));
+    if(b) b.classList.toggle('on',(topic==='states'&&x==='s')||(topic==='roots'&&x==='r')||(topic==='map'&&x==='m'));
   });
-  // dict is reversed (roots default)
   if(pg==='dict'){
-    const br=document.getElementById('dict-tt-r');
-    const bs=document.getElementById('dict-tt-s');
+    const br=document.getElementById('dict-tt-r');const bs=document.getElementById('dict-tt-s');
     if(br) br.classList.toggle('on',topic==='roots');
     if(bs) bs.classList.toggle('on',topic==='states');
   }
 }
 function getTopic(pg){return P.pgTopics[pg]||'states';}
+function hideAllQzModes(){
+  ['qz-active','qz-res','qz-map-mode','qz-map-res'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+}
+function hideAllTsModes(){
+  ['ts-intro','ts-area','ts-res','ts-map-mode','ts-map-res'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+}
 
 // ═══════════════════════════════
 // NAV
@@ -905,11 +1046,17 @@ function go(pg){
   applyTopicToggle(pg,t);
   if(pg==='dash') renderDash();
   else if(pg==='fc'){AF={states:['All'],roots:['All']};initFC();}
-  else if(pg==='qz'){document.getElementById('qz-res').style.display='none';document.getElementById('qz-active').style.display='';startQuiz();}
-  else if(pg==='ts'){document.getElementById('ts-area').style.display='none';document.getElementById('ts-res').style.display='none';document.getElementById('ts-intro').style.display='';refreshTestIntro();}
+  else if(pg==='qz'){
+    if(t==='map'){hideAllQzModes();document.getElementById('qz-map-mode').style.display='';document.getElementById('qz-map-res').style.display='none';startMapQuiz();}
+    else{hideAllQzModes();document.getElementById('qz-active').style.display='';startQuiz();}
+  }
+  else if(pg==='ts'){
+    if(t==='map'){hideAllTsModes();document.getElementById('ts-map-mode').style.display='';beginMapTest();}
+    else{hideAllTsModes();document.getElementById('ts-intro').style.display='';refreshTestIntro();}
+  }
   else if(pg==='dict') initDict();
   else if(pg==='cd'){document.getElementById('cd-main-view').style.display='';document.getElementById('cd-study-view').style.display='none';renderDecksPage();}
-  if(tTimer&&pg!=='ts'){clearInterval(tTimer);tTimer=null;}
+  if(tTimer&&pg!=='ts'&&t!=='map'){clearInterval(tTimer);tTimer=null;}
 }
 
 // ═══════════════════════════════
@@ -971,6 +1118,18 @@ function fR(){const f=AF.roots||['All'];if(f.includes('All'))return[...ROOTS];re
 // ═══════════════════════════════
 function initFC(){
   const t=getTopic('fc');
+  const mapMode=document.getElementById('fc-map-mode');
+  const normalLayout=document.querySelector('#pg-fc .fc-layout');
+  const fbar=document.getElementById('fc-fbar');
+  if(t==='map'){
+    if(normalLayout)normalLayout.style.display='none';
+    if(mapMode)mapMode.style.display='';
+    if(fbar)fbar.style.display='none';
+    initMLCFc();return;
+  }
+  if(normalLayout)normalLayout.style.display='';
+  if(mapMode)mapMode.style.display='none';
+  if(fbar)fbar.style.display='';
   buildFilters('fc-fbar',t==='states'?S_REG:['All','Greek','Latin'],t);
   const pool=t==='states'?fS():fR();
   deck=[...pool];shuf(deck);dIdx=0;buildDots();renderCard();buildList();
@@ -1031,6 +1190,7 @@ function jumpCard(i){dIdx=i;renderCard();}
 // ═══════════════════════════════
 function startQuiz(){
   const t=getTopic('qz');
+  const fb=document.getElementById('qz-fbar');if(fb)fb.style.display='';
   buildFilters('qz-fbar',t==='states'?S_REG:['All','Greek','Latin'],t);
   qIdx=0;qRight=0;qAns=false;
   const pool=t==='states'?fS():fR();const p=[...pool];shuf(p);
@@ -1075,6 +1235,7 @@ function endQuiz(){
 // ═══════════════════════════════
 function refreshTestIntro(){
   const t=getTopic('ts');
+  const fb=document.getElementById('ts-fbar');if(fb)fb.style.display='';
   buildFilters('ts-fbar',t==='states'?S_REG:['All','Greek','Latin'],t);
   const pool=t==='states'?fS():fR();
   setText('ts-ttl',t==='states'?'States & Capitals Test':'Greek & Latin Roots Test');
@@ -1274,6 +1435,284 @@ function updateCustomDots(){cdStudyDeck.forEach((card,i)=>{const d=document.getE
 function buildCustomList(){const prog=P.customProgress[cdActiveDeckId]||{};document.getElementById('cd-fc-list').innerHTML=cdStudyDeck.map((card,i)=>{const st=prog[card.id];return `<li class="fsl-item${i===cdStudyIdx?' cur':''}" onclick="jumpCustomCard(${i})"><span class="fsl-dot${st==='known'?' known':st==='learn'?' learn':''}"></span><span><strong style="font-size:13px">${card.front}</strong><span style="font-size:11px;color:var(--iv);display:block">${card.back}</span></span></li>`;}).join('');}
 function updateCustomList(){document.querySelectorAll('#cd-fc-list .fsl-item').forEach((el,i)=>el.classList.toggle('cur',i===cdStudyIdx));const cur=document.querySelector('#cd-fc-list .fsl-item.cur');if(cur)cur.scrollIntoView({block:'nearest',behavior:'smooth'});}
 function jumpCustomCard(i){cdStudyIdx=i;renderCustomCard();}
+
+
+// ═══════════════════════════════
+// MAP LOCATE — SHARED
+// ═══════════════════════════════
+// Build the full US SVG map with clickable state paths
+function buildMapSVG(wrapId, onClickFn, highlightAbbr, resultMap){
+  // resultMap: {abbr: 'correct'|'wrong'|'reveal'|'dim'} or null
+  const wrap = document.getElementById(wrapId);
+  if(!wrap) return;
+  let paths = '';
+  for(const [a, d] of Object.entries(STATE_PATHS)){
+    let cls = 'msp';
+    if(resultMap && resultMap[a]) cls += ' ' + resultMap[a];
+    else if(highlightAbbr && a === highlightAbbr) cls += ' reveal';
+    paths += `<path class="${cls}" data-abbr="${a}" d="${d}"/>`;
+  }
+  wrap.innerHTML = `<svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
+  if(onClickFn){
+    wrap.querySelectorAll('.msp').forEach(p=>{
+      p.addEventListener('click', ()=>{ if(!p.classList.contains('correct')&&!p.classList.contains('wrong')&&!p.classList.contains('reveal')&&!p.classList.contains('dim')) onClickFn(p.dataset.abbr,p); });
+    });
+  }
+}
+
+// ═══════════════════════════════
+// MAP LOCATE — FLASHCARD MODE
+// ═══════════════════════════════
+let mlcFcDeck=[], mlcFcIdx=0, mlcFcCorrect=0, mlcFcWrong=0, mlcFcAnswered=false;
+
+function initMLCFc(){
+  mlcFcDeck=[...STATES]; shuf(mlcFcDeck);
+  mlcFcIdx=0; mlcFcCorrect=0; mlcFcWrong=0; mlcFcAnswered=false;
+  setText('mlc-fc-correct',0); setText('mlc-fc-wrong',0);
+  buildMLCFcDots();
+  renderMLCFcCard();
+}
+
+function renderMLCFcCard(){
+  if(mlcFcIdx>=mlcFcDeck.length){endMLCFc();return;}
+  const st=mlcFcDeck[mlcFcIdx];
+  mlcFcAnswered=false;
+  setText('mlc-fc-name', st.s);
+  setText('mlc-fc-prog', (mlcFcIdx+1)+' / '+mlcFcDeck.length);
+  document.getElementById('mlc-fc-fb').className='mlc-fb';
+  document.getElementById('mlc-fc-fb').textContent='';
+  document.getElementById('mlc-fc-next').style.display='none';
+  document.getElementById('mlc-fc-skip').style.display='';
+  buildMapSVG('mlc-fc-svg-wrap', (abbr,el)=>handleMLCFcClick(abbr,el,st.a), null, null);
+  updateMLCFcDots();
+}
+
+function handleMLCFcClick(abbr, el, correct){
+  if(mlcFcAnswered) return;
+  mlcFcAnswered=true;
+  const ok = abbr===correct;
+  const fb=document.getElementById('mlc-fc-fb');
+  // Color the map
+  const svgWrap=document.getElementById('mlc-fc-svg-wrap');
+  const allPaths=svgWrap.querySelectorAll('.msp');
+  allPaths.forEach(p=>{
+    p.classList.add('dim');
+    p.style.pointerEvents='none';
+  });
+  // Mark clicked
+  el.classList.remove('dim');
+  el.classList.add(ok?'correct':'wrong');
+  // If wrong, also reveal the correct one
+  if(!ok){
+    svgWrap.querySelector(`[data-abbr="${correct}"]`)?.classList.add('reveal');
+    svgWrap.querySelector(`[data-abbr="${correct}"]`)?.classList.remove('dim');
+    mlcFcWrong++; setText('mlc-fc-wrong',mlcFcWrong);
+    P.sErr[correct]=(P.sErr[correct]||0)+1;
+    fb.className='mlc-fb ng';
+    const correctState=STATES.find(s=>s.a===correct);
+    fb.textContent='Not quite — that was '+abbr+'. '+correctState.s+' is highlighted in gold.';
+  } else {
+    mlcFcCorrect++; setText('mlc-fc-correct',mlcFcCorrect);
+    P.sKnown[correct]=true;
+    fb.className='mlc-fb ok';
+    fb.textContent='Correct! That is '+STATES.find(s=>s.a===correct).s+'.';
+  }
+  save(); updateProg(); updateMLCFcDots();
+  document.getElementById('mlc-fc-skip').style.display='none';
+  document.getElementById('mlc-fc-next').style.display='inline-block';
+}
+
+function mlcFcSkip(){
+  if(mlcFcAnswered) return;
+  const st=mlcFcDeck[mlcFcIdx];
+  const svgWrap=document.getElementById('mlc-fc-svg-wrap');
+  svgWrap.querySelectorAll('.msp').forEach(p=>{p.classList.add('dim');p.style.pointerEvents='none';});
+  svgWrap.querySelector('[data-abbr="'+st.a+'"]')?.classList.add('reveal');
+  svgWrap.querySelector('[data-abbr="'+st.a+'"]')?.classList.remove('dim');
+  const fb=document.getElementById('mlc-fc-fb');
+  fb.className='mlc-fb ng';
+  fb.textContent='Skipped — '+st.s+' is highlighted in gold.';
+  mlcFcAnswered=true;
+  document.getElementById('mlc-fc-skip').style.display='none';
+  document.getElementById('mlc-fc-next').style.display='inline-block';
+}
+
+function mlcFcNext(){
+  mlcFcIdx++;
+  if(mlcFcIdx>=mlcFcDeck.length) endMLCFc();
+  else renderMLCFcCard();
+}
+
+function endMLCFc(){
+  const fb=document.getElementById('mlc-fc-fb');
+  const pct=Math.round(mlcFcCorrect/mlcFcDeck.length*100);
+  fb.className='mlc-fb ok';
+  fb.innerHTML='<strong>Done!</strong> '+mlcFcCorrect+' / '+mlcFcDeck.length+' correct ('+pct+'%). Shuffle to go again.';
+  document.getElementById('mlc-fc-next').style.display='none';
+  document.getElementById('mlc-fc-skip').style.display='none';
+  document.getElementById('mlc-fc-svg-wrap').innerHTML='';
+}
+
+function shuffleMLCFc(){ mlcFcDeck=[...STATES];shuf(mlcFcDeck);mlcFcIdx=0;mlcFcCorrect=0;mlcFcWrong=0;setText('mlc-fc-correct',0);setText('mlc-fc-wrong',0);buildMLCFcDots();renderMLCFcCard(); }
+function resetMLCFc(){ P.sKnown={};P.sErr={};save();updateProg();shuffleMLCFc(); }
+
+function buildMLCFcDots(){
+  const w=document.getElementById('mlc-fc-dots');
+  w.innerHTML=mlcFcDeck.map((_,i)=>`<div class="dot" id="mlcd${i}"></div>`).join('');
+}
+function updateMLCFcDots(){
+  mlcFcDeck.forEach((st,i)=>{
+    const d=document.getElementById('mlcd'+i);if(!d)return;
+    const k=P.sKnown[st.a];const e=P.sErr[st.a];
+    d.className='dot'+(i===mlcFcIdx?' cur':k===true?' known':e?' learn':'');
+  });
+}
+
+// ═══════════════════════════════
+// MAP LOCATE — QUIZ MODE
+// ═══════════════════════════════
+let mapQItems=[], mapQIdx=0, mapQRight=0, mapQAnswered=false;
+
+function startMapQuiz(){
+  const pool=[...STATES]; shuf(pool);
+  mapQItems=pool;
+  mapQIdx=0; mapQRight=0; mapQAnswered=false;
+  document.getElementById('qz-map-res').style.display='none';
+  document.getElementById('qz-map-mode').querySelector('.map-locate-wrap').style.display='';
+  setText('qz-map-tot',mapQItems.length);
+  setText('qz-map-sc',0);
+  renderMapQ();
+}
+
+function renderMapQ(){
+  if(mapQIdx>=mapQItems.length){endMapQuiz();return;}
+  const st=mapQItems[mapQIdx];
+  mapQAnswered=false;
+  setText('qz-map-n', mapQIdx+1);
+  setText('qz-map-name', st.s);
+  document.getElementById('qz-map-pf').style.width=(mapQIdx/mapQItems.length*100)+'%';
+  document.getElementById('qz-map-fb').className='mlc-fb';
+  document.getElementById('qz-map-fb').textContent='';
+  document.getElementById('qz-map-nxt').style.display='none';
+  buildMapSVG('qz-map-svg-wrap', (abbr,el)=>handleMapQClick(abbr,el,st.a), null, null);
+}
+
+function handleMapQClick(abbr, el, correct){
+  if(mapQAnswered) return;
+  mapQAnswered=true;
+  const ok=abbr===correct;
+  const svgWrap=document.getElementById('qz-map-svg-wrap');
+  svgWrap.querySelectorAll('.msp').forEach(p=>{p.classList.add('dim');p.style.pointerEvents='none';});
+  el.classList.remove('dim'); el.classList.add(ok?'correct':'wrong');
+  if(!ok){
+    svgWrap.querySelector('[data-abbr="'+correct+'"]')?.classList.add('reveal');
+    svgWrap.querySelector('[data-abbr="'+correct+'"]')?.classList.remove('dim');
+    P.sErr[correct]=(P.sErr[correct]||0)+1;
+    const fb=document.getElementById('qz-map-fb');
+    fb.className='mlc-fb ng';
+    fb.textContent='Incorrect — '+STATES.find(s=>s.a===correct).s+' is shown in gold.';
+  } else {
+    mapQRight++; setText('qz-map-sc',mapQRight);
+    P.sKnown[correct]=true;
+    const fb=document.getElementById('qz-map-fb');
+    fb.className='mlc-fb ok';
+    fb.textContent='Correct!';
+  }
+  save();
+  document.getElementById('qz-map-nxt').style.display='inline-block';
+}
+
+function nextMapQ(){
+  mapQIdx++;
+  if(mapQIdx>=mapQItems.length) endMapQuiz();
+  else renderMapQ();
+}
+
+function endMapQuiz(){
+  const pct=Math.round(mapQRight/mapQItems.length*100);
+  if(P.quizBest===null||pct>P.quizBest){P.quizBest=pct;}
+  save(); updateProg();
+  document.getElementById('qz-map-mode').querySelector('.map-locate-wrap').style.display='none';
+  document.getElementById('qz-map-res').style.display='';
+  setText('qz-map-res-sc', mapQRight+'/'+mapQItems.length);
+  setText('qz-map-res-tot', mapQItems.length);
+  setText('qz-map-res-gr', gradeText(pct));
+  document.getElementById('qz-map-pf').style.width='100%';
+}
+
+// ═══════════════════════════════
+// MAP LOCATE — TEST MODE
+// ═══════════════════════════════
+let mapTestItems=[], mapTestIdx=0, mapTestCorrect=0, mapTestWrong=0, mapTestAnswered=false, mapTestTimer=null, mapTestSec=0, mapTestWrongList=[];
+
+function beginMapTest(){
+  if(mapTestTimer) clearInterval(mapTestTimer);
+  mapTestItems=[...STATES]; shuf(mapTestItems);
+  mapTestIdx=0; mapTestCorrect=0; mapTestWrong=0; mapTestAnswered=false; mapTestWrongList=[];
+  mapTestSec=0; setText('ts-map-tm','0:00');
+  document.getElementById('ts-map-res').style.display='none';
+  document.getElementById('ts-map-mode').style.display='';
+  setText('tsm-correct',0); setText('tsm-wrong',0); setText('tsm-prog','1 / '+mapTestItems.length);
+  mapTestTimer=setInterval(()=>{mapTestSec++;const m=Math.floor(mapTestSec/60),s=mapTestSec%60;setText('ts-map-tm',`${m}:${s.toString().padStart(2,'0')}`);},1000);
+  renderMapTestQ();
+}
+
+function renderMapTestQ(){
+  if(mapTestIdx>=mapTestItems.length){endMapTest();return;}
+  const st=mapTestItems[mapTestIdx];
+  mapTestAnswered=false;
+  setText('tsm-name', st.s);
+  setText('tsm-prog', (mapTestIdx+1)+' / '+mapTestItems.length);
+  document.getElementById('tsm-fb').className='mlc-fb';
+  document.getElementById('tsm-fb').textContent='';
+  document.getElementById('tsm-next').style.display='none';
+  buildMapSVG('tsm-svg-wrap', (abbr,el)=>handleMapTestClick(abbr,el,st.a), null, null);
+}
+
+function handleMapTestClick(abbr,el,correct){
+  if(mapTestAnswered) return;
+  mapTestAnswered=true;
+  const ok=abbr===correct;
+  const svgWrap=document.getElementById('tsm-svg-wrap');
+  svgWrap.querySelectorAll('.msp').forEach(p=>{p.classList.add('dim');p.style.pointerEvents='none';});
+  el.classList.remove('dim'); el.classList.add(ok?'correct':'wrong');
+  if(!ok){
+    svgWrap.querySelector('[data-abbr="'+correct+'"]')?.classList.add('reveal');
+    svgWrap.querySelector('[data-abbr="'+correct+'"]')?.classList.remove('dim');
+    mapTestWrong++; setText('tsm-wrong',mapTestWrong);
+    P.sErr[correct]=(P.sErr[correct]||0)+1;
+    mapTestWrongList.push({name:STATES.find(s=>s.a===correct).s, clicked:STATES.find(s=>s.a===abbr)?.s||abbr});
+    document.getElementById('tsm-fb').className='mlc-fb ng';
+    document.getElementById('tsm-fb').textContent='Incorrect — '+STATES.find(s=>s.a===correct).s+' is in gold.';
+  } else {
+    mapTestCorrect++; setText('tsm-correct',mapTestCorrect);
+    P.sKnown[correct]=true;
+    document.getElementById('tsm-fb').className='mlc-fb ok';
+    document.getElementById('tsm-fb').textContent='Correct!';
+  }
+  save(); updateProg();
+  document.getElementById('tsm-next').style.display='inline-block';
+}
+
+function nextMapTestQ(){
+  mapTestIdx++;
+  if(mapTestIdx>=mapTestItems.length) endMapTest();
+  else renderMapTestQ();
+}
+
+function endMapTest(){
+  if(mapTestTimer){clearInterval(mapTestTimer);mapTestTimer=null;}
+  P.tests++; save(); updateProg();
+  const pct=Math.round(mapTestCorrect/mapTestItems.length*100);
+  document.getElementById('ts-map-mode').style.display='none';
+  document.getElementById('ts-map-res').style.display='';
+  setText('tsm-res-sc', mapTestCorrect+'/'+mapTestItems.length);
+  setText('tsm-res-tot', mapTestItems.length);
+  setText('tsm-res-gr', gradeText(pct));
+  const rv=document.getElementById('tsm-rev');
+  if(!mapTestWrongList.length){ rv.innerHTML='<p style="color:var(--sage);font-style:italic">All 50 states correct!</p>'; }
+  else{ rv.innerHTML=`<p style="font-size:13px;color:var(--il);margin-bottom:10px"><strong>${mapTestWrongList.length}</strong> incorrect:</p>`+mapTestWrongList.map(w=>`<div class="wrong-item">You clicked <em>${w.clicked}</em> instead of <strong>${w.name}</strong></div>`).join(''); }
+}
 
 // ═══════════════════════════════
 // MODAL + KEYBOARD + UTILS
