@@ -55,6 +55,13 @@ nav{flex:1;padding:8px 0 6px;}
 .topic-toggle{display:flex;background:var(--p2);border-radius:24px;padding:3px;gap:2px;border:1px solid var(--bdr);}
 .tt-btn{padding:5px 18px;border-radius:20px;border:none;background:transparent;font-family:'EB Garamond',Georgia,serif;font-size:13px;color:var(--im);cursor:pointer;transition:all .18s;white-space:nowrap;}
 .tt-btn.on{background:var(--gold);color:#fff;box-shadow:0 1px 4px rgba(90,60,10,.2);}
+/* DIRECTION TOGGLE */
+.dir-toggle{display:flex;background:var(--p2);border-radius:24px;padding:3px;gap:2px;border:1px solid var(--bdr);margin-left:0;}
+.dt-btn{padding:4px 14px;border-radius:20px;border:none;background:transparent;font-family:'EB Garamond',Georgia,serif;font-size:12px;color:var(--im);cursor:pointer;transition:all .18s;white-space:nowrap;}
+.dt-btn.on{background:var(--sky);color:#fff;box-shadow:0 1px 4px rgba(20,60,100,.2);}
+.pgh-row2{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px;margin-bottom:6px;}
+.pgh-row2 span{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--iv);}
+
 
 /* MAP LOCATE MODE */
 .map-locate-wrap{max-width:680px;}
@@ -399,6 +406,10 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
         <button class="tt-btn" id="fc-tt-m" onclick="setTopic('fc','map')">Locate the State</button>
       </div>
     </div>
+    <div class="pgh-row2" id="fc-dir-row">
+      <span>Direction:</span>
+      <div class="dir-toggle" id="fc-dir-toggle"></div>
+    </div>
     <hr class="rule">
     <div class="fbar" id="fc-fbar"><label>Filter:</label></div>
     <div class="fc-layout">
@@ -473,6 +484,10 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
         <button class="tt-btn" id="qz-tt-m" onclick="setTopic('qz','map')">Locate the State</button>
       </div>
     </div>
+    <div class="pgh-row2" id="qz-dir-row">
+      <span>Direction:</span>
+      <div class="dir-toggle" id="qz-dir-toggle"></div>
+    </div>
     <hr class="rule">
     <div class="fbar" id="qz-fbar"><label>Filter:</label></div>
     <div class="qz-wrap">
@@ -535,6 +550,10 @@ hr.div{border:none;border-top:1px solid var(--bdrl);margin:20px 0;}
         <button class="tt-btn" id="ts-tt-r" onclick="setTopic('ts','roots')">Greek &amp; Latin Roots</button>
         <button class="tt-btn" id="ts-tt-m" onclick="setTopic('ts','map')">Locate the State</button>
       </div>
+    </div>
+    <div class="pgh-row2" id="ts-dir-row">
+      <span>Direction:</span>
+      <div class="dir-toggle" id="ts-dir-toggle"></div>
     </div>
     <hr class="rule">
     <div class="fbar" id="ts-fbar"><label>Filter:</label></div>
@@ -977,7 +996,8 @@ const ROOTS=[
 // APP STATE
 // ═══════════════════════════════
 let P={sKnown:{},rKnown:{},sErr:{},rErr:{},quizBest:null,tests:0,streak:1,lastDay:'',
-       pgTopics:{fc:'states',qz:'states',ts:'states',dict:'roots'}};
+       pgTopics:{fc:'states',qz:'states',ts:'states',dict:'roots'},
+       pgDir:{fc:'mix',qz:'mix',ts:'mix'}};
 let uName='';
 let curPg='dash';
 // per-page topics persisted
@@ -993,7 +1013,7 @@ let cdActiveDeckId=null,cdStudyDeck=[],cdStudyIdx=0,cdStudyFlipped=false,cdEditC
 // ═══════════════════════════════
 function save(){localStorage.setItem('studyGL_v4',JSON.stringify(P));localStorage.setItem('studyGL_nm',uName);}
 function load(){
-  try{const d=localStorage.getItem('studyGL_v4');if(d){const parsed=JSON.parse(d);P=Object.assign({sKnown:{},rKnown:{},sErr:{},rErr:{},quizBest:null,tests:0,streak:1,lastDay:'',pgTopics:{fc:'states',qz:'states',ts:'states',dict:'roots'}},parsed);if(!P.pgTopics)P.pgTopics={fc:'states',qz:'states',ts:'states',dict:'roots'};}}catch(e){}
+  try{const d=localStorage.getItem('studyGL_v4');if(d){const parsed=JSON.parse(d);P=Object.assign({sKnown:{},rKnown:{},sErr:{},rErr:{},quizBest:null,tests:0,streak:1,lastDay:'',pgTopics:{fc:'states',qz:'states',ts:'states',dict:'roots'},pgDir:{fc:'mix',qz:'mix',ts:'mix'}},parsed);if(!P.pgTopics)P.pgTopics={fc:'states',qz:'states',ts:'states',dict:'roots'};if(!P.pgDir)P.pgDir={fc:'mix',qz:'mix',ts:'mix'};}}catch(e){}
   uName=localStorage.getItem('studyGL_nm')||'';
 }
 
@@ -1003,6 +1023,7 @@ function load(){
 function setTopic(pg,topic){
   P.pgTopics[pg]=topic;save();
   applyTopicToggle(pg,topic);
+  buildDirToggle(pg);
   if(pg==='fc'){AF={states:['All'],roots:['All']};initFC();}
   else if(pg==='qz'){
     if(topic==='map'){hideAllQzModes();document.getElementById('qz-map-mode').style.display='';document.getElementById('qz-map-res').style.display='none';startMapQuiz();}
@@ -1026,6 +1047,64 @@ function applyTopicToggle(pg,topic){
   }
 }
 function getTopic(pg){return P.pgTopics[pg]||'states';}
+
+// ═══════════════════════════════
+// DIRECTION (question style)
+// ═══════════════════════════════
+// States dirs: 'state->capital' | 'capital->state' | 'mix'
+// Roots dirs:  'root->meaning'  | 'meaning->root'  | 'mix'
+// Map mode: no direction toggle
+const DIR_STATES = [
+  {id:'mix',          label:'Mix'},
+  {id:'state->cap',   label:'State → Capital'},
+  {id:'cap->state',   label:'Capital → State'},
+];
+const DIR_ROOTS = [
+  {id:'mix',          label:'Mix'},
+  {id:'root->meaning',label:'Root → Meaning'},
+  {id:'meaning->root',label:'Meaning → Root'},
+];
+
+function getDir(pg){ return P.pgDir[pg]||'mix'; }
+function setDir(pg, dir){
+  P.pgDir[pg]=dir; save();
+  buildDirToggle(pg);
+  if(pg==='fc') renderCard();
+  else if(pg==='qz'){ document.getElementById('qz-res').style.display='none'; document.getElementById('qz-active').style.display=''; startQuiz(); }
+  else if(pg==='ts') refreshTestIntro();
+}
+
+function buildDirToggle(pg){
+  const topic = getTopic(pg);
+  const row = document.getElementById(pg+'-dir-row');
+  const wrap = document.getElementById(pg+'-dir-toggle');
+  if(!row||!wrap) return;
+  if(topic==='map'){ row.style.display='none'; return; }
+  row.style.display='';
+  const dirs = topic==='roots' ? DIR_ROOTS : DIR_STATES;
+  const cur = getDir(pg);
+  wrap.innerHTML = dirs.map(d=>`<button class="dt-btn${cur===d.id?' on':''}" onclick="setDir('${pg}','${d.id}')">${d.label}</button>`).join('');
+}
+
+// Returns question direction for a single item
+// For states: returns 'state->cap' or 'cap->state'
+// For roots:  returns 'root->meaning' or 'meaning->root'
+function resolveDir(pg, topic){
+  const d = getDir(pg);
+  if(topic==='states'){
+    if(d==='mix') return Math.random()<.5?'state->cap':'cap->state';
+    return d;
+  } else {
+    if(d==='mix'){
+      const r=Math.random();
+      if(r<.4) return 'root->meaning';
+      if(r<.8) return 'meaning->root';
+      return 'example';
+    }
+    return d;
+  }
+}
+
 function hideAllQzModes(){
   ['qz-active','qz-res','qz-map-mode','qz-map-res'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
 }
@@ -1044,6 +1123,7 @@ function go(pg){
   const nb=document.getElementById('n-'+pg);if(nb)nb.classList.add('on');
   const t=getTopic(pg);
   applyTopicToggle(pg,t);
+  buildDirToggle(pg);
   if(pg==='dash') renderDash();
   else if(pg==='fc'){AF={states:['All'],roots:['All']};initFC();}
   else if(pg==='qz'){
@@ -1136,18 +1216,35 @@ function initFC(){
 }
 function renderCard(){
   if(!deck.length)return;
-  const item=deck[dIdx];const isS=getTopic('fc')==='states';
+  const item=deck[dIdx];const t=getTopic('fc');const isS=t==='states';
   document.getElementById('fc-card').classList.remove('flip');flipped=false;
+  const dir=resolveDir('fc',t==='states'?'states':'roots');
   if(isS){
-    setText('fc-fl','State');setText('fc-fm',item.s);setText('fc-fs',item.a+' \u00b7 '+item.r);
-    setText('fc-bl','Capital');setText('fc-bm',item.c);document.getElementById('fc-bs').textContent='';
-    const m=document.getElementById('fc-bmap');m.innerHTML=miniMap(item.a);m.style.display='block';
+    const bmap=document.getElementById('fc-bmap');
+    if(dir==='state->cap'){
+      setText('fc-fl','State');setText('fc-fm',item.s);setText('fc-fs',item.a+' \u00b7 '+item.r);
+      setText('fc-bl','Capital');setText('fc-bm',item.c);document.getElementById('fc-bs').textContent='';
+      bmap.innerHTML=miniMap(item.a);bmap.style.display='block';
+    }else{
+      setText('fc-fl','Capital');setText('fc-fm',item.c);setText('fc-fs',item.r);
+      setText('fc-bl','State');setText('fc-bm',item.s);document.getElementById('fc-bs').textContent=item.a;
+      bmap.innerHTML=miniMap(item.a);bmap.style.display='block';
+    }
   }else{
-    document.getElementById('fc-fl').innerHTML=`<span class="root-origin-pill">${item.origin}</span>`;
-    setText('fc-fm',item.root);setText('fc-fs','');
-    setText('fc-bl','Meaning');setText('fc-bm',item.meaning);
-    document.getElementById('fc-bs').innerHTML=`<div style="margin-top:8px;font-size:13px;color:var(--il)">${item.examples.join(' \u00b7 ')}</div><div style="margin-top:10px;font-size:12px;color:var(--iv);font-style:italic;max-width:300px;text-align:center;line-height:1.5">${item.note}</div>`;
-    document.getElementById('fc-bmap').style.display='none';
+    const bmap=document.getElementById('fc-bmap');bmap.style.display='none';
+    const backNote=`<div style="margin-top:8px;font-size:13px;color:var(--il)">${item.examples.join(' \u00b7 ')}</div><div style="margin-top:10px;font-size:12px;color:var(--iv);font-style:italic;max-width:300px;text-align:center;line-height:1.5">${item.note}</div>`;
+    if(dir==='root->meaning'||dir==='example'){
+      document.getElementById('fc-fl').innerHTML=`<span class="root-origin-pill">${item.origin}</span>`;
+      setText('fc-fm',item.root);setText('fc-fs','');
+      setText('fc-bl','Meaning');setText('fc-bm',item.meaning);
+      document.getElementById('fc-bs').innerHTML=backNote;
+    }else{
+      // meaning->root
+      document.getElementById('fc-fl').innerHTML=`<span class="root-origin-pill">${item.origin}</span>`;
+      setText('fc-fm',item.meaning);setText('fc-fs','');
+      setText('fc-bl','Root');setText('fc-bm',item.root);
+      document.getElementById('fc-bs').innerHTML=backNote;
+    }
   }
   setText('fc-i',dIdx+1);setText('fc-t',deck.length);updateDots();updateList();
 }
@@ -1204,8 +1301,28 @@ function renderQ(){
   document.getElementById('qz-nxt').style.display='none';document.getElementById('qz-fb').className='qfb';
   document.getElementById('qpf').style.width=(qIdx/qItems.length*100)+'%';
   const all=isS?STATES:ROOTS;let q,correct,dist;
-  if(isS){const flip=Math.random()>.5;if(flip){q=`What is the capital of <strong>${item.s}</strong>?<br><span style="font-size:13px;color:var(--iv)">${item.a} \u00b7 ${item.r}</span>`;correct=item.c;dist=all.filter(x=>x.a!==item.a).map(x=>x.c);}else{q=`<strong>${item.c}</strong> is the capital of which state?`;correct=item.s;dist=all.filter(x=>x.a!==item.a).map(x=>x.s);}}
-  else{const t2=Math.floor(Math.random()*3);if(t2===0){q=`What does the root <strong>"${item.root}"</strong> mean? <span style="font-size:13px;color:var(--iv)">${item.origin}</span>`;correct=item.meaning;dist=all.filter(x=>x.root!==item.root).map(x=>x.meaning);}else if(t2===1){q=`Which root means <strong>"${item.meaning}"</strong>?`;correct=item.root;dist=all.filter(x=>x.root!==item.root).map(x=>x.root);}else{q=`Which word comes from the root <strong>"${item.root}"</strong>?`;correct=item.examples[0];const others=all.filter(x=>x.root!==item.root).flatMap(x=>x.examples);shuf(others);dist=others.slice(0,3);}}
+  const dir=resolveDir('qz',isS?'states':'roots');
+  if(isS){
+    if(dir==='state->cap'){
+      q=`What is the capital of <strong>${item.s}</strong>?<br><span style="font-size:13px;color:var(--iv)">${item.a} \u00b7 ${item.r}</span>`;
+      correct=item.c;dist=all.filter(x=>x.a!==item.a).map(x=>x.c);
+    }else{
+      q=`<strong>${item.c}</strong> is the capital of which state?`;
+      correct=item.s;dist=all.filter(x=>x.a!==item.a).map(x=>x.s);
+    }
+  }else{
+    if(dir==='root->meaning'){
+      q=`What does the root <strong>"${item.root}"</strong> mean? <span style="font-size:13px;color:var(--iv)">${item.origin}</span>`;
+      correct=item.meaning;dist=all.filter(x=>x.root!==item.root).map(x=>x.meaning);
+    }else if(dir==='meaning->root'){
+      q=`Which root means <strong>"${item.meaning}"</strong>?`;
+      correct=item.root;dist=all.filter(x=>x.root!==item.root).map(x=>x.root);
+    }else{
+      // example mode in mix
+      q=`Which word comes from the root <strong>"${item.root}"</strong>?`;
+      correct=item.examples[0];const others=all.filter(x=>x.root!==item.root).flatMap(x=>x.examples);shuf(others);dist=others.slice(0,3);
+    }
+  }
   shuf(dist);const opts=[correct,...dist.slice(0,3)];shuf(opts);
   document.getElementById('qz-qt').innerHTML=q;setText('qz-qn','Question '+(qIdx+1));
   document.getElementById('qz-opts').innerHTML=opts.map((o,i)=>`<button class="qopt" onclick="ansQ(this,${JSON.stringify(o)},${JSON.stringify(correct)})"><span class="ql">${['A','B','C','D'][i]}</span>${o}</button>`).join('');
@@ -1251,8 +1368,19 @@ function buildTestQs(){
   const c=document.getElementById('ts-qs');c.innerHTML='';const t=getTopic('ts');const isS=t==='states';const all=isS?STATES:ROOTS;
   tItems.forEach((item,idx)=>{
     const fill=(idx%4===3);let q,correct,opts;
-    if(isS){if(idx%2===0){q=`What is the capital of <strong>${item.s}</strong>? <span style="font-size:12px;color:var(--iv)">(${item.a} \u00b7 ${item.r})</span>`;correct=item.c;if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.c);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}else{q=`<strong>${item.c}</strong> is the capital of which state?`;correct=item.s;if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.s);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}}
-    else{if(idx%2===0){q=`What does the root <strong>"${item.root}"</strong> (${item.origin}) mean?`;correct=item.meaning;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.meaning);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}else{q=`Which root means <strong>"${item.meaning}"</strong>?`;correct=item.root;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.root);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}}
+    const dir=resolveDir('ts',isS?'states':'roots');
+    if(isS){
+      if(dir==='state->cap'){q=`What is the capital of <strong>${item.s}</strong>? <span style="font-size:12px;color:var(--iv)">(${item.a} \u00b7 ${item.r})</span>`;correct=item.c;if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.c);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}
+      else{q=`<strong>${item.c}</strong> is the capital of which state?`;correct=item.s;if(!fill){const d=all.filter(x=>x.a!==item.a).map(x=>x.s);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}
+    }else{
+      if(dir==='root->meaning'){q=`What does the root <strong>"${item.root}"</strong> (${item.origin}) mean?`;correct=item.meaning;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.meaning);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}
+      else if(dir==='meaning->root'){q=`Which root means <strong>"${item.meaning}"</strong>?`;correct=item.root;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.root);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}
+      else{// mix: alternate
+        if(idx%3===0){q=`What does the root <strong>"${item.root}"</strong> (${item.origin}) mean?`;correct=item.meaning;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.meaning);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}
+        else if(idx%3===1){q=`Which root means <strong>"${item.meaning}"</strong>?`;correct=item.root;if(!fill){const d=all.filter(x=>x.root!==item.root).map(x=>x.root);shuf(d);opts=[correct,...d.slice(0,3)];shuf(opts);}}
+        else{q=`Which word comes from the root <strong>"${item.root}"</strong>?`;correct=item.examples[0];if(!fill){const oth=all.filter(x=>x.root!==item.root).flatMap(x=>x.examples);shuf(oth);opts=[correct,...oth.slice(0,3)];shuf(opts);}}
+      }
+    }
     const blk=document.createElement('div');blk.className='tq';blk.id='tq'+idx;
     blk.innerHTML=`<div class="tqn">Question ${idx+1} of ${tItems.length}</div><div class="tqt">${q}</div>`;
     if(fill){const d=document.createElement('div');d.className='t-fill';const inp=document.createElement('input');inp.type='text';inp.placeholder='Type your answer...';inp.dataset.correct=correct;inp.oninput=function(){tAnswers[idx]={val:this.value.trim(),correct};};d.appendChild(inp);blk.appendChild(d);}
